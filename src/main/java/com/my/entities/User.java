@@ -18,6 +18,11 @@ public class User {
         public Builder() {
             newUser = new User();
         }
+        public Builder id(int id){
+            newUser.id = id;
+            return this;
+
+        }
         public Builder login(String login){
             newUser.login = login;
             return this;
@@ -53,6 +58,14 @@ public class User {
         public User build(){
             return newUser;
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {

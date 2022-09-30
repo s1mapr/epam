@@ -17,7 +17,7 @@
     </c:when>
     <c:when test="${sessionScope.user.role == 'user'}">
         <a href="${pageContext.request.contextPath}/profile">profile</a>
-        <a href="">logout</a>
+        <a href="${pageContext.request.contextPath}/logout">logout</a>
     </c:when>
 </c:choose>
 </body>

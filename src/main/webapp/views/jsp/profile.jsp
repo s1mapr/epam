@@ -12,6 +12,10 @@
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
-<a href = "">add card</a>
+<p>First name: ${sessionScope.user.firstName}</p>
+<p>Last name: ${sessionScope.user.lastName}</p>
+<p>Email: ${sessionScope.user.email}</p>
+<p>Phone number: ${sessionScope.user.phoneNumber}</p>
+<a href = "${pageContext.request.contextPath}/addNewAccount">add new account</a>
 </body>
 </html>
