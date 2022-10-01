@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>

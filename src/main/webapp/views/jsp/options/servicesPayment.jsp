@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: S1ma
-  Date: 30.09.2022
-  Time: 20:01
+  Date: 01.10.2022
+  Time: 16:50
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,8 +16,9 @@
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
-<form action="${pageContext.request.contextPath}/phoneRecharge" method="post">
-    Номер телефону: <input name="phone"><br>
+<form action="${pageContext.request.contextPath}/servicesPayment" method="post">
+    Номер карти: <input name="card"><br>
+    Послуга: <input name="name"><br>
     Сума: <input name="amount"><br>
     <select name="accountId" aria-label="Default select example">
         <option value="0" selected>Оберіть рахунок</option>

@@ -2,6 +2,7 @@ package com.my.entities;
 
 public class Account {
     private String name;
+    private int id;
 
     public static class Builder {
         private Account newAccount;
@@ -14,9 +15,22 @@ public class Account {
             newAccount.name = name;
             return this;
         }
+        public Account.Builder id(int id) {
+            newAccount.id = id;
+            return this;
+        }
         public Account build() {
             return newAccount;
         }
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

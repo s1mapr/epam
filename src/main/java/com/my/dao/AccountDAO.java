@@ -33,8 +33,12 @@ public class AccountDAO {
             statement.setInt(1, id);
             try(ResultSet rs = statement.executeQuery()){
                 while(rs.next()){
+                    int accountId = rs.getInt("id");
                     String name = rs.getString("name");
-                    Account account = new Account.Builder().name(name).build();
+                    Account account = new Account.Builder()
+                            .id(accountId)
+                            .name(name)
+                            .build();
                     list.add(account);
                 }
             }

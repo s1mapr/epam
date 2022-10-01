@@ -25,7 +25,7 @@
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" onclick="return false">Створити новий платіж</a>
             <div class="dropdown-menu">
                 <a href="${pageContext.request.contextPath}/phoneRecharge" class="dropdown-item">Поповнення телефону</a>
-                <a href="#" class="dropdown-item">Оплата посуг</a>
+                <a href="${pageContext.request.contextPath}/servicesPayment" class="dropdown-item">Оплата посуг</a>
                 <a href="#" class="dropdown-item">Переказ на картку</a>
                 <a href="#" class="dropdown-item">Оплата комунальний послуг</a>
                 <a href="#" class="dropdown-item">Оплата штрафів</a>
