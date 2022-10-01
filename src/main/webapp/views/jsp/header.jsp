@@ -26,9 +26,9 @@
             <div class="dropdown-menu">
                 <a href="${pageContext.request.contextPath}/phoneRecharge" class="dropdown-item">Поповнення телефону</a>
                 <a href="${pageContext.request.contextPath}/servicesPayment" class="dropdown-item">Оплата посуг</a>
-                <a href="#" class="dropdown-item">Переказ на картку</a>
-                <a href="#" class="dropdown-item">Оплата комунальний послуг</a>
-                <a href="#" class="dropdown-item">Оплата штрафів</a>
+                <a href="${pageContext.request.contextPath}/cardTransfer" class="dropdown-item">Переказ на картку</a>
+                <a href="${pageContext.request.contextPath}/utilitiesPayment" class="dropdown-item">Оплата комунальний послуг</a>
+                <a href="${pageContext.request.contextPath}/finesPayment" class="dropdown-item">Оплата штрафів</a>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

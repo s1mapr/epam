@@ -6,11 +6,29 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/views/css/selectStyle.css" rel="stylesheet">
 </head>
 <body>
-
+<jsp:include page="/views/jsp/header.jsp"/>
+<form action="${pageContext.request.contextPath}/cardTransfer" method="post">
+    Номер картки: <input name="card"><br>
+    Ім'я: <input name="firstName"><br>
+    Прізвище: <input name="lastName"><br>
+    Сума: <input name="amount"><br>
+    <select name="accountId" aria-label="Default select example">
+        <option value="0" selected>Оберіть рахунок</option>
+        <c:forEach var="names" items="${sessionScope.accounts}">
+            <option value="${names.id}">${names.name}</option>
+        </c:forEach>
+    </select>
+    <input type="submit" value="Надіслати">
+</form>
 </body>
 </html>
