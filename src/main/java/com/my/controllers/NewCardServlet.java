@@ -2,7 +2,6 @@ package com.my.controllers;
 
 import com.my.dao.AccountDAO;
 import com.my.dao.CardDAO;
-import com.my.dao.UserDAO;
 import com.my.entities.User;
 
 import javax.servlet.ServletException;
@@ -26,16 +25,15 @@ public class NewCardServlet extends HttpServlet {
         System.out.println("NewCardServlet#doPost");
         String cardNumber = req.getParameter("card");
         HttpSession session = req.getSession();
-        if(CardDAO.checkCardNumber(cardNumber)){
-            User user = (User)session.getAttribute("user");
-            int cardId = CardDAO.createNewCard(cardNumber,
-                    req.getParameter("date"),
-                    req.getParameter("cvv"));
-            AccountDAO.addNewAccount(req.getParameter("name"), cardId, user.getId());
-            resp.sendRedirect("/epamProject/profile");
-        }
-        else{
+        if (!CardDAO.checkCardNumber(cardNumber)) {
             resp.sendRedirect("/epamProject/addNewAccount");
+            return;
         }
+        User user = (User) session.getAttribute("user");
+        int cardId = CardDAO.createNewCard(cardNumber,
+                req.getParameter("date"),
+                req.getParameter("cvv"));
+        AccountDAO.addNewAccount(req.getParameter("name"), cardId, user.getId());
+        resp.sendRedirect("/epamProject/profile");
     }
 }
