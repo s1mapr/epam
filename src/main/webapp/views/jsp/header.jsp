@@ -19,6 +19,7 @@
     </c:when>
     <c:when test="${sessionScope.user.role == 'user'}">
         <a href="${pageContext.request.contextPath}/mainPage">Main Page</a>
+        <a href="${pageContext.request.contextPath}/myReceipts">My receipts</a>
         <a href="${pageContext.request.contextPath}/profile">Profile</a>
         <a href="${pageContext.request.contextPath}/logout">logout</a>
         <div class="nav-item dropdown">
@@ -33,6 +34,12 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     </c:when>
+    <c:when test="${sessionScope.user.role == 'admin'}">
+        <a href="${pageContext.request.contextPath}/mainPage">Main Page</a>
+        <a href = "${pageContext.request.contextPath}/accounts">Accounts</a>
+        <a href="${pageContext.request.contextPath}/logout">logout</a>
+    </c:when>
+
 </c:choose>
 </body>
 </html>

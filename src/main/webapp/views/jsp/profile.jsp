@@ -21,10 +21,13 @@
 <table border="3">
     <tr>
         <th>Название</th>
+        <th>Баланс</th>
     </tr>
     <c:forEach var="names" items="${sessionScope.accounts}">
         <tr>
             <td>${names.name}</td>
+            <td>${names.amount}</td>
+            <td><a href ="${pageContext.request.contextPath}/blockAccount?id=${names.id}">Заблокувати</a></td>
         </tr>
     </c:forEach>
 </table>
