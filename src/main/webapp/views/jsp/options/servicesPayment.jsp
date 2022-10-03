@@ -18,8 +18,17 @@
 <jsp:include page="/views/jsp/header.jsp"/>
 <form action="${pageContext.request.contextPath}/servicesPayment" method="post">
     Номер карти: <input name="card"><br>
+    <c:if test="${requestScope.valid.cardNumber == 'false'}">
+        card number error<br>
+    </c:if>
     Послуга: <input name="name"><br>
+    <c:if test="${requestScope.valid.paymentPurpose == 'false'}">
+        purpose name error<br>
+    </c:if>
     Сума: <input name="amount"><br>
+    <c:if test="${requestScope.valid.paymentAmount == 'false'}">
+        payment amount error<br>
+    </c:if>
     <select name="accountId" aria-label="Default select example">
         <option value="0" selected>Оберіть рахунок</option>
         <c:forEach var="names" items="${sessionScope.accounts}">

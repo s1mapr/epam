@@ -4,6 +4,7 @@ import com.my.dao.AccountDAO;
 import com.my.dao.CardDAO;
 import com.my.dao.ReceiptDAO;
 import com.my.entities.User;
+import com.my.utils.Validation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,9 @@ public class FinesPaymentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("finesPaymentServlet#doGet");
         HttpSession session = req.getSession();
+        Validation validation = (Validation) session.getAttribute("valid");
+        session.removeAttribute("valid");
+        req.setAttribute("valid", validation);
         if(Objects.nonNull(session.getAttribute("notEnoughMoney"))){
             session.removeAttribute("notEnoughMoney");
             req.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
@@ -33,6 +37,14 @@ public class FinesPaymentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("finesPaymentServlet#doPost");
         HttpSession session = req.getSession();
+        Validation validation = new Validation();
+        boolean isValid = validation.finesPaymentValidation(req.getParameter("firstName"), req.getParameter("patronymic"),
+                req.getParameter("lastName"), req.getParameter("number"), req.getParameter("amount"));
+        if(!isValid){
+            session.setAttribute("valid", validation);
+            resp.sendRedirect("/epamProject/finesPayment");
+            return;
+        }
         User user = (User) session.getAttribute("user");
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");

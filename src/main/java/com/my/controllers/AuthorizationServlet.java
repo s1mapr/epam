@@ -4,6 +4,7 @@ import com.my.dao.AccountDAO;
 import com.my.dao.UserDAO;
 import com.my.entities.Account;
 import com.my.entities.User;
+import com.my.utils.Validation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

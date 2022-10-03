@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Objects;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -19,7 +18,9 @@ public class RegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("RegistrationServlet#doGet");
         HttpSession session = req.getSession();
-        session.removeAttribute("nonValid");
+        Validation validation = (Validation) session.getAttribute("valid");
+        session.removeAttribute("valid");
+        req.setAttribute("valid", validation);
         req.getRequestDispatcher("views/jsp/registration.jsp").forward(req, resp);
     }
 
@@ -38,7 +39,6 @@ public class RegistrationServlet extends HttpServlet {
                     req.getParameter("email"),
                     req.getParameter("phoneNumber"));
             if(!isValid){
-                session.setAttribute("nonValid", "login error");
                 session.setAttribute("valid", validation);
                 resp.sendRedirect("/epamProject/registration");
                 return;

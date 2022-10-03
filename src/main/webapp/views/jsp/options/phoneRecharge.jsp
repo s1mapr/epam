@@ -18,7 +18,13 @@
 <jsp:include page="/views/jsp/header.jsp"/>
 <form action="${pageContext.request.contextPath}/phoneRecharge" method="post">
     Номер телефону: <input name="phone"><br>
+    <c:if test="${requestScope.valid.phoneNumber == 'false'}">
+        phone number error<br>
+    </c:if>
     Сума: <input name="amount"><br>
+    <c:if test="${requestScope.valid.paymentAmount == 'false'}">
+        payment amount error<br>
+    </c:if>
     <select name="accountId" aria-label="Default select example">
         <option value="0" selected>Оберіть рахунок</option>
         <c:forEach var="names" items="${sessionScope.accounts}">

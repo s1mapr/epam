@@ -18,11 +18,29 @@
 <jsp:include page="/views/jsp/header.jsp"/>
 <form action="${pageContext.request.contextPath}/utilitiesPayment" method="post">
     Показання лічильника води: <input name="meter_w"><br>
+    <c:if test="${requestScope.valid.meterW == 'false'}">
+        meter error<br>
+    </c:if>
     Сума: <input name="amount_w"><br>
+    <c:if test="${requestScope.valid.amountW == 'false'}">
+        payment amount error<br>
+    </c:if>
     Показання лічильника елктроенергії:<input name="meter_e"><br>
+    <c:if test="${requestScope.valid.meterE == 'false'}">
+        meter error<br>
+    </c:if>
     Сума: <input name="amount_e"><br>
+    <c:if test="${requestScope.valid.amountE == 'false'}">
+        payment amount error<br>
+    </c:if>
     Показання лічильника елктроенергії:<input name="meter_g"><br>
+    <c:if test="${requestScope.valid.meterG == 'false'}">
+        meter error<br>
+    </c:if>
     Сума: <input name="amount_g"><br>
+    <c:if test="${requestScope.valid.amountG == 'false'}">
+        payment amount error<br>
+    </c:if>
     <select name="accountId" aria-label="Default select example">
         <option value="0" selected>Оберіть рахунок</option>
         <c:forEach var="names" items="${sessionScope.accounts}">

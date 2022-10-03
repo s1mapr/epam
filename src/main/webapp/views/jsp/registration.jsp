@@ -16,27 +16,27 @@
 <body>
 <form action="${pageContext.request.contextPath}/registration" method="post">
     login: <input name="login"><br>
-    <c:if test="${sessionScope.valid.login == 'false'}">
+    <c:if test="${requestScope.valid.login == 'false'}">
         login error<br>
     </c:if>
     password: <input name="password" type="password"><br>
-    <c:if test="${sessionScope.valid.password == 'false'}">
+    <c:if test="${requestScope.valid.password == 'false'}">
         password error<br>
     </c:if>
     first name: <input name="firstName"><br>
-    <c:if test="${sessionScope.valid.firstName == 'false'}">
+    <c:if test="${requestScope.valid.firstName == 'false'}">
         error first name<br>
     </c:if>
     last name: <input name="lastName"><br>
-    <c:if test="${sessionScope.valid.lastName == 'false'}">
+    <c:if test="${requestScope.valid.lastName == 'false'}">
         error last name<br>
     </c:if>
     email: <input name="email"><br>
-    <c:if test="${sessionScope.valid.email == 'false'}">
+    <c:if test="${requestScope.valid.email == 'false'}">
         error email<br>
     </c:if>
     phone number: <input name="phoneNumber"><br>
-    <c:if test="${sessionScope.valid.phoneNumber == 'false'}">
+    <c:if test="${requestScope.valid.phoneNumber == 'false'}">
         error phone number<br>
     </c:if>
     <input value="Gay Development!" type ="submit">

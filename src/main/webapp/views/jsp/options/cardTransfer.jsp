@@ -19,9 +19,21 @@
 <jsp:include page="/views/jsp/header.jsp"/>
 <form action="${pageContext.request.contextPath}/cardTransfer" method="post">
     Номер картки: <input name="card"><br>
+    <c:if test="${requestScope.valid.cardNumber == 'false'}">
+        card number error<br>
+    </c:if>
     Ім'я: <input name="firstName"><br>
+    <c:if test="${requestScope.valid.firstName == 'false'}">
+        first name error<br>
+    </c:if>
     Прізвище: <input name="lastName"><br>
+    <c:if test="${requestScope.valid.lastName == 'false'}">
+        last name error<br>
+    </c:if>
     Сума: <input name="amount"><br>
+    <c:if test="${requestScope.valid.paymentAmount == 'false'}">
+        payment amount error<br>
+    </c:if>
     <select name="accountId" aria-label="Default select example">
         <option value="0" selected>Оберіть рахунок</option>
         <c:forEach var="names" items="${sessionScope.accounts}">

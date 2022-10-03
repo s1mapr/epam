@@ -3,6 +3,7 @@ package com.my.controllers;
 import com.my.dao.AccountDAO;
 import com.my.dao.CardDAO;
 import com.my.entities.User;
+import com.my.utils.Validation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,14 +18,27 @@ public class NewCardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("NewCardServlet#doGet");
+        HttpSession session = req.getSession();
+        Validation validation = (Validation) session.getAttribute("valid");
+        session.removeAttribute("valid");
+        req.setAttribute("valid", validation);
+
         req.getRequestDispatcher("/views/jsp/newAccount.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("NewCardServlet#doPost");
-        String cardNumber = req.getParameter("card");
         HttpSession session = req.getSession();
+        Validation validation = new Validation();
+        boolean isValid = validation.newCardValidation(req.getParameter("name"),
+                req.getParameter("card"), req.getParameter("date"), req.getParameter("cvv"));
+        if(!isValid){
+            session.setAttribute("valid", validation);
+            resp.sendRedirect("/epamProject/addNewAccount");
+            return;
+        }
+        String cardNumber = req.getParameter("card");
         if (!CardDAO.checkCardNumber(cardNumber)) {
             resp.sendRedirect("/epamProject/addNewAccount");
             return;

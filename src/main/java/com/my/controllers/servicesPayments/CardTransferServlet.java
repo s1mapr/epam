@@ -4,6 +4,7 @@ import com.my.dao.AccountDAO;
 import com.my.dao.CardDAO;
 import com.my.dao.ReceiptDAO;
 import com.my.entities.User;
+import com.my.utils.Validation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,9 @@ public class CardTransferServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("CardTransferServlet#doGet");
         HttpSession session = req.getSession();
+        Validation validation = (Validation) session.getAttribute("valid");
+        session.removeAttribute("valid");
+        req.setAttribute("valid", validation);
         if(Objects.nonNull(session.getAttribute("notEnoughMoney"))){
             session.removeAttribute("notEnoughMoney");
             req.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
@@ -33,6 +37,14 @@ public class CardTransferServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("CardTransferServlet#doPost");
         HttpSession session = req.getSession();
+        Validation validation = new Validation();
+        boolean isValid = validation.cardTransferValidation(req.getParameter("card"),
+                req.getParameter("firstName"), req.getParameter("lastName"), req.getParameter("amount"));
+        if(!isValid){
+            session.setAttribute("valid", validation);
+            resp.sendRedirect("/epamProject/cardTransfer");
+            return;
+        }
         User user = (User) session.getAttribute("user");
         String cardNumber = req.getParameter("card");
         String firstName = req.getParameter("firstName");
