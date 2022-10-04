@@ -40,6 +40,18 @@
     </tr>
   </c:forEach>
 </table>
+<c:choose>
+  <c:when test="${sessionScope.userPage == 1}">
+    <a href="${pageContext.request.contextPath}/users?pagAction=next" >-></a>
+  </c:when>
+  <c:when test="${(sessionScope.userPage)*5 > requestScope.listLength}">
+    <a href="${pageContext.request.contextPath}/users?pagAction=prev" ><-</a>
+  </c:when>
+  <c:when test="${sessionScope.userPage > 1 && (sessionScope.userPage)*5 <= requestScope.listLength}">
+    <a href="${pageContext.request.contextPath}/users?pagAction=prev" ><-</a>
+    <a href="${pageContext.request.contextPath}/users?pagAction=next" >-></a>
+  </c:when>
+</c:choose>
 
 </body>
 </html>

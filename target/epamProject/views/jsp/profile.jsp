@@ -23,7 +23,7 @@
         <th>Название</th>
         <th>Баланс</th>
     </tr>
-    <c:forEach var="names" items="${sessionScope.accounts}">
+    <c:forEach var="names" items="${requestScope.accounts}">
         <tr>
             <td>${names.name}</td>
             <td>${names.amount}</td>
