@@ -15,9 +15,10 @@ public class ReceiptDAO {
     public static String CREATE_NEW_ENTRY_IN_UTILITIES_SERVICE = "INSERT INTO utilities_service(meter_reading_water, meter_reading_electricity, meter_reading_gas," +
             " amount_water, amount_electricity, amount_gas ) VALUES(?, ?, ?, ?, ?, ?)";
     public static String CREATE_NEW_ENTRY_IN_RECEIPT = "INSERT INTO receipt(name, account_id, date, status, purpose_id, amount, service_id, user_id) VALUES(?,?,?,\"prepared\", ?, ?, ?, ?)";
-    public static String GET_ALL_USERS_RECEIPTS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ?";
+    public static String GET_ALL_USERS_RECEIPTS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? LIMIT 5 OFFSET ?";
     private static final String GET_PAYMENTS_COUNT_OF_ACCOUNT_BY_ID = "SELECT COUNT(account_id) AS count FROM receipt WHERE account_id = ?";
     private static final String GET_PAYMENTS_COUNT_OF_USER_BY_ID = "SELECT COUNT(user_id) AS count FROM receipt WHERE user_id = ?";
+    private static final String GET_COUNT_OF_USERS_RECEIPTS = "SELECT COUNT(user_id) AS count FROM receipt WHERE user_id = ?";
 
     public static int createNewEntryInPhoneService(String phoneNumber) {
         int phoneId = -1;
@@ -133,12 +134,15 @@ public class ReceiptDAO {
         }
     }
 
-    public static List<Receipt> getUsersReceipts(int userId){
+
+
+    public static List<Receipt> getUsersReceiptsWithPagination(int userId, int currentPage){
         List<Receipt> receiptList = new ArrayList<>();
         Receipt receipt = null;
         try(Connection connection = DBManager.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS_RECEIPTS)){
             statement.setInt(1, userId);
+            statement.setInt(2, (currentPage-1)*5);
             try(ResultSet rs = statement.executeQuery()){
                 while(rs.next()){
                     String name = rs.getString("name");
@@ -194,6 +198,20 @@ public class ReceiptDAO {
         return count;
     }
 
+    public static int getCountOfUsersPayments(int userId){
+        int count = -1;
+        try(Connection connection = DBManager.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(GET_COUNT_OF_USERS_RECEIPTS)) {
+            statement.setInt(1,userId);
+            try(ResultSet rs = statement.executeQuery()){
+                rs.next();
+                count = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return count;
+    }
 
 
 }

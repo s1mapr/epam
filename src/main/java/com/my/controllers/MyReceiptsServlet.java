@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @WebServlet("/myReceipts")
 public class MyReceiptsServlet extends HttpServlet {
@@ -20,7 +21,23 @@ public class MyReceiptsServlet extends HttpServlet {
         System.out.println("MyReceiptsServlet#doGet");
         HttpSession session = req.getSession();
         User user = (User)session.getAttribute("user");
-        List<Receipt> list = ReceiptDAO.getUsersReceipts(user.getId());
+        int listLength = ReceiptDAO.getCountOfUsersPayments(user.getId());
+        int pagesCount = listLength%5==0?listLength/5:listLength/5+1;
+        req.setAttribute("pagesCount", pagesCount);
+        Object pageNumberStr = session.getAttribute("recPage");
+        int pageNumber;
+        if(Objects.nonNull(req.getParameter("page"))){
+            pageNumber = Integer.parseInt(req.getParameter("page"));
+            session.removeAttribute("recPage");
+            session.setAttribute("recPage", pageNumber);
+        }else if(Objects.isNull(pageNumberStr)){
+            pageNumber = 1;
+            session.setAttribute("recPage", pageNumber);
+        }
+        else{
+            pageNumber = Integer.parseInt(session.getAttribute("recPage").toString());
+        }
+        List<Receipt> list = ReceiptDAO.getUsersReceiptsWithPagination(user.getId(), pageNumber);
         req.setAttribute("list", list);
         req.getRequestDispatcher("/views/jsp/myReceipts.jsp").forward(req, resp);
     }

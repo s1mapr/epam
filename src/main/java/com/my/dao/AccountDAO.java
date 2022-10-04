@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AccountDAO {
     private static final String CREATE_NEW_ACCOUNT = "INSERT INTO account(card_id, name, user_id, status) VALUES (?, ?, ?, ?)";
-    private static final String GET_USER_ACCOUNTS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ?";
+    private static final String GET_USER_ACCOUNTS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? LIMIT 5 OFFSET ?";
     private static final String BLOCK_USER_ACCOUNT = "UPDATE account SET status = \"blocked\" WHERE id = ?";
     private static final String UNBLOCK_USER_ACCOUNT = "UPDATE account SET status = \"unblocked\" WHERE id = ?";
     private static final String GET_ALL_ACCOUNTS_COUNT = "SELECT COUNT(id) AS count FROM account";
@@ -29,11 +29,12 @@ public class AccountDAO {
         }
     }
 
-    public static List<Account> getUserAccounts(int id) {
+    public static List<Account> getUserAccounts(int id, int currentPage) {
         List<Account> list = new ArrayList<>();
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_USER_ACCOUNTS)) {
             statement.setInt(1, id);
+            statement.setInt(2, (currentPage-1)*5);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     int accountId = rs.getInt("id");

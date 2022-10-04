@@ -31,6 +31,18 @@
         </tr>
     </c:forEach>
 </table>
+<c:choose>
+    <c:when test="${sessionScope.profPage == 1}">
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}" >-></a>
+    </c:when>
+    <c:when test="${sessionScope.profPage == requestScope.pagesCount}">
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}" ><-</a>
+    </c:when>
+    <c:when test="${sessionScope.profPage > 1 && sessionScope.profPage < requestScope.pagesCount}">
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}" ><-</a>
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}" >-></a>
+    </c:when>
+</c:choose>
 <a href = "${pageContext.request.contextPath}/addNewAccount">add new account</a>
 </body>
 </html>

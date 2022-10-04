@@ -1,8 +1,6 @@
 package com.my.controllers;
 
-import com.my.dao.AccountDAO;
 import com.my.dao.UserDAO;
-import com.my.entities.Account;
 import com.my.entities.User;
 
 import javax.servlet.ServletException;
@@ -23,37 +21,30 @@ public class UsersServlet extends HttpServlet {
         System.out.println("UsersServlet#doGet");
         HttpSession session = req.getSession();
         int listLength = UserDAO.getAllUsersCount();
-        req.setAttribute("listLength", listLength);
         String action = req.getParameter("action");
-        String pagAction = req.getParameter("pagAction");
         if (Objects.nonNull(action) && action.equals("block")) {
             UserDAO.blockUser(Integer.parseInt(req.getParameter("id")));
         } else if (Objects.nonNull(action) && action.equals("unblock")) {
             UserDAO.unblockUser(Integer.parseInt(req.getParameter("id")));
         }
         Object pageNumberStr = session.getAttribute("userPage");
-        int pageNumber = 0;
-        if (Objects.nonNull(pageNumberStr) && Objects.nonNull(pagAction)) {
-            if (pagAction.equals("next")) {
-                pageNumber = (Integer.parseInt(session.getAttribute("userPage").toString()));
-                session.removeAttribute("userPage");
-                session.setAttribute("userPage", ++pageNumber);
-            } else if (pagAction.equals("prev")) {
-                pageNumber = (Integer.parseInt(session.getAttribute("userPage").toString()));
-                session.removeAttribute("userPage");
-                session.setAttribute("userPage", --pageNumber);
-            }
-
-        } else if (Objects.isNull(pageNumberStr)) {
+        int pageNumber;
+        if(Objects.nonNull(req.getParameter("page"))){
+            pageNumber = Integer.parseInt(req.getParameter("page"));
+            session.removeAttribute("userPage");
+            session.setAttribute("userPage", pageNumber);
+        }else if(Objects.isNull(pageNumberStr)){
             pageNumber = 1;
             session.setAttribute("userPage", pageNumber);
-        } else {
-            pageNumber = (Integer.parseInt(session.getAttribute("userPage").toString()));
         }
-
-        List<User> accounts = UserDAO.usersPagination(pageNumber);
-
-        req.setAttribute("list", accounts);
+        else{
+            pageNumber = Integer.parseInt(session.getAttribute("userPage").toString());
+        }
+        List<User> users = UserDAO.usersPagination(pageNumber);
+        int pagesCount = listLength%5==0?listLength/5:listLength/5+1;
+        req.setAttribute("pagesCount", pagesCount);
+        req.setAttribute("list", users);
         req.getRequestDispatcher("/views/jsp/users.jsp").forward(req, resp);
     }
+
 }

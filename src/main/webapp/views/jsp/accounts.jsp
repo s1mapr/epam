@@ -38,14 +38,14 @@
 </table>
 <c:choose>
   <c:when test="${sessionScope.accPage == 1}">
-    <a href="${pageContext.request.contextPath}/accounts?pagAction=next" >-></a>
+    <a href="${pageContext.request.contextPath}/accounts?page=${sessionScope.accPage+1}" >-></a>
   </c:when>
-  <c:when test="${(sessionScope.accPage)*5 > requestScope.listLength}">
-    <a href="${pageContext.request.contextPath}/accounts?pagAction=prev" ><-</a>
+  <c:when test="${sessionScope.accPage == requestScope.pagesCount}">
+    <a href="${pageContext.request.contextPath}/accounts?page=${sessionScope.accPage-1}" ><-</a>
   </c:when>
-  <c:when test="${sessionScope.accPage > 1 && (sessionScope.accPage)*5 <= requestScope.listLength}">
-    <a href="${pageContext.request.contextPath}/accounts?pagAction=prev" ><-</a>
-    <a href="${pageContext.request.contextPath}/accounts?pagAction=next" >-></a>
+  <c:when test="${sessionScope.accPage > 1 && sessionScope.accPage < requestScope.pagesCount}">
+    <a href="${pageContext.request.contextPath}/accounts?page=${sessionScope.accPage-1}" ><-</a>
+    <a href="${pageContext.request.contextPath}/accounts?page=${sessionScope.accPage+1}" >-></a>
   </c:when>
 </c:choose>
 
