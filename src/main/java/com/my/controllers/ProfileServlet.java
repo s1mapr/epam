@@ -23,7 +23,7 @@ public class ProfileServlet extends HttpServlet {
         req.removeAttribute("accounts");
         List<Account> list = AccountDAO.getUserAccounts(user.getId());
         if(!list.isEmpty()){
-            session.setAttribute("accounts", list);
+            req.setAttribute("accounts", list);
         }
         req.getRequestDispatcher("/views/jsp/profile.jsp").forward(req, resp);
     }

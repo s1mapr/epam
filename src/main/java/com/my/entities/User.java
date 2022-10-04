@@ -11,6 +11,8 @@ public class User {
     private String phoneNumber;
     private String role;
     private String status;
+    private int accountsCount;
+    private int paymentsCount;
 
     public static class Builder{
         private User newUser;
@@ -49,6 +51,14 @@ public class User {
         }
         public Builder role(String role){
             newUser.role = role;
+            return this;
+        }
+        public Builder accountsCount(int accountsCount){
+            newUser.accountsCount = accountsCount;
+            return this;
+        }
+        public Builder paymentsCount(int paymentsCount){
+            newUser.paymentsCount = paymentsCount;
             return this;
         }
         public Builder status(String status){
@@ -130,6 +140,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getAccountsCount() {
+        return accountsCount;
+    }
+
+    public void setAccountsCount(int accountsCount) {
+        this.accountsCount = accountsCount;
+    }
+
+    public int getPaymentsCount() {
+        return paymentsCount;
+    }
+
+    public void setPaymentsCount(int paymentsCount) {
+        this.paymentsCount = paymentsCount;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.my.entities;
 
+import com.my.controllers.servicesPayments.PhoneRechargeServlet;
+
 import java.util.Date;
 
 public class Account {
@@ -7,6 +9,10 @@ public class Account {
     private int id;
     private Double amount;
     private String status;
+    private String userLogin;
+    private String userFirstName;
+    private String userLastName;
+    private int paymentsCount;
     public static class Builder {
         private Account newAccount;
 
@@ -28,6 +34,22 @@ public class Account {
         }
         public Account.Builder status(String status) {
             newAccount.status = status;
+            return this;
+        }
+        public Account.Builder userLogin(String userLogin) {
+            newAccount.userLogin = userLogin;
+            return this;
+        }
+        public Account.Builder userFirstName(String userFirstName) {
+            newAccount.userFirstName = userFirstName;
+            return this;
+        }
+        public Account.Builder userLastName(String userLastName) {
+            newAccount.userLastName = userLastName;
+            return this;
+        }
+        public Account.Builder paymentsCount(int paymentsCount) {
+            newAccount.paymentsCount = paymentsCount;
             return this;
         }
         public Account build() {
@@ -66,5 +88,37 @@ public class Account {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
+    }
+
+    public int getPaymentsCount() {
+        return paymentsCount;
+    }
+
+    public void setPaymentsCount(int paymentsCount) {
+        this.paymentsCount = paymentsCount;
     }
 }

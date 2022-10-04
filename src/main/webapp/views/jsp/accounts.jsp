@@ -17,16 +17,38 @@
 <table border="3">
   <tr>
     <th>Назва</th>
-    <th></th>
+    <th>Логін</th>
+    <th>Ім'я</th>
+    <th>Прізвище</th>
+    <th>Кількість операцій</th>
+    <th>Статус</th>
   </tr>
   <c:forEach var="accounts" items="${requestScope.list}">
     <tr>
       <td>${accounts.name}</td>
+      <td>${accounts.userLogin}</td>
+      <td>${accounts.userFirstName}</td>
+      <td>${accounts.userLastName}</td>
+      <td>${accounts.paymentsCount}</td>
+      <td>${accounts.status}</td>
       <td><a href="${pageContext.request.contextPath}/accounts?action=block&id=${accounts.id}">Заблокувати</a></td>
       <td><a href="${pageContext.request.contextPath}/accounts?action=unblock&id=${accounts.id}">Розблокувати</a></td>
     </tr>
   </c:forEach>
 </table>
+<c:choose>
+  <c:when test="${sessionScope.accPage == 1}">
+    <a href="${pageContext.request.contextPath}/accounts?pagAction=next" >-></a>
+  </c:when>
+  <c:when test="${(sessionScope.accPage)*5 > requestScope.listLength}">
+    <a href="${pageContext.request.contextPath}/accounts?pagAction=prev" ><-</a>
+  </c:when>
+  <c:when test="${sessionScope.accPage > 1 && (sessionScope.accPage)*5 <= requestScope.listLength}">
+    <a href="${pageContext.request.contextPath}/accounts?pagAction=prev" ><-</a>
+    <a href="${pageContext.request.contextPath}/accounts?pagAction=next" >-></a>
+  </c:when>
+</c:choose>
+
 
 </body>
 </html>

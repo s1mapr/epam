@@ -3,13 +3,16 @@ package com.my.dao;
 import com.my.entities.User;
 
 import java.sql.*;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
     private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user JOIN role ON role.id = user.role_id WHERE login = ? AND password = ?";
     private static final String CREATE_NEW_USER = "INSERT INTO user (login, password, first_name, last_name, email, phone_number, role_id, status) VALUES (?, ?, ?, ?, ?, ?, 1, \"unblocked\");";
     private static final String GET_USER_BY_LOGIN = "SELECT * FROM user WHERE login = ?";
-
+    private static final String GET_ALL_USERS = "SELECT * FROM user WHERE role_id = '1'";
+    private static final String BLOCK_USER = "UPDATE user SET status = \"blocked\" WHERE id = ?";
+    private static final String UNBLOCK_USER = "UPDATE user SET status = \"unblocked\" WHERE id = ?";
     public static User getUserByLoginAndPassword(String login, String password) {
         User user = null;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -73,4 +76,59 @@ public class UserDAO {
         }
         return userLogin == null;
     }
+
+    public static List<User> getAllUsers(){
+        List<User> list = new ArrayList<>();
+        User user = null;
+        try(Connection connection = DBManager.getInstance().getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(GET_ALL_USERS)){
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int accountsCount = AccountDAO.getCountOfUsersAccounts(id);
+                int paymentsCount = ReceiptDAO.getPaymentsCountOfUser(id);
+                String login = rs.getString("login");
+                String firsName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                String email = rs.getString("email");
+                String phoneNumber = rs.getString("phone_number");
+                String status = rs.getString("status");
+                user = new User.Builder()
+                        .id(id)
+                        .login(login)
+                        .firstName(firsName)
+                        .lastName(lastName)
+                        .email(email)
+                        .phoneNumber(phoneNumber)
+                        .status(status)
+                        .accountsCount(accountsCount)
+                        .paymentsCount(paymentsCount)
+                        .build();
+                list.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+    public static void blockUser(int userId) {
+        try (Connection connection = DBManager.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(BLOCK_USER)) {
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void unblockUser(int userId){
+        try (Connection connection = DBManager.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(UNBLOCK_USER)) {
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
