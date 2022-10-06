@@ -82,6 +82,14 @@ public class Validation {
         return this.meterW && this.meterE && this.meterG && this.amountW && this.amountE && this.amountG;
     }
 
+    public boolean updateProfileValidation(String firstName, String lastName, String email, String phoneNumber){
+        this.firstName = checkFirstName(firstName);
+        this.lastName = checkLastName(lastName);
+        this.email = checkEmail(email);
+        this.phoneNumber = checkPhoneNumber(phoneNumber);
+        return this.firstName && this.lastName && this.email && this.phoneNumber;
+    }
+
     private static boolean checkLogin(String login) {
         return login.matches("^[a-zA-Z0-9._-]{3,18}$");
     }

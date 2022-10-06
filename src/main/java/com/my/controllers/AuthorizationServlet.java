@@ -36,9 +36,11 @@ public class AuthorizationServlet extends HttpServlet {
             resp.sendRedirect("/epamProject/authorization");
             return;
         }
+
         List<Account> list = AccountDAO.getUserAccounts(user.getId(),1);
         if(!list.isEmpty()){
             session.setAttribute("accounts", list);
+
         }
         session.setAttribute("user", user);
         resp.sendRedirect("/epamProject/mainPage");

@@ -14,6 +14,7 @@ public class UserDAO {
     private static final String BLOCK_USER = "UPDATE user SET status = \"blocked\" WHERE id = ?";
     private static final String UNBLOCK_USER = "UPDATE user SET status = \"unblocked\" WHERE id = ?";
     private static final String GET_ALL_USERS_COUNT = "SELECT COUNT(id) AS count FROM user WHERE role_id = '1'";
+    private static final String UPDATE_USER_DATA = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE id = ?";
     public static User getUserByLoginAndPassword(String login, String password) {
         User user = null;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -146,6 +147,20 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
         return list;
+    }
+
+    public static void updateUserData(String firstName, String lastName, String email, String phoneNumber, int userId){
+        try(Connection connection = DBManager.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(UPDATE_USER_DATA)){
+        statement.setString(1, firstName);
+        statement.setString(2, lastName);
+        statement.setString(3, email);
+        statement.setString(4, phoneNumber);
+        statement.setInt(5, userId);
+        statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

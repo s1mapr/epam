@@ -18,6 +18,7 @@
 <p>Last name: ${sessionScope.user.lastName}</p>
 <p>Email: ${sessionScope.user.email}</p>
 <p>Phone number: ${sessionScope.user.phoneNumber}</p>
+<a href="${pageContext.request.contextPath}/editProfile">Edit profile</a><br>
 <table border="3">
     <tr>
         <th>Название</th>

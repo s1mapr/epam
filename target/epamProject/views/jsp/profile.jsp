@@ -18,6 +18,7 @@
 <p>Last name: ${sessionScope.user.lastName}</p>
 <p>Email: ${sessionScope.user.email}</p>
 <p>Phone number: ${sessionScope.user.phoneNumber}</p>
+<a href="${pageContext.request.contextPath}/editProfile">Edit profile</a><br>
 <table border="3">
     <tr>
         <th>Название</th>
@@ -31,6 +32,18 @@
         </tr>
     </c:forEach>
 </table>
+<c:choose>
+    <c:when test="${sessionScope.profPage == 1}">
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}" >-></a>
+    </c:when>
+    <c:when test="${sessionScope.profPage == requestScope.pagesCount}">
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}" ><-</a>
+    </c:when>
+    <c:when test="${sessionScope.profPage > 1 && sessionScope.profPage < requestScope.pagesCount}">
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}" ><-</a>
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}" >-></a>
+    </c:when>
+</c:choose>
 <a href = "${pageContext.request.contextPath}/addNewAccount">add new account</a>
 </body>
 </html>
