@@ -136,11 +136,11 @@ public class ReceiptDAO {
 
 
 
-    public static List<Receipt> getUsersReceiptsWithPagination(int userId, int currentPage){
+    public static List<Receipt> getUsersReceiptsWithPagination(int userId, int currentPage, String query){
         List<Receipt> receiptList = new ArrayList<>();
         Receipt receipt = null;
         try(Connection connection = DBManager.getInstance().getConnection();
-        PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS_RECEIPTS)){
+        PreparedStatement statement = connection.prepareStatement(query)){
             statement.setInt(1, userId);
             statement.setInt(2, (currentPage-1)*5);
             try(ResultSet rs = statement.executeQuery()){
