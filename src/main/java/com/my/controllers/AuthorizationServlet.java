@@ -37,12 +37,16 @@ public class AuthorizationServlet extends HttpServlet {
             return;
         }
 
-        List<Account> list = AccountDAO.getUserAccounts(user.getId(),1);
+        List<Account> list = AccountDAO.getUserAccounts(user.getId(),1, "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? LIMIT 5 OFFSET ?");
         if(!list.isEmpty()){
             session.setAttribute("accounts", list);
 
         }
         session.setAttribute("user", user);
+        if(user.getRole().equals("admin")){
+            resp.sendRedirect("/epamProject/accounts");
+            return;
+        }
         resp.sendRedirect("/epamProject/mainPage");
 
     }

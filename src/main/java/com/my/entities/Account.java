@@ -13,6 +13,7 @@ public class Account {
     private String userFirstName;
     private String userLastName;
     private int paymentsCount;
+    private String cardNumber;
     public static class Builder {
         private Account newAccount;
 
@@ -52,11 +53,22 @@ public class Account {
             newAccount.paymentsCount = paymentsCount;
             return this;
         }
+        public Account.Builder cardNumber(String cardNumber) {
+            newAccount.cardNumber = cardNumber;
+            return this;
+        }
         public Account build() {
             return newAccount;
         }
     }
 
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
 
     public String getStatus() {
         return status;

@@ -21,16 +21,22 @@
 <a href="${pageContext.request.contextPath}/editProfile">Edit profile</a><br>
 <table border="3">
     <tr>
-        <th>Название</th>
-        <th>Баланс</th>
+        <th><a href="${pageContext.request.contextPath}/profile?sortAction=sortName&sortId=${sessionScope.profileSortNameId}&page=1">Название</a></th>
+        <th><a href="${pageContext.request.contextPath}/profile?sortAction=sortCardNumber&sortId=${sessionScope.profileSortCardNumberId}&page=1">Номер картки</a></th>
+        <th><a href="${pageContext.request.contextPath}/profile?sortAction=sortAmount&sortId=${sessionScope.profileSortAmountId}&page=1">Баланс</a></th>
+        <th><a href="${pageContext.request.contextPath}/profile?sortAction=sortStatus&sortId=${sessionScope.profileSortStatusId}&page=1">Статус</a></th>
     </tr>
     <c:forEach var="names" items="${requestScope.accounts}">
-        <tr>
+    <tr>
+
             <td>${names.name}</td>
+            <td>${names.cardNumber}</td>
             <td>${names.amount}</td>
-            <td><a href ="${pageContext.request.contextPath}/blockAccount?id=${names.id}">Заблокувати</a></td>
-        </tr>
+            <td>${names.status}</td>
+        <td><a href ="${pageContext.request.contextPath}/profile?action=block&id=${names.id}">Заблокувати</a></td>
+    </tr>
     </c:forEach>
+
 </table>
 <c:choose>
     <c:when test="${sessionScope.profPage == 1}">

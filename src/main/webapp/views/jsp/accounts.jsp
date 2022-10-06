@@ -16,12 +16,12 @@
 <jsp:include page="/views/jsp/header.jsp"/>
 <table border="3">
   <tr>
-    <th>Назва</th>
-    <th>Логін</th>
-    <th>Ім'я</th>
-    <th>Прізвище</th>
+    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortAccountName&sortId=${sessionScope.accountsSortAccountNameId}&page=1">Назва</a></th>
+    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortLogin&sortId=${sessionScope.accountsSortLoginId}&page=1">Логін</a></th>
+    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortName&sortId=${sessionScope.accountsSortUserName}&page=1">Ім'я</a></th>
+    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortLastName&sortId=${sessionScope.accountsSortUserLastName}&page=1">Прізвище</a></th>
     <th>Кількість операцій</th>
-    <th>Статус</th>
+    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortStatus&sortId=${sessionScope.accountsSortStatusId}&page=1">Статус</a></th>
   </tr>
   <c:forEach var="accounts" items="${requestScope.list}">
     <tr>

@@ -10,7 +10,6 @@ public class UserDAO {
     private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user JOIN role ON role.id = user.role_id WHERE login = ? AND password = ?";
     private static final String CREATE_NEW_USER = "INSERT INTO user (login, password, first_name, last_name, email, phone_number, role_id, status) VALUES (?, ?, ?, ?, ?, ?, 1, \"unblocked\");";
     private static final String GET_USER_BY_LOGIN = "SELECT * FROM user WHERE login = ?";
-    private static final String SELECT_FIVE_ELEMENT = "SELECT * FROM user WHERE role_id = '1' LIMIT 5 OFFSET ?";
     private static final String BLOCK_USER = "UPDATE user SET status = \"blocked\" WHERE id = ?";
     private static final String UNBLOCK_USER = "UPDATE user SET status = \"unblocked\" WHERE id = ?";
     private static final String GET_ALL_USERS_COUNT = "SELECT COUNT(id) AS count FROM user WHERE role_id = '1'";
@@ -112,16 +111,15 @@ public class UserDAO {
     }
 
 
-    public static List<User> usersPagination(int currentPage){
+    public static List<User> usersPagination(int currentPage, String query){
         List<User> list = new ArrayList<>();
         User user = null;
         try(Connection connection = DBManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_FIVE_ELEMENT)){
+            PreparedStatement statement = connection.prepareStatement(query)){
             statement.setInt(1, (currentPage-1)*5);
             try(ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("id");
-                    int accountsCount = AccountDAO.getCountOfUsersAccounts(id);
                     int paymentsCount = ReceiptDAO.getPaymentsCountOfUser(id);
                     String login = rs.getString("login");
                     String firsName = rs.getString("first_name");
@@ -137,7 +135,6 @@ public class UserDAO {
                             .email(email)
                             .phoneNumber(phoneNumber)
                             .status(status)
-                            .accountsCount(accountsCount)
                             .paymentsCount(paymentsCount)
                             .build();
                     list.add(user);

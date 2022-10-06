@@ -35,7 +35,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     </c:when>
     <c:when test="${sessionScope.user.role == 'admin'}">
-        <a href="${pageContext.request.contextPath}/mainPage">Main Page</a>
         <a href = "${pageContext.request.contextPath}/accounts">Accounts</a>
         <a href = "${pageContext.request.contextPath}/users">Users</a>
         <a href="${pageContext.request.contextPath}/logout">logout</a>

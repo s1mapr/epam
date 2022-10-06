@@ -8,13 +8,11 @@ import java.util.List;
 
 public class AccountDAO {
     private static final String CREATE_NEW_ACCOUNT = "INSERT INTO account(card_id, name, user_id, status) VALUES (?, ?, ?, ?)";
-    private static final String GET_USER_ACCOUNTS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? LIMIT 5 OFFSET ?";
     private static final String BLOCK_USER_ACCOUNT = "UPDATE account SET status = \"blocked\" WHERE id = ?";
     private static final String UNBLOCK_USER_ACCOUNT = "UPDATE account SET status = \"unblocked\" WHERE id = ?";
     private static final String GET_ALL_ACCOUNTS_COUNT = "SELECT COUNT(id) AS count FROM account";
     private static final String GET_CARD_ID = "SELECT * FROM account WHERE id = ?";
     private static final String GET_COUNT_OF_USERS_ACCOUNTS = "SELECT COUNT(user_id) AS count FROM account WHERE user_id = ?";
-    private static final String SELECT_FIVE_ELEMENT = "SELECT * FROM account JOIN user ON user.id = account.user_id LIMIT 5 OFFSET ?";
 
     public static void addNewAccount(String name, int cardId, int userId) {
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -29,21 +27,23 @@ public class AccountDAO {
         }
     }
 
-    public static List<Account> getUserAccounts(int id, int currentPage) {
+    public static List<Account> getUserAccounts(int id, int currentPage, String query) {
         List<Account> list = new ArrayList<>();
         try (Connection connection = DBManager.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_USER_ACCOUNTS)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.setInt(2, (currentPage-1)*5);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     int accountId = rs.getInt("id");
                     String name = rs.getString("name");
+                    String cardNumber = rs.getString("card.number");
                     Double amount = rs.getDouble("card.amount");
                     String status = rs.getString("status");
                     Account account = new Account.Builder()
                             .id(accountId)
                             .name(name)
+                            .cardNumber(cardNumber)
                             .amount(amount)
                             .status(status)
                             .build();
@@ -121,11 +121,11 @@ public class AccountDAO {
         return count;
     }
 
-    public static List<Account> accountPagination(int currentPage){
+    public static List<Account> accountPagination(int currentPage, String query){
         List<Account> accounts = new ArrayList<>();
         Account account = null;
         try (Connection connection = DBManager.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_FIVE_ELEMENT)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, (currentPage-1)*5);
             try(ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {

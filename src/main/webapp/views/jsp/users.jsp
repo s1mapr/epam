@@ -16,14 +16,13 @@
 <jsp:include page="/views/jsp/header.jsp"/>
 <table border="3">
   <tr>
-    <th>Логін</th>
-    <th>Ім'я</th>
-    <th>Прізвище</th>
-    <th>Пошта</th>
-    <th>Номер телефону</th>
-    <th>Статус</th>
-    <th>Кількість акаунтів</th>
+    <th><a href="${pageContext.request.contextPath}/users?sortAction=sortLogin&sortId=${sessionScope.usersSortLoginId}&page=1">Логін</a></th>
+    <th><a href="${pageContext.request.contextPath}/users?sortAction=sortName&sortId=${sessionScope.usersSortUserName}&page=1">Ім'я</a></th>
+    <th><a href="${pageContext.request.contextPath}/users?sortAction=sortLastName&sortId=${sessionScope.usersSortUserLastName}&page=1">Прізвище</a></th>
+    <th><a href="${pageContext.request.contextPath}/users?sortAction=sortEmail&sortId=${sessionScope.usersSortEmailId}&page=1">Пошта</a></th>
+    <th><a href="${pageContext.request.contextPath}/users?sortAction=sortPhoneNumber&sortId=${sessionScope.usersSortPhoneNumberId}&page=1">Номер телефону</a></th>
     <th>Кількість платежів</th>
+    <th><a href="${pageContext.request.contextPath}/users?sortAction=sortStatus&sortId=${sessionScope.usersSortStatusId}&page=1">Статус</a></th>
   </tr>
   <c:forEach var="users" items="${requestScope.list}">
     <tr>
@@ -32,9 +31,8 @@
       <td>${users.lastName}</td>
       <td>${users.email}</td>
       <td>${users.phoneNumber}</td>
-      <td>${users.status}</td>
-      <td>${users.accountsCount}</td>
       <td>${users.paymentsCount}</td>
+      <td>${users.status}</td>
       <td><a href="${pageContext.request.contextPath}/users?action=block&id=${users.id}">Заблокувати</a></td>
       <td><a href="${pageContext.request.contextPath}/users?action=unblock&id=${users.id}">Розблокувати</a></td>
     </tr>
