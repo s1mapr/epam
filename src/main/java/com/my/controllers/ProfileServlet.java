@@ -1,6 +1,7 @@
 package com.my.controllers;
 
 import com.my.dao.AccountDAO;
+import com.my.dao.RequestDAO;
 import com.my.dao.UserDAO;
 import com.my.entities.Account;
 import com.my.entities.User;
@@ -40,6 +41,9 @@ public class ProfileServlet extends HttpServlet {
         String action = req.getParameter("action");
         if (Objects.nonNull(action) && action.equals("block")) {
             AccountDAO.blockAccount(Integer.parseInt(req.getParameter("id")));
+        }else if(Objects.nonNull(action) && action.equals("unblock")){
+            AccountDAO.setPendingStatus(Integer.parseInt(req.getParameter("id")));
+            RequestDAO.createNewRequest(Integer.parseInt(req.getParameter("id")));
         }
         if(Objects.nonNull(session.getAttribute("profileQuery"))&&Objects.isNull(req.getParameter("sortAction"))){
             list = getAccounts(req, session,user ,session.getAttribute("profileQuery").toString());
@@ -47,7 +51,11 @@ public class ProfileServlet extends HttpServlet {
             String query = getQuery(req);
             list = getAccounts(req, session, user ,query);
         }
-        req.setAttribute("accounts", list);
+        List<Account> accountList = AccountDAO.getUserAccountsWithoutPagination(user.getId());
+        System.out.println(accountList);
+        session.removeAttribute("accounts");
+        session.setAttribute("accounts", accountList);
+        req.setAttribute("accountsPag", list);
         req.getRequestDispatcher("/views/jsp/profile.jsp").forward(req, resp);
     }
 
@@ -55,9 +63,9 @@ public class ProfileServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String action = req.getParameter("sortAction");
         if(Objects.nonNull(action)){
+            int profileSortNameId = Integer.parseInt(req.getParameter("sortId"));
             switch (action){
                 case "sortName":
-                    int profileSortNameId = Integer.parseInt(req.getParameter("sortId"));
                     if(profileSortNameId ==1) {
                         session.removeAttribute("profileSortNameId");
                         session.setAttribute("profileSortNameId", 2);

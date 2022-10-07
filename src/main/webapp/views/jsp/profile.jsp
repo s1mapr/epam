@@ -21,35 +21,50 @@
 <a href="${pageContext.request.contextPath}/editProfile">Edit profile</a><br>
 <table border="3">
     <tr>
-        <th><a href="${pageContext.request.contextPath}/profile?sortAction=sortName&sortId=${sessionScope.profileSortNameId}&page=1">Название</a></th>
-        <th><a href="${pageContext.request.contextPath}/profile?sortAction=sortCardNumber&sortId=${sessionScope.profileSortCardNumberId}&page=1">Номер картки</a></th>
-        <th><a href="${pageContext.request.contextPath}/profile?sortAction=sortAmount&sortId=${sessionScope.profileSortAmountId}&page=1">Баланс</a></th>
-        <th><a href="${pageContext.request.contextPath}/profile?sortAction=sortStatus&sortId=${sessionScope.profileSortStatusId}&page=1">Статус</a></th>
+        <th>
+            <a href="${pageContext.request.contextPath}/profile?sortAction=sortName&sortId=${sessionScope.profileSortNameId}&page=1">Название</a>
+        </th>
+        <th>
+            <a href="${pageContext.request.contextPath}/profile?sortAction=sortCardNumber&sortId=${sessionScope.profileSortCardNumberId}&page=1">Номер
+                картки</a></th>
+        <th>
+            <a href="${pageContext.request.contextPath}/profile?sortAction=sortAmount&sortId=${sessionScope.profileSortAmountId}&page=1">Баланс</a>
+        </th>
+        <th>
+            <a href="${pageContext.request.contextPath}/profile?sortAction=sortStatus&sortId=${sessionScope.profileSortStatusId}&page=1">Статус</a>
+        </th>
     </tr>
-    <c:forEach var="names" items="${requestScope.accounts}">
-    <tr>
+    <c:forEach var="names" items="${requestScope.accountsPag}">
+        <tr>
 
             <td>${names.name}</td>
             <td>${names.cardNumber}</td>
             <td>${names.amount}</td>
             <td>${names.status}</td>
-        <td><a href ="${pageContext.request.contextPath}/profile?action=block&id=${names.id}">Заблокувати</a></td>
-    </tr>
+            <c:choose>
+            <c:when test="${names.status == 'unblocked'}">
+                <td><a href="${pageContext.request.contextPath}/profile?action=block&id=${names.id}">Заблокувати</a></td>
+            </c:when>
+            <c:when test="${names.status == 'blocked'}">
+                <td><a href="${pageContext.request.contextPath}/profile?action=unblock&id=${names.id}">Надіслати запит на розблокування</a></td>
+            </c:when>
+            </c:choose>
+        </tr>
     </c:forEach>
 
 </table>
 <c:choose>
-    <c:when test="${sessionScope.profPage == 1}">
-        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}" >-></a>
+    <c:when test="${sessionScope.profPage == 1 && requestScope.pagesCount !=1}">
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}">-></a>
     </c:when>
-    <c:when test="${sessionScope.profPage == requestScope.pagesCount}">
-        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}" ><-</a>
+    <c:when test="${sessionScope.profPage == requestScope.pagesCount && sessionScope.profPage != 1}">
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}"><-</a>
     </c:when>
     <c:when test="${sessionScope.profPage > 1 && sessionScope.profPage < requestScope.pagesCount}">
-        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}" ><-</a>
-        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}" >-></a>
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}"><-</a>
+        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}">-></a>
     </c:when>
 </c:choose>
-<a href = "${pageContext.request.contextPath}/addNewAccount">add new account</a>
+<a href="${pageContext.request.contextPath}/addNewAccount">add new account</a>
 </body>
 </html>

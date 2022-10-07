@@ -116,7 +116,7 @@ public class UserDAO {
         User user = null;
         try(Connection connection = DBManager.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query)){
-            statement.setInt(1, (currentPage-1)*5);
+            statement.setInt(1, (currentPage-1)*10);
             try(ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("id");

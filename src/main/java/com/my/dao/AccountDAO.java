@@ -13,7 +13,7 @@ public class AccountDAO {
     private static final String GET_ALL_ACCOUNTS_COUNT = "SELECT COUNT(id) AS count FROM account";
     private static final String GET_CARD_ID = "SELECT * FROM account WHERE id = ?";
     private static final String GET_COUNT_OF_USERS_ACCOUNTS = "SELECT COUNT(user_id) AS count FROM account WHERE user_id = ?";
-
+    private static final String CHANGE_STATUS_TO_PENDING = "UPDATE account SET status = \"pending\" WHERE id = ?";
     public static void addNewAccount(String name, int cardId, int userId) {
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(CREATE_NEW_ACCOUNT)) {
@@ -56,6 +56,34 @@ public class AccountDAO {
         return list;
     }
 
+
+    public static List<Account> getUserAccountsWithoutPagination(int id) {
+        List<Account> list = new ArrayList<>();
+        try (Connection connection = DBManager.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ?")) {
+            statement.setInt(1, id);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    int accountId = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String cardNumber = rs.getString("card.number");
+                    Double amount = rs.getDouble("card.amount");
+                    String status = rs.getString("status");
+                    Account account = new Account.Builder()
+                            .id(accountId)
+                            .name(name)
+                            .cardNumber(cardNumber)
+                            .amount(amount)
+                            .status(status)
+                            .build();
+                    list.add(account);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     public static void blockAccount(int accountId) {
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(BLOCK_USER_ACCOUNT)) {
@@ -76,6 +104,15 @@ public class AccountDAO {
         }
     }
 
+    public static void setPendingStatus(int accountId){
+        try (Connection connection = DBManager.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(CHANGE_STATUS_TO_PENDING)) {
+            statement.setInt(1, accountId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     public static int getAllAccountsCount() {
@@ -126,7 +163,7 @@ public class AccountDAO {
         Account account = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, (currentPage-1)*5);
+            statement.setInt(1, (currentPage-1)*10);
             try(ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("id");

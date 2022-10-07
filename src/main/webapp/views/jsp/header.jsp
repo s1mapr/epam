@@ -37,6 +37,7 @@
     <c:when test="${sessionScope.user.role == 'admin'}">
         <a href = "${pageContext.request.contextPath}/accounts">Accounts</a>
         <a href = "${pageContext.request.contextPath}/users">Users</a>
+        <a href = "${pageContext.request.contextPath}/requests">Requests</a>
         <a href="${pageContext.request.contextPath}/logout">logout</a>
     </c:when>
 

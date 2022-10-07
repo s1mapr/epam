@@ -2,6 +2,7 @@ package com.my.dao;
 
 import com.my.entities.Receipt;
 
+import javax.servlet.annotation.WebServlet;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ public class ReceiptDAO {
     public static String CREATE_NEW_ENTRY_IN_RECEIPT = "INSERT INTO receipt(name, account_id, date, status, purpose_id, amount, service_id, user_id) VALUES(?,?,?,\"prepared\", ?, ?, ?, ?)";
     private static final String GET_PAYMENTS_COUNT_OF_ACCOUNT_BY_ID = "SELECT COUNT(account_id) AS count FROM receipt WHERE account_id = ?";
     private static final String GET_PAYMENTS_COUNT_OF_USER_BY_ID = "SELECT COUNT(user_id) AS count FROM receipt WHERE user_id = ?";
-    private static final String GET_COUNT_OF_USERS_RECEIPTS = "SELECT COUNT(user_id) AS count FROM receipt WHERE user_id = ?";
-
+    private static final String GET_ALL_PAYMENTS = "SELECT * FROM receipt";
+    private static final String UPDATE_STATUS_BY_ID = "UPDATE receipt SET status = \"sent\" WHERE id = ?";
     public static int createNewEntryInPhoneService(String phoneNumber) {
         int phoneId = -1;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -141,7 +142,7 @@ public class ReceiptDAO {
         try(Connection connection = DBManager.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(query)){
             statement.setInt(1, userId);
-            statement.setInt(2, (currentPage-1)*5);
+            statement.setInt(2, (currentPage-1)*10);
             try(ResultSet rs = statement.executeQuery()){
                 while(rs.next()){
                     String name = rs.getString("name");
@@ -197,19 +198,31 @@ public class ReceiptDAO {
         return count;
     }
 
-    public static int getCountOfUsersPayments(int userId){
-        int count = -1;
+
+    public static void updateStatus(){
         try(Connection connection = DBManager.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(GET_COUNT_OF_USERS_RECEIPTS)) {
-            statement.setInt(1,userId);
-            try(ResultSet rs = statement.executeQuery()){
-                rs.next();
-                count = rs.getInt("count");
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(GET_ALL_PAYMENTS)){
+            while(rs.next()){
+                int id = rs.getInt("id");
+                Date date = rs.getDate("date");
+                String status = rs.getString("status");
+                if(date.toLocalDate().plusDays(1).getDayOfYear()<=LocalDate.now().getDayOfYear()&&status.equals("prepared")){
+                    utilUpdateStatus(id);
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void utilUpdateStatus(int receiptId){
+        try(Connection connection = DBManager.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(UPDATE_STATUS_BY_ID)){
+            statement.setInt(1,receiptId);
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return count;
     }
 
 

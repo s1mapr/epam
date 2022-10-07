@@ -37,7 +37,7 @@ public class AuthorizationServlet extends HttpServlet {
             return;
         }
 
-        List<Account> list = AccountDAO.getUserAccounts(user.getId(),1, "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? LIMIT 5 OFFSET ?");
+        List<Account> list = AccountDAO.getUserAccountsWithoutPagination(user.getId());
         if(!list.isEmpty()){
             session.setAttribute("accounts", list);
 

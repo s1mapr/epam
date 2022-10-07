@@ -16,26 +16,26 @@ import java.util.Objects;
 
 @WebServlet("/users")
 public class UsersServlet extends HttpServlet {
-    private static final String GET_USERS = "SELECT * FROM user WHERE role_id = '1' LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_LOGIN_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY login ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_LOGIN_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY login DESC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_NAME_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY first_name ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_NAME_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY first_name DESC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_LAST_NAME_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY last_name ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_LAST_NAME_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY last_name DESC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_EMAIL_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY email ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_EMAIL_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY email DESC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_PHONE_NUMBER_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY phone_number ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_PHONE_NUMBER_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY phone_number DESC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_STATUS_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY status ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_STATUS_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY status DESC LIMIT 5 OFFSET ?";
+    private static final String GET_USERS = "SELECT * FROM user WHERE role_id = '1' LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_LOGIN_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY login ASC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_LOGIN_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY login DESC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_NAME_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY first_name ASC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_NAME_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY first_name DESC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_LAST_NAME_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY last_name ASC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_LAST_NAME_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY last_name DESC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_EMAIL_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY email ASC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_EMAIL_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY email DESC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_PHONE_NUMBER_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY phone_number ASC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_PHONE_NUMBER_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY phone_number DESC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_STATUS_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY status ASC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_STATUS_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY status DESC LIMIT 10 OFFSET ?";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("UsersServlet#doGet");
         HttpSession session = req.getSession();
         int listLength = UserDAO.getAllUsersCount();
-        int pagesCount = listLength%5==0?listLength/5:listLength/5+1;
+        int pagesCount = listLength%10==0?listLength/10:listLength/10+1;
         req.setAttribute("pagesCount", pagesCount);
         List<User> users;
         String action = req.getParameter("action");

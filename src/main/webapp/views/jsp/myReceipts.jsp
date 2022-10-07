@@ -37,10 +37,10 @@
     </c:forEach>
 </table>
 <c:choose>
-    <c:when test="${sessionScope.recPage == 1}">
+    <c:when test="${sessionScope.recPage == 1 && requestScope.pagesCount !=1}">
         <a href="${pageContext.request.contextPath}/myReceipts?page=${sessionScope.recPage+1}" >-></a>
     </c:when>
-    <c:when test="${sessionScope.recPage == requestScope.pagesCount}">
+    <c:when test="${sessionScope.recPage == requestScope.pagesCount && sessionScope.recPage != 1}">
         <a href="${pageContext.request.contextPath}/myReceipts?page=${sessionScope.recPage-1}" ><-</a>
     </c:when>
     <c:when test="${sessionScope.recPage > 1 && sessionScope.recPage < requestScope.pagesCount}">

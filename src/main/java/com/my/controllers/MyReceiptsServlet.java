@@ -16,19 +16,19 @@ import java.util.Objects;
 
 @WebServlet("/myReceipts")
 public class MyReceiptsServlet extends HttpServlet {
-    public static String GET_RECEIPTS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_AMOUNT_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY amount ASC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_AMOUNT_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY amount DESC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_NAME_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.name ASC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_NAME_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.name DESC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_DATE_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY date ASC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_DATE_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY date DESC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_STATUS_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.status ASC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_STATUS_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.status DESC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_PURPOSE_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY purpose.name ASC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_PURPOSE_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY purpose.name DESC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_ACCOUNT_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY account.name ASC LIMIT 5 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_ACCOUNT_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY account.name DESC LIMIT 5 OFFSET ?";
+    public static String GET_RECEIPTS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_AMOUNT_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY amount ASC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_AMOUNT_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY amount DESC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_NAME_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.name ASC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_NAME_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.name DESC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_DATE_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY date ASC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_DATE_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY date DESC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_STATUS_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.status ASC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_STATUS_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.status DESC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_PURPOSE_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY purpose.name ASC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_PURPOSE_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY purpose.name DESC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_ACCOUNT_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY account.name ASC LIMIT 10 OFFSET ?";
+    public static String GET_RECEIPTS_SORTED_BY_ACCOUNT_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY account.name DESC LIMIT 10 OFFSET ?";
 
 
     @Override
@@ -36,8 +36,9 @@ public class MyReceiptsServlet extends HttpServlet {
         System.out.println("MyReceiptsServlet#doGet");
         HttpSession session = req.getSession();
         User user = (User)session.getAttribute("user");
-        int listLength = ReceiptDAO.getCountOfUsersPayments(user.getId());
-        int pagesCount = listLength%5==0?listLength/5:listLength/5+1;
+        ReceiptDAO.updateStatus();
+        int listLength = ReceiptDAO.getPaymentsCountOfUser(user.getId());
+        int pagesCount = listLength%10==0?listLength/10:listLength/10+1;
         req.setAttribute("pagesCount", pagesCount);
         List<Receipt> list;
 

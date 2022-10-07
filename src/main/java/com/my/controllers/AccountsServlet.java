@@ -15,23 +15,23 @@ import java.util.Objects;
 
 @WebServlet("/accounts")
 public class AccountsServlet extends HttpServlet {
-    private static final String GET_ACCOUNTS = "SELECT * FROM account JOIN user ON user.id = account.user_id LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name ASC LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name DESC LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_LOGIN_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY login ASC LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_LOGIN_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY login DESC LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_USER_NAME_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.first_name ASC LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_USER_NAME_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.first_name DESC LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.last_name ASC LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.last_name DESC LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_STATUS_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.status ASC LIMIT 5 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_STATUS_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.status DESC LIMIT 5 OFFSET ?";
+    private static final String GET_ACCOUNTS = "SELECT * FROM account JOIN user ON user.id = account.user_id LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name ASC LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name DESC LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_LOGIN_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY login ASC LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_LOGIN_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY login DESC LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_USER_NAME_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.first_name ASC LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_USER_NAME_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.first_name DESC LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.last_name ASC LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.last_name DESC LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_STATUS_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.status ASC LIMIT 10 OFFSET ?";
+    private static final String GET_ACCOUNTS_SORTED_BY_STATUS_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.status DESC LIMIT 10 OFFSET ?";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         int listLength = AccountDAO.getAllAccountsCount();
-        int pagesCount = listLength%5==0?listLength/5:listLength/5+1;
+        int pagesCount = listLength%10==0?listLength/10:listLength/10+1;
         req.setAttribute("pagesCount", pagesCount);
         List<Account> accounts;
         String action = req.getParameter("action");
