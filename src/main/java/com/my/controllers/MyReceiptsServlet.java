@@ -17,19 +17,12 @@ import java.util.Objects;
 @WebServlet("/myReceipts")
 public class MyReceiptsServlet extends HttpServlet {
     public static String GET_RECEIPTS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_AMOUNT_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY amount ASC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_AMOUNT_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY amount DESC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_NAME_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.name ASC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_NAME_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.name DESC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_DATE_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY date ASC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_DATE_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY date DESC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_STATUS_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.status ASC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_STATUS_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.status DESC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_PURPOSE_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY purpose.name ASC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_PURPOSE_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY purpose.name DESC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_ACCOUNT_ASC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY account.name ASC LIMIT 10 OFFSET ?";
-    public static String GET_RECEIPTS_SORTED_BY_ACCOUNT_DESC = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY account.name DESC LIMIT 10 OFFSET ?";
-
+    public static String GET_RECEIPTS_SORTED_BY_AMOUNT = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY amount ";
+    public static String GET_RECEIPTS_SORTED_BY_NAME = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.name ";
+    public static String GET_RECEIPTS_SORTED_BY_DATE = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY date ";
+    public static String GET_RECEIPTS_SORTED_BY_STATUS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.status ";
+    public static String GET_RECEIPTS_SORTED_BY_PURPOSE = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY purpose.name ";
+    public static String GET_RECEIPTS_SORTED_BY_ACCOUNT = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY account.name ";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,7 +35,7 @@ public class MyReceiptsServlet extends HttpServlet {
         req.setAttribute("pagesCount", pagesCount);
         List<Receipt> list;
 
-        if(Objects.nonNull(session.getAttribute("query"))&&Objects.isNull(req.getParameter("action"))){
+        if(Objects.nonNull(session.getAttribute("query"))&&Objects.isNull(req.getParameter("sortAction"))){
             list = getReceipts(req, session, user, session.getAttribute("query").toString());
         }else{
             String query = getQuery(req);
@@ -53,78 +46,24 @@ public class MyReceiptsServlet extends HttpServlet {
     }
 
     private static String getQuery(HttpServletRequest req){
-        HttpSession session = req.getSession();
-        String action = req.getParameter("action");
+        String action = req.getParameter("sortAction");
         if(Objects.nonNull(action)){
+            String type = req.getParameter("type");
             switch (action){
                 case "sortAmount":
-                    int amountSortId = Integer.parseInt(req.getParameter("sortId"));
-                    if(amountSortId ==1) {
-                        session.removeAttribute("amountSortId");
-                        session.setAttribute("amountSortId", 2);
-                        return GET_RECEIPTS_SORTED_BY_AMOUNT_ASC;
-                    }
-                    session.removeAttribute("amountSortId");
-                    session.setAttribute("amountSortId", 1);
-                    return GET_RECEIPTS_SORTED_BY_AMOUNT_DESC;
+                    return GET_RECEIPTS_SORTED_BY_AMOUNT + type + " LIMIT 10 OFFSET ?";
                 case "sortName":
-                    int nameSortId = Integer.parseInt(req.getParameter("sortId"));
-                    if(nameSortId ==1) {
-                        session.removeAttribute("nameSortId");
-                        session.setAttribute("nameSortId", 2);
-                        return GET_RECEIPTS_SORTED_BY_NAME_ASC;
-                    }
-                    session.removeAttribute("nameSortId");
-                    session.setAttribute("nameSortId", 1);
-                    return GET_RECEIPTS_SORTED_BY_NAME_DESC;
+                    return GET_RECEIPTS_SORTED_BY_NAME + type + " LIMIT 10 OFFSET ?";
                 case "sortDate":
-                    int dateSortId = Integer.parseInt(req.getParameter("sortId"));
-                    if(dateSortId ==1) {
-                        session.removeAttribute("dateSortId");
-                        session.setAttribute("dateSortId", 2);
-                        return GET_RECEIPTS_SORTED_BY_DATE_ASC;
-                    }
-                    session.removeAttribute("dateSortId");
-                    session.setAttribute("dateSortId", 1);
-                    return GET_RECEIPTS_SORTED_BY_DATE_DESC;
+                    return GET_RECEIPTS_SORTED_BY_DATE + type + " LIMIT 10 OFFSET ?";
                 case "sortStatus":
-                    int statusSortId = Integer.parseInt(req.getParameter("sortId"));
-                    if(statusSortId ==1) {
-                        session.removeAttribute("statusSortId");
-                        session.setAttribute("statusSortId", 2);
-                        return GET_RECEIPTS_SORTED_BY_STATUS_ASC;
-                    }
-                    session.removeAttribute("statusSortId");
-                    session.setAttribute("statusSortId", 1);
-                    return GET_RECEIPTS_SORTED_BY_STATUS_DESC;
+                    return GET_RECEIPTS_SORTED_BY_STATUS + type + " LIMIT 10 OFFSET ?";
                 case "sortAccount":
-                    int accountSortId = Integer.parseInt(req.getParameter("sortId"));
-                    if(accountSortId ==1) {
-                        session.removeAttribute("accountSortId");
-                        session.setAttribute("accountSortId", 2);
-                        return GET_RECEIPTS_SORTED_BY_ACCOUNT_ASC;
-                    }
-                    session.removeAttribute("accountSortId");
-                    session.setAttribute("accountSortId", 1);
-                    return GET_RECEIPTS_SORTED_BY_ACCOUNT_DESC;
+                    return GET_RECEIPTS_SORTED_BY_ACCOUNT + type + " LIMIT 10 OFFSET ?";
                 case "sortPurpose":
-                    int purposeSortId = Integer.parseInt(req.getParameter("sortId"));
-                    if(purposeSortId ==1) {
-                        session.removeAttribute("purposeSortId");
-                        session.setAttribute("purposeSortId", 2);
-                        return GET_RECEIPTS_SORTED_BY_PURPOSE_ASC;
-                    }
-                    session.removeAttribute("purposeSortId");
-                    session.setAttribute("purposeSortId", 1);
-                    return GET_RECEIPTS_SORTED_BY_PURPOSE_DESC;
+                    return GET_RECEIPTS_SORTED_BY_PURPOSE + type + " LIMIT 10 OFFSET ?";
             }
         }
-        session.setAttribute("amountSortId", 1);
-        session.setAttribute("nameSortId", 1);
-        session.setAttribute("dateSortId", 1);
-        session.setAttribute("statusSortId", 1);
-        session.setAttribute("purposeSortId", 1);
-        session.setAttribute("accountSortId", 1);
         return GET_RECEIPTS;
     }
 
@@ -134,7 +73,6 @@ public class MyReceiptsServlet extends HttpServlet {
     private static List<Receipt> getReceipts(HttpServletRequest req, HttpSession session, User user, String query) {
         session.removeAttribute("query");
         session.setAttribute("query", query);
-
         Object pageNumberStr = session.getAttribute("recPage");
         int pageNumber;
         if(Objects.nonNull(req.getParameter("page"))){

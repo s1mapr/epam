@@ -38,6 +38,17 @@
     </tr>
 </c:forEach>
 </table>
-
+<c:choose>
+    <c:when test="${sessionScope.reqPage == 1 && requestScope.pagesCount >1}">
+        <a href="${pageContext.request.contextPath}/requests?page=${sessionScope.reqPage+1}">-></a>
+    </c:when>
+    <c:when test="${sessionScope.reqPage == requestScope.pagesCount && sessionScope.reqPage != 1}">
+        <a href="${pageContext.request.contextPath}/requests?page=${sessionScope.reqPage-1}"><-</a>
+    </c:when>
+    <c:when test="${sessionScope.reqPage > 1 && sessionScope.reqPage < requestScope.pagesCount}">
+        <a href="${pageContext.request.contextPath}/requests?page=${sessionScope.reqPage-1}"><-</a>
+        <a href="${pageContext.request.contextPath}/requests?page=${sessionScope.reqPage+1}">-></a>
+    </c:when>
+</c:choose>
 </body>
 </html>

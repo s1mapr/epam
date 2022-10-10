@@ -90,6 +90,14 @@ public class Validation {
         return this.firstName && this.lastName && this.email && this.phoneNumber;
     }
 
+    public boolean topUpValidation(String cardNumber, String expiryDate, String cvv, String amount){
+        this.cardNumber = checkCardNumber(cardNumber);
+        this.expirationDate = checkExpirationDate(expiryDate);
+        this.cvv = checkCVV(cvv);
+        this.paymentAmount = checkPaymentAmount(amount);
+        return this.cardNumber&&this.expirationDate&&this.cvv&&this.paymentAmount;
+    }
+
     private static boolean checkLogin(String login) {
         return login.matches("^[a-zA-Z0-9._-]{3,18}$");
     }

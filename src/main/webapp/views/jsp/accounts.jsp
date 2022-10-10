@@ -16,12 +16,32 @@
 <jsp:include page="/views/jsp/header.jsp"/>
 <table border="3">
   <tr>
-    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortAccountName&sortId=${sessionScope.accountsSortAccountNameId}&page=1">Назва</a></th>
-    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortLogin&sortId=${sessionScope.accountsSortLoginId}&page=1">Логін</a></th>
-    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortName&sortId=${sessionScope.accountsSortUserName}&page=1">Ім'я</a></th>
-    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortLastName&sortId=${sessionScope.accountsSortUserLastName}&page=1">Прізвище</a></th>
+    <th>
+      Назва
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortAccountName&type=ASC&page=1">&#129047;</a>
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortAccountName&type=DESC&page=1">&#129045;</a>
+    </th>
+    <th>
+      Логін
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortLogin&type=ASC&page=1">&#129047;</a>
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortLogin&type=DESC&page=1">&#129045;</a>
+    </th>
+    <th>
+      Ім'я
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortName&type=ASC&page=1">&#129047;</a>
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortName&type=DESC&page=1">&#129045;</a>
+    </th>
+    <th>
+      Прізвище
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortLastName&type=ASC&page=1">&#129047;</a>
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortLastName&type=DESC&page=1">&#129045;</a>
+    </th>
     <th>Кількість операцій</th>
-    <th><a href="${pageContext.request.contextPath}/accounts?sortAction=sortStatus&sortId=${sessionScope.accountsSortStatusId}&page=1">Статус</a></th>
+    <th>
+      Статус
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
+      <a href = "${pageContext.request.contextPath}/accounts?sortAction=sortStatus&type=DESC&page=1">&#129045;</a>
+    </th>
   </tr>
   <c:forEach var="accounts" items="${requestScope.list}">
     <tr>
@@ -37,7 +57,7 @@
   </c:forEach>
 </table>
 <c:choose>
-  <c:when test="${sessionScope.accPage == 1 && requestScope.pagesCount != 1}">
+  <c:when test="${sessionScope.accPage == 1 && requestScope.pagesCount >1}">
     <a href="${pageContext.request.contextPath}/accounts?page=${sessionScope.accPage+1}" >-></a>
   </c:when>
   <c:when test="${sessionScope.accPage == requestScope.pagesCount && sessionScope.accPage != 1}">

@@ -19,14 +19,10 @@ import java.util.Objects;
 @WebServlet("/profile")
 public class ProfileServlet extends HttpServlet {
     private static final String GET_USER_ACCOUNTS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? LIMIT 5 OFFSET ?";
-    private static final String GET_USER_ACCOUNTS_SORTED_BY_NAME_ASC = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY name ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USER_ACCOUNTS_SORTED_BY_NAME_DESC = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY name DESC LIMIT 5 OFFSET ?";
-    private static final String GET_USER_ACCOUNTS_SORTED_BY_CARD_NUMBER_ASC = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY card.number ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USER_ACCOUNTS_SORTED_BY_CARD_NUMBER_DESC = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY card.number DESC LIMIT 5 OFFSET ?";
-    private static final String GET_USER_ACCOUNTS_SORTED_BY_AMOUNT_ASC = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY card.amount ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USER_ACCOUNTS_SORTED_BY_AMOUNT_DESC = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY card.amount DESC LIMIT 5 OFFSET ?";
-    private static final String GET_USER_ACCOUNTS_SORTED_BY_STATUS_ASC = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY status ASC LIMIT 5 OFFSET ?";
-    private static final String GET_USER_ACCOUNTS_SORTED_BY_STATUS_DESC = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY status DESC LIMIT 5 OFFSET ?";
+    private static final String GET_USER_ACCOUNTS_SORTED_BY_NAME = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY name ";
+    private static final String GET_USER_ACCOUNTS_SORTED_BY_CARD_NUMBER = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY card.number ";
+    private static final String GET_USER_ACCOUNTS_SORTED_BY_AMOUNT = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY card.amount ";
+    private static final String GET_USER_ACCOUNTS_SORTED_BY_STATUS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY status ";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,83 +37,44 @@ public class ProfileServlet extends HttpServlet {
         String action = req.getParameter("action");
         if (Objects.nonNull(action) && action.equals("block")) {
             AccountDAO.blockAccount(Integer.parseInt(req.getParameter("id")));
-        }else if(Objects.nonNull(action) && action.equals("unblock")){
+        } else if (Objects.nonNull(action) && action.equals("unblock")) {
             AccountDAO.setPendingStatus(Integer.parseInt(req.getParameter("id")));
             RequestDAO.createNewRequest(Integer.parseInt(req.getParameter("id")));
         }
-        if(Objects.nonNull(session.getAttribute("profileQuery"))&&Objects.isNull(req.getParameter("sortAction"))){
-            list = getAccounts(req, session,user ,session.getAttribute("profileQuery").toString());
-        }else{
+        if (Objects.nonNull(session.getAttribute("profileQuery")) && Objects.isNull(req.getParameter("sortAction"))) {
+            list = getAccounts(req, session, user, session.getAttribute("profileQuery").toString());
+        } else {
             String query = getQuery(req);
-            list = getAccounts(req, session, user ,query);
+            list = getAccounts(req, session, user, query);
         }
         List<Account> accountList = AccountDAO.getUserAccountsWithoutPagination(user.getId());
-        System.out.println(accountList);
         session.removeAttribute("accounts");
         session.setAttribute("accounts", accountList);
         req.setAttribute("accountsPag", list);
         req.getRequestDispatcher("/views/jsp/profile.jsp").forward(req, resp);
     }
 
-    private static String getQuery(HttpServletRequest req){
-        HttpSession session = req.getSession();
+    private static String getQuery(HttpServletRequest req) {
         String action = req.getParameter("sortAction");
-        if(Objects.nonNull(action)){
-            int profileSortNameId = Integer.parseInt(req.getParameter("sortId"));
-            switch (action){
+        if (Objects.nonNull(action)) {
+            String type = req.getParameter("type");
+            switch (action) {
                 case "sortName":
-                    if(profileSortNameId ==1) {
-                        session.removeAttribute("profileSortNameId");
-                        session.setAttribute("profileSortNameId", 2);
-                        return GET_USER_ACCOUNTS_SORTED_BY_NAME_ASC;
-                    }
-                    session.removeAttribute("profileSortNameId");
-                    session.setAttribute("profileSortNameId", 1);
-                    return GET_USER_ACCOUNTS_SORTED_BY_NAME_DESC;
+                    return GET_USER_ACCOUNTS_SORTED_BY_NAME + type + " LIMIT 5 OFFSET ?";
                 case "sortCardNumber":
-                    int profileSortCardNumberId = Integer.parseInt(req.getParameter("sortId"));
-                    if(profileSortCardNumberId ==1) {
-                        session.removeAttribute("profileSortCardNumberId");
-                        session.setAttribute("profileSortCardNumberId", 2);
-                        return GET_USER_ACCOUNTS_SORTED_BY_CARD_NUMBER_ASC;
-                    }
-                    session.removeAttribute("profileSortCardNumberId");
-                    session.setAttribute("profileSortCardNumberId", 1);
-                    return GET_USER_ACCOUNTS_SORTED_BY_CARD_NUMBER_DESC;
+                    return GET_USER_ACCOUNTS_SORTED_BY_CARD_NUMBER + type + " LIMIT 5 OFFSET ?";
                 case "sortAmount":
-                    int profileSortAmountId = Integer.parseInt(req.getParameter("sortId"));
-                    if(profileSortAmountId ==1) {
-                        session.removeAttribute("profileSortAmountId");
-                        session.setAttribute("profileSortAmountId", 2);
-                        return GET_USER_ACCOUNTS_SORTED_BY_AMOUNT_ASC;
-                    }
-                    session.removeAttribute("profileSortAmountId");
-                    session.setAttribute("profileSortAmountId", 1);
-                    return GET_USER_ACCOUNTS_SORTED_BY_AMOUNT_DESC;
+                    return GET_USER_ACCOUNTS_SORTED_BY_AMOUNT + type + " LIMIT 5 OFFSET ?";
                 case "sortStatus":
-                    int profileSortStatusId = Integer.parseInt(req.getParameter("sortId"));
-                    if(profileSortStatusId ==1) {
-                        session.removeAttribute("profileSortStatusId");
-                        session.setAttribute("profileSortStatusId", 2);
-                        return GET_USER_ACCOUNTS_SORTED_BY_STATUS_ASC;
-                    }
-                    session.removeAttribute("profileSortStatusId");
-                    session.setAttribute("profileSortStatusId", 1);
-                    return GET_USER_ACCOUNTS_SORTED_BY_STATUS_DESC;
+                    return GET_USER_ACCOUNTS_SORTED_BY_STATUS + type + " LIMIT 5 OFFSET ?";
             }
         }
-        session.setAttribute("profileSortNameId", 1);
-        session.setAttribute("profileSortCardNumberId", 1);
-        session.setAttribute("profileSortAmountId", 1);
-        session.setAttribute("profileSortStatusId", 1);
         return GET_USER_ACCOUNTS;
     }
-
 
     private static List<Account> getAccounts(HttpServletRequest req, HttpSession session, User user, String query) {
         session.removeAttribute("profileQuery");
         session.setAttribute("profileQuery", query);
-
         Object pageNumberStr = session.getAttribute("profPage");
         int pageNumber;
         if (Objects.nonNull(req.getParameter("page"))) {
@@ -130,7 +87,6 @@ public class ProfileServlet extends HttpServlet {
         } else {
             pageNumber = Integer.parseInt(session.getAttribute("profPage").toString());
         }
-
         return AccountDAO.getUserAccounts(user.getId(), pageNumber, query);
     }
 

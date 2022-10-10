@@ -22,16 +22,24 @@
 <table border="3">
     <tr>
         <th>
-            <a href="${pageContext.request.contextPath}/profile?sortAction=sortName&sortId=${sessionScope.profileSortNameId}&page=1">Название</a>
+            Назва
+            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortName&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortName&type=DESC&page=1">&#129045;</a>
         </th>
         <th>
-            <a href="${pageContext.request.contextPath}/profile?sortAction=sortCardNumber&sortId=${sessionScope.profileSortCardNumberId}&page=1">Номер
-                картки</a></th>
-        <th>
-            <a href="${pageContext.request.contextPath}/profile?sortAction=sortAmount&sortId=${sessionScope.profileSortAmountId}&page=1">Баланс</a>
+            Номер картки
+            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortCardNumber&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortCardNumber&type=DESC&page=1">&#129045;</a>
         </th>
         <th>
-            <a href="${pageContext.request.contextPath}/profile?sortAction=sortStatus&sortId=${sessionScope.profileSortStatusId}&page=1">Статус</a>
+            Баланс
+            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortAmount&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortAmount&type=DESC&page=1">&#129045;</a>
+        </th>
+        <th>
+            Статус
+            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortStatus&type=DESC&page=1">&#129045;</a>
         </th>
     </tr>
     <c:forEach var="names" items="${requestScope.accountsPag}">
@@ -41,6 +49,7 @@
             <td>${names.cardNumber}</td>
             <td>${names.amount}</td>
             <td>${names.status}</td>
+            <td><a href="${pageContext.request.contextPath}/topUp?id=${names.id}">Пополнить счет</a></td>
             <c:choose>
             <c:when test="${names.status == 'unblocked'}">
                 <td><a href="${pageContext.request.contextPath}/profile?action=block&id=${names.id}">Заблокувати</a></td>
@@ -54,7 +63,7 @@
 
 </table>
 <c:choose>
-    <c:when test="${sessionScope.profPage == 1 && requestScope.pagesCount !=1}">
+    <c:when test="${sessionScope.profPage == 1 && requestScope.pagesCount >1}">
         <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}">-></a>
     </c:when>
     <c:when test="${sessionScope.profPage == requestScope.pagesCount && sessionScope.profPage != 1}">

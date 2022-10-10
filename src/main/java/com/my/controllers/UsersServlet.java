@@ -17,18 +17,12 @@ import java.util.Objects;
 @WebServlet("/users")
 public class UsersServlet extends HttpServlet {
     private static final String GET_USERS = "SELECT * FROM user WHERE role_id = '1' LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_LOGIN_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY login ASC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_LOGIN_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY login DESC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_NAME_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY first_name ASC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_NAME_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY first_name DESC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_LAST_NAME_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY last_name ASC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_LAST_NAME_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY last_name DESC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_EMAIL_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY email ASC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_EMAIL_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY email DESC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_PHONE_NUMBER_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY phone_number ASC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_PHONE_NUMBER_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY phone_number DESC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_STATUS_ASC = "SELECT * FROM user WHERE role_id = '1' ORDER BY status ASC LIMIT 10 OFFSET ?";
-    private static final String GET_USERS_SORTED_BY_STATUS_DESC = "SELECT * FROM user WHERE role_id = '1' ORDER BY status DESC LIMIT 10 OFFSET ?";
+    private static final String GET_USERS_SORTED_BY_LOGIN = "SELECT * FROM user WHERE role_id = '1' ORDER BY login ";
+    private static final String GET_USERS_SORTED_BY_NAME = "SELECT * FROM user WHERE role_id = '1' ORDER BY first_name ";
+    private static final String GET_USERS_SORTED_BY_LAST_NAME = "SELECT * FROM user WHERE role_id = '1' ORDER BY last_name ";
+    private static final String GET_USERS_SORTED_BY_EMAIL = "SELECT * FROM user WHERE role_id = '1' ORDER BY email ";
+    private static final String GET_USERS_SORTED_BY_PHONE_NUMBER = "SELECT * FROM user WHERE role_id = '1' ORDER BY phone_number ";
+    private static final String GET_USERS_SORTED_BY_STATUS = "SELECT * FROM user WHERE role_id = '1' ORDER BY status ";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,86 +50,30 @@ public class UsersServlet extends HttpServlet {
     }
 
     private static String getQuery(HttpServletRequest req){
-        HttpSession session = req.getSession();
         String action = req.getParameter("sortAction");
         if(Objects.nonNull(action)){
+            String type = req.getParameter("type");
             switch (action){
                 case "sortLogin":
-                    int usersSortLoginId = Integer.parseInt(req.getParameter("sortId"));
-                    if(usersSortLoginId ==1) {
-                        session.removeAttribute("usersSortLoginId");
-                        session.setAttribute("usersSortLoginId", 2);
-                        return GET_USERS_SORTED_BY_LOGIN_ASC;
-                    }
-                    session.removeAttribute("usersSortLoginId");
-                    session.setAttribute("usersSortLoginId", 1);
-                    return GET_USERS_SORTED_BY_LOGIN_DESC;
+                    return GET_USERS_SORTED_BY_LOGIN + type + " LIMIT 10 OFFSET ?";
                 case "sortName":
-                    int usersSortUserName = Integer.parseInt(req.getParameter("sortId"));
-                    if(usersSortUserName ==1) {
-                        session.removeAttribute("usersSortUserName");
-                        session.setAttribute("usersSortUserName", 2);
-                        return GET_USERS_SORTED_BY_NAME_ASC;
-                    }
-                    session.removeAttribute("usersSortUserName");
-                    session.setAttribute("usersSortUserName", 1);
-                    return GET_USERS_SORTED_BY_NAME_DESC;
+                    return GET_USERS_SORTED_BY_NAME + type + " LIMIT 10 OFFSET ?";
                 case "sortLastName":
-                    int usersSortUserLastName = Integer.parseInt(req.getParameter("sortId"));
-                    if(usersSortUserLastName ==1) {
-                        session.removeAttribute("usersSortUserLastName");
-                        session.setAttribute("usersSortUserLastName", 2);
-                        return GET_USERS_SORTED_BY_LAST_NAME_ASC;
-                    }
-                    session.removeAttribute("usersSortUserLastName");
-                    session.setAttribute("usersSortUserLastName", 1);
-                    return GET_USERS_SORTED_BY_LAST_NAME_DESC;
+                    return GET_USERS_SORTED_BY_LAST_NAME + type + " LIMIT 10 OFFSET ?";
                 case "sortEmail":
-                    int usersSortEmailId = Integer.parseInt(req.getParameter("sortId"));
-                    if(usersSortEmailId ==1) {
-                        session.removeAttribute("usersSortEmailId");
-                        session.setAttribute("usersSortEmailId", 2);
-                        return GET_USERS_SORTED_BY_EMAIL_ASC;
-                    }
-                    session.removeAttribute("usersSortEmailId");
-                    session.setAttribute("usersSortEmailId", 1);
-                    return GET_USERS_SORTED_BY_EMAIL_DESC;
+                    return GET_USERS_SORTED_BY_EMAIL + type + " LIMIT 10 OFFSET ?";
                 case "sortPhoneNumber":
-                    int usersSortPhoneNumberId = Integer.parseInt(req.getParameter("sortId"));
-                    if(usersSortPhoneNumberId ==1) {
-                        session.removeAttribute("usersSortPhoneNumberId");
-                        session.setAttribute("usersSortPhoneNumberId", 2);
-                        return GET_USERS_SORTED_BY_PHONE_NUMBER_ASC;
-                    }
-                    session.removeAttribute("usersSortPhoneNumberId");
-                    session.setAttribute("usersSortPhoneNumberId", 1);
-                    return GET_USERS_SORTED_BY_PHONE_NUMBER_DESC;
+                    return GET_USERS_SORTED_BY_PHONE_NUMBER + type + " LIMIT 10 OFFSET ?";
                 case "sortStatus":
-                    int usersSortStatusId = Integer.parseInt(req.getParameter("sortId"));
-                    if(usersSortStatusId ==1) {
-                        session.removeAttribute("usersSortStatusId");
-                        session.setAttribute("usersSortStatusId", 2);
-                        return GET_USERS_SORTED_BY_STATUS_ASC;
-                    }
-                    session.removeAttribute("usersSortStatusId");
-                    session.setAttribute("usersSortStatusId", 1);
-                    return GET_USERS_SORTED_BY_STATUS_DESC;
-
+                    return GET_USERS_SORTED_BY_STATUS + type + " LIMIT 10 OFFSET ?";
             }
         }
-        session.setAttribute("usersSortLoginId", 1);
-        session.setAttribute("usersSortUserName", 1);
-        session.setAttribute("usersSortUserLastName", 1);
-        session.setAttribute("usersSortEmailId", 1);
-        session.setAttribute("usersSortPhoneNumberId", 1);
-        session.setAttribute("usersSortStatusId", 1);
         return GET_USERS;
     }
 
     private static List<User> getUsers(HttpServletRequest req, HttpSession session, String query) {
         session.removeAttribute("usersQuery");
         session.setAttribute("usersQuery", query);
-
         Object pageNumberStr = session.getAttribute("userPage");
         int pageNumber;
         if(Objects.nonNull(req.getParameter("page"))){

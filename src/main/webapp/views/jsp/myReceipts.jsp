@@ -16,12 +16,36 @@
 <jsp:include page="/views/jsp/header.jsp"/>
 <table border="3">
     <tr>
-        <th><a href="${pageContext.request.contextPath}/myReceipts?action=sortName&sortId=${sessionScope.nameSortId}&page=1">Назва</a></th>
-        <th><a href="${pageContext.request.contextPath}/myReceipts?action=sortDate&sortId=${sessionScope.dateSortId}&page=1">Дата</a></th>
-        <th><a href="${pageContext.request.contextPath}/myReceipts?action=sortPurpose&sortId=${sessionScope.purposeSortId}&page=1">Мета платежу</a></th>
-        <th><a href="${pageContext.request.contextPath}/myReceipts?action=sortAccount&sortId=${sessionScope.accountSortId}&page=1">Ім'я аккаунту</a></th>
-        <th><a href="${pageContext.request.contextPath}/myReceipts?action=sortAmount&sortId=${sessionScope.amountSortId}&page=1">Сума</a></th>
-        <th><a href="${pageContext.request.contextPath}/myReceipts?action=sortStatus&sortId=${sessionScope.statusSortId}&page=1">Статус</a></th>
+        <th>
+            Назва
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortName&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortName&type=DESC&page=1">&#129045;</a>
+        </th>
+        <th>
+            Дата
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortDate&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortDate&type=DESC&page=1">&#129045;</a>
+        </th>
+        <th>
+            Мета платежу
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortPurpose&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortPurpose&type=DESC&page=1">&#129045;</a>
+        </th>
+        <th>
+            Ім'я аккаунту
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortAccount&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortAccount&type=DESC&page=1">&#129045;</a>
+        </th>
+        <th>
+            Сума
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortAmount&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortAmount&type=DESC&page=1">&#129045;</a>
+        </th>
+        <th>
+            Статус
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
+            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortStatus&type=DESC&page=1">&#129045;</a>
+        </th>
 
     </tr>
     <c:forEach var="receipts" items="${requestScope.list}">
@@ -37,7 +61,7 @@
     </c:forEach>
 </table>
 <c:choose>
-    <c:when test="${sessionScope.recPage == 1 && requestScope.pagesCount !=1}">
+    <c:when test="${sessionScope.recPage == 1 && requestScope.pagesCount >1}">
         <a href="${pageContext.request.contextPath}/myReceipts?page=${sessionScope.recPage+1}" >-></a>
     </c:when>
     <c:when test="${sessionScope.recPage == requestScope.pagesCount && sessionScope.recPage != 1}">

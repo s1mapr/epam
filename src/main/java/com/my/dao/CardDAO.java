@@ -6,7 +6,7 @@ import java.util.Random;
 public class CardDAO {
 
     private static final String GET_CARD_BY_NUMBER = "SELECT * FROM card WHERE number = ?";
-    private static final String GET_CARD_BY_ID = "SELECT * FROM card WHERE id = ?";
+    private static final String GET_CARD_AMOUNT_BY_ID = "SELECT * FROM card WHERE id = ?";
     private static final String CREATE_NEW_CARD = "INSERT INTO card(number, expiration_date, cvv, amount) VALUES (?, ?, ?, ?)";
     private static final String UPDATE_AMOUNT = "UPDATE card SET amount = ? WHERE id = ?";
 
@@ -50,7 +50,7 @@ public class CardDAO {
     public static double getAmount(int cardId){
         double amount = -1;
         try(Connection connection = DBManager.getInstance().getConnection();
-        PreparedStatement statement = connection.prepareStatement(GET_CARD_BY_ID)){
+        PreparedStatement statement = connection.prepareStatement(GET_CARD_AMOUNT_BY_ID)){
             statement.setInt(1, cardId);
             try(ResultSet rs = statement.executeQuery()){
                 rs.next();

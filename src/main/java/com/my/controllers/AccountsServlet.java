@@ -16,17 +16,11 @@ import java.util.Objects;
 @WebServlet("/accounts")
 public class AccountsServlet extends HttpServlet {
     private static final String GET_ACCOUNTS = "SELECT * FROM account JOIN user ON user.id = account.user_id LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name ASC LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name DESC LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_LOGIN_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY login ASC LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_LOGIN_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY login DESC LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_USER_NAME_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.first_name ASC LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_USER_NAME_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.first_name DESC LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.last_name ASC LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.last_name DESC LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_STATUS_ASC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.status ASC LIMIT 10 OFFSET ?";
-    private static final String GET_ACCOUNTS_SORTED_BY_STATUS_DESC = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.status DESC LIMIT 10 OFFSET ?";
-
+    private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name ";
+    private static final String GET_ACCOUNTS_SORTED_BY_LOGIN = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY login ";
+    private static final String GET_ACCOUNTS_SORTED_BY_USER_NAME = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.first_name ";
+    private static final String GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.last_name ";
+    private static final String GET_ACCOUNTS_SORTED_BY_STATUS = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.status ";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -52,68 +46,22 @@ public class AccountsServlet extends HttpServlet {
     }
 
     private static String getQuery(HttpServletRequest req){
-        HttpSession session = req.getSession();
         String action = req.getParameter("sortAction");
         if(Objects.nonNull(action)){
+            String type = req.getParameter("type");
             switch (action){
                 case "sortAccountName":
-                    int accountsSortAccountNameId = Integer.parseInt(req.getParameter("sortId"));
-                    if(accountsSortAccountNameId ==1) {
-                        session.removeAttribute("accountsSortAccountNameId");
-                        session.setAttribute("accountsSortAccountNameId", 2);
-                        return GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME_ASC;
-                    }
-                    session.removeAttribute("accountsSortAccountNameId");
-                    session.setAttribute("accountsSortAccountNameId", 1);
-                    return GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME_DESC;
+                    return GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME + type + " LIMIT 10 OFFSET ?";
                 case "sortLogin":
-                    int accountsSortLoginId = Integer.parseInt(req.getParameter("sortId"));
-                    if(accountsSortLoginId ==1) {
-                        session.removeAttribute("accountsSortLoginId");
-                        session.setAttribute("accountsSortLoginId", 2);
-                        return GET_ACCOUNTS_SORTED_BY_LOGIN_ASC;
-                    }
-                    session.removeAttribute("accountsSortLoginId");
-                    session.setAttribute("accountsSortLoginId", 1);
-                    return GET_ACCOUNTS_SORTED_BY_LOGIN_DESC;
+                    return GET_ACCOUNTS_SORTED_BY_LOGIN + type + " LIMIT 10 OFFSET ?";
                 case "sortName":
-                    int accountsSortUserName = Integer.parseInt(req.getParameter("sortId"));
-                    if(accountsSortUserName ==1) {
-                        session.removeAttribute("accountsSortUserName");
-                        session.setAttribute("accountsSortUserName", 2);
-                        return GET_ACCOUNTS_SORTED_BY_USER_NAME_ASC;
-                    }
-                    session.removeAttribute("accountsSortUserName");
-                    session.setAttribute("accountsSortUserName", 1);
-                    return GET_ACCOUNTS_SORTED_BY_USER_NAME_DESC;
+                    return GET_ACCOUNTS_SORTED_BY_USER_NAME + type + " LIMIT 10 OFFSET ?";
                 case "sortLastName":
-                    int accountsSortUserLastName = Integer.parseInt(req.getParameter("sortId"));
-                    if(accountsSortUserLastName ==1) {
-                        session.removeAttribute("accountsSortUserLastName");
-                        session.setAttribute("accountsSortUserLastName", 2);
-                        return GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME_ASC;
-                    }
-                    session.removeAttribute("accountsSortUserLastName");
-                    session.setAttribute("accountsSortUserLastName", 1);
-                    return GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME_DESC;
+                    return GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME + type + " LIMIT 10 OFFSET ?";
                 case "sortStatus":
-                    int accountsSortStatusId = Integer.parseInt(req.getParameter("sortId"));
-                    if(accountsSortStatusId ==1) {
-                        session.removeAttribute("accountsSortStatusId");
-                        session.setAttribute("accountsSortStatusId", 2);
-                        return GET_ACCOUNTS_SORTED_BY_STATUS_ASC;
-                    }
-                    session.removeAttribute("accountsSortStatusId");
-                    session.setAttribute("accountsSortStatusId", 1);
-                    return GET_ACCOUNTS_SORTED_BY_STATUS_DESC;
-
+                    return GET_ACCOUNTS_SORTED_BY_STATUS + type + " LIMIT 10 OFFSET ?";
             }
         }
-        session.setAttribute("accountsSortAccountNameId", 1);
-        session.setAttribute("accountsSortLoginId", 1);
-        session.setAttribute("accountsSortUserName", 1);
-        session.setAttribute("accountsSortUserLastName", 1);
-        session.setAttribute("accountsSortStatusId", 1);
         return GET_ACCOUNTS;
     }
 
