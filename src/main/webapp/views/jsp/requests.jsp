@@ -34,20 +34,20 @@
         <td>${request.accountName}</td>
         <td>${request.status}</td>
         <td>${request.paymentCount}</td>
-        <td><a href="${pageContext.request.contextPath}/requests?action=unblock&id=${request.accountId}">Розблокувати</a></td>
+        <td><a href="${pageContext.request.contextPath}/adm/requests?action=unblock&id=${request.accountId}">Розблокувати</a></td>
     </tr>
 </c:forEach>
 </table>
 <c:choose>
     <c:when test="${sessionScope.reqPage == 1 && requestScope.pagesCount >1}">
-        <a href="${pageContext.request.contextPath}/requests?page=${sessionScope.reqPage+1}">-></a>
+        <a href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage+1}">-></a>
     </c:when>
     <c:when test="${sessionScope.reqPage == requestScope.pagesCount && sessionScope.reqPage != 1}">
-        <a href="${pageContext.request.contextPath}/requests?page=${sessionScope.reqPage-1}"><-</a>
+        <a href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage-1}"><-</a>
     </c:when>
     <c:when test="${sessionScope.reqPage > 1 && sessionScope.reqPage < requestScope.pagesCount}">
-        <a href="${pageContext.request.contextPath}/requests?page=${sessionScope.reqPage-1}"><-</a>
-        <a href="${pageContext.request.contextPath}/requests?page=${sessionScope.reqPage+1}">-></a>
+        <a href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage-1}"><-</a>
+        <a href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage+1}">-></a>
     </c:when>
 </c:choose>
 </body>

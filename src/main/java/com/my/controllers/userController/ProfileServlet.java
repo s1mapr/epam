@@ -1,4 +1,4 @@
-package com.my.controllers;
+package com.my.controllers.userController;
 
 import com.my.dao.AccountDAO;
 import com.my.dao.RequestDAO;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@WebServlet("/profile")
+@WebServlet("/user/profile")
 public class ProfileServlet extends HttpServlet {
     private static final String GET_USER_ACCOUNTS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? LIMIT 5 OFFSET ?";
     private static final String GET_USER_ACCOUNTS_SORTED_BY_NAME = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY name ";

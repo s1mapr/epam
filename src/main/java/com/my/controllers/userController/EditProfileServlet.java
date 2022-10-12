@@ -1,4 +1,4 @@
-package com.my.controllers;
+package com.my.controllers.userController;
 
 import com.my.dao.UserDAO;
 import com.my.entities.User;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/editProfile")
+@WebServlet("/user/editProfile")
 public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class EditProfileServlet extends HttpServlet {
                 req.getParameter("phoneNumber"));
         if(!isValid){
             session.setAttribute("valid", validation);
-            resp.sendRedirect("/epamProject/editProfile");
+            resp.sendRedirect("/epamProject/user/editProfile");
             return;
         }
         String firstName = req.getParameter("firstName");
@@ -52,6 +52,6 @@ public class EditProfileServlet extends HttpServlet {
         user.setPhoneNumber(phoneNumber);
         session.removeAttribute("user");
         session.setAttribute("user", user);
-        resp.sendRedirect("/epamProject/profile");
+        resp.sendRedirect("/epamProject/user/profile");
     }
 }

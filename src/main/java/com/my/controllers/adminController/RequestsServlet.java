@@ -1,6 +1,6 @@
-package com.my.controllers;
+package com.my.controllers.adminController;
 
-import com.my.controllers.dto.RequestDTO;
+import com.my.dto.RequestDTO;
 import com.my.dao.AccountDAO;
 import com.my.dao.RequestDAO;
 
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@WebServlet("/requests")
+@WebServlet("/adm/requests")
 public class RequestsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

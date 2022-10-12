@@ -44,7 +44,7 @@ public class AuthorizationServlet extends HttpServlet {
         }
         session.setAttribute("user", user);
         if(user.getRole().equals("admin")){
-            resp.sendRedirect("/epamProject/accounts");
+            resp.sendRedirect("/epamProject/adm/accounts");
             return;
         }
         resp.sendRedirect("/epamProject/mainPage");

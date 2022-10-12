@@ -15,7 +15,7 @@
 
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/addNewAccount" method="post">
+<form action="${pageContext.request.contextPath}/user/addNewAccount" method="post">
   Name: <input name = "name"><br>
   <c:if test="${requestScope.valid.accountName == 'false'}">
     account name error<br>
@@ -34,6 +34,6 @@
   </c:if>
   <input  value = "Create new Account" type="submit">
 </form>
-<a href = "${pageContext.request.contextPath}/profile">Back to profile</a>
+<a href = "${pageContext.request.contextPath}/user/profile">Back to profile</a>
 </body>
 </html>

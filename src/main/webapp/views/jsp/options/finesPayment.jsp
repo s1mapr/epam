@@ -39,7 +39,7 @@
         payment amount error<br>
     </c:if>
     <select name="accountId" aria-label="Default select example">
-        <option value="0" selected>Оберіть рахунок</option>
+        <option value="${sessionScope.accounts.get(0).id}" selected>${sessionScope.accounts.get(0).name}</option>
         <c:forEach var="names" items="${sessionScope.accounts}">
             <c:if test="${names.status == 'unblocked'}">
                 <option value="${names.id}">${names.name}</option>

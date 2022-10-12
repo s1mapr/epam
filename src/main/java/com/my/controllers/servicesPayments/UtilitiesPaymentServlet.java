@@ -41,7 +41,7 @@ public class UtilitiesPaymentServlet extends HttpServlet {
         boolean isValid = validation.utilitiesPaymentValidation(req.getParameter("meter_w"),
                 req.getParameter("meter_e"), req.getParameter("meter_g"), req.getParameter("amount_w"),
                 req.getParameter("amount_e"), req.getParameter("amount_g"));
-        if(!isValid){
+        if (!isValid) {
             session.setAttribute("valid", validation);
             resp.sendRedirect("/epamProject/utilitiesPayment");
             return;
@@ -70,6 +70,7 @@ public class UtilitiesPaymentServlet extends HttpServlet {
         ReceiptDAO.createEntryInReceipt(accountId, purposeId, amount, serviceId, user.getId());
 
         CardDAO.updateAmount(newAmount, cardId);
+        user.setPaymentsCount(user.getPaymentsCount() + 1);
         resp.sendRedirect("/epamProject/mainPage");
     }
 }

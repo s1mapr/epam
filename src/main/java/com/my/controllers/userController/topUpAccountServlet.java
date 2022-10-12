@@ -1,4 +1,4 @@
-package com.my.controllers;
+package com.my.controllers.userController;
 
 import com.my.dao.AccountDAO;
 import com.my.dao.CardDAO;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.CacheRequest;
 import java.util.Objects;
 
-@WebServlet("/topUp")
+@WebServlet("/user/topUp")
 public class topUpAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,7 +43,7 @@ public class topUpAccountServlet extends HttpServlet {
                 req.getParameter("amount"));
         if(!isValid){
             session.setAttribute("valid", validation);
-            resp.sendRedirect("/epamProject/topUp");
+            resp.sendRedirect("/epamProject/user/topUp");
             return;
         }
         int cardId = AccountDAO.getCardId(Integer.parseInt(id));
@@ -52,6 +52,6 @@ public class topUpAccountServlet extends HttpServlet {
         double newAmount = currentAmount+amount;
         CardDAO.updateAmount(newAmount, cardId);
         session.removeAttribute("accountId");
-        resp.sendRedirect("/epamProject/profile");
+        resp.sendRedirect("/epamProject/user/profile");
     }
 }

@@ -1,5 +1,6 @@
 package com.my.dao;
 
+import com.my.entities.Account;
 import com.my.entities.User;
 
 import java.sql.*;
@@ -30,6 +31,8 @@ public class UserDAO {
                 String userEmail = rs.getString("email");
                 String userPhoneNumber = rs.getString("phone_number");
                 String userRole = rs.getString("name");
+                int accountsCount = AccountDAO.getCountOfUsersAccounts(userId);
+                int paymentsCount = ReceiptDAO.getPaymentsCountOfUser(userId);
                 user = new User.Builder()
                         .id(userId)
                         .login(userLogin)
@@ -39,6 +42,8 @@ public class UserDAO {
                         .email(userEmail)
                         .phoneNumber(userPhoneNumber)
                         .role(userRole)
+                        .accountsCount(accountsCount)
+                        .paymentsCount(paymentsCount)
                         .build();
             }
         } catch (SQLException e) {

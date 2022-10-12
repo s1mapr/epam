@@ -1,4 +1,4 @@
-package com.my.controllers;
+package com.my.controllers.adminController;
 
 import com.my.dao.UserDAO;
 import com.my.entities.User;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@WebServlet("/users")
+@WebServlet("/adm/users")
 public class UsersServlet extends HttpServlet {
     private static final String GET_USERS = "SELECT * FROM user WHERE role_id = '1' LIMIT 10 OFFSET ?";
     private static final String GET_USERS_SORTED_BY_LOGIN = "SELECT * FROM user WHERE role_id = '1' ORDER BY login ";

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<form action="${pageContext.request.contextPath}/editProfile" method="post">
+<form action="${pageContext.request.contextPath}/user/editProfile" method="post">
     Ім'я: <input name = "firstName" value="${sessionScope.user.firstName}"><br>
     <c:if test="${requestScope.valid.firstName == 'false'}">
         first name error<br>

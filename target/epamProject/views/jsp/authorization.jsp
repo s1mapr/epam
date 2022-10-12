@@ -12,11 +12,32 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/authorization" method="post">
-        <input name="login"/><br>
-        <input name="password" type="password"/><br>
-        <input value="Authorization!" type="submit"><br>
-    </form>
-    Create account: <a href="${pageContext.request.contextPath}/registration">тык</a>
+<div class="container-fluid vh-50" style="margin-top:150px">
+    <div class="rounded d-flex justify-content-center">
+        <div class="col-md-4 col-sm-12 shadow-lg px-5 pt-5 bg-light">
+            <div class="text-center">
+                <h3 class="text-primary">Авторизація</h3>
+            </div>
+            <form action="${pageContext.request.contextPath}/authorization" method="post">
+                <div class="p-4">
+                    <div class="input-group mb-3">
+                        <input name="login" class="form-control" placeholder="Логін">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input name="password" type="password" class="form-control" placeholder="Пароль">
+                    </div>
+                    <div class="form-row text-center">
+                        <button class="btn btn-primary text-center mt-2" type="submit">
+                            Авторизуватися
+                        </button>
+                    </div>
+                    <p class="text-center mt-5">Ще не зареєстровані?
+                        <a href="${pageContext.request.contextPath}/registration" class="text-decoration-none">Зареєструватися</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

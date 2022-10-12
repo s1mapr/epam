@@ -62,6 +62,7 @@ public class PhoneRechargeServlet extends HttpServlet {
         ReceiptDAO.createEntryInReceipt(accountId, purposeId,amount, serviceId, user.getId());
 
         CardDAO.updateAmount(newAmount, cardId);
+        user.setPaymentsCount(user.getPaymentsCount()+1);
         resp.sendRedirect("/epamProject/mainPage");
     }
 }

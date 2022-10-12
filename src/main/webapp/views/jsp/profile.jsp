@@ -11,69 +11,159 @@
 <head>
     <title>Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .mainDiv {
+            display: flex;
+        }
+
+        .firstDiv {
+            width: 1050px;
+            height: 500px;
+
+        }
+
+        .secDiv {
+            width: 550px;
+            height: 550px;
+
+        }
+
+        .arrow {
+            margin-left: -15px;
+        }
+        .avatar {
+            vertical-align: middle;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
-<p>First name: ${sessionScope.user.firstName}</p>
-<p>Last name: ${sessionScope.user.lastName}</p>
-<p>Email: ${sessionScope.user.email}</p>
-<p>Phone number: ${sessionScope.user.phoneNumber}</p>
-<a href="${pageContext.request.contextPath}/editProfile">Edit profile</a><br>
-<table border="3">
-    <tr>
-        <th>
-            Назва
-            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortName&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortName&type=DESC&page=1">&#129045;</a>
-        </th>
-        <th>
-            Номер картки
-            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortCardNumber&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortCardNumber&type=DESC&page=1">&#129045;</a>
-        </th>
-        <th>
-            Баланс
-            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortAmount&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortAmount&type=DESC&page=1">&#129045;</a>
-        </th>
-        <th>
-            Статус
-            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/profile?sortAction=sortStatus&type=DESC&page=1">&#129045;</a>
-        </th>
-    </tr>
-    <c:forEach var="names" items="${requestScope.accountsPag}">
-        <tr>
+<div class="mainDiv">
+    <div class="pt-5 mt-5 mx-3 firstDiv">
+        <img src="avatar.png" alt="Avatar" class="avatar">
+        <table class="table border border-primary">
+            <thead class="table bg-primary">
+            <tr>
+                <th scope="col">
+                    <a class="text-white text-decoration-none">Назва</a>
+                    <a class="text-white text-decoration-none arrow"
+                       href="${pageContext.request.contextPath}/user/profile?sortAction=sortName&type=ASC&page=1">&#129047;</a>
+                    <a class="text-white text-decoration-none arrow"
+                       href="${pageContext.request.contextPath}/user/profile?sortAction=sortName&type=DESC&page=1">&#129045;</a>
+                </th>
+                <th scope="col">
+                    <a class="text-white text-decoration-none">Номер картки</a>
+                    <a class="text-white text-decoration-none arrow"
+                       href="${pageContext.request.contextPath}/user/profile?sortAction=sortCardNumber&type=ASC&page=1">&#129047;</a>
+                    <a class="text-white text-decoration-none arrow"
+                       href="${pageContext.request.contextPath}/user/profile?sortAction=sortCardNumber&type=DESC&page=1">&#129045;</a>
+                </th>
+                <th scope="col">
+                    <a class="text-white text-decoration-none">Баланс</a>
+                    <a class="text-white text-decoration-none arrow"
+                       href="${pageContext.request.contextPath}/user/profile?sortAction=sortAmount&type=ASC&page=1">&#129047;</a>
+                    <a class="text-white text-decoration-none arrow"
+                       href="${pageContext.request.contextPath}/user/profile?sortAction=sortAmount&type=DESC&page=1">&#129045;</a>
+                </th>
+                <th scope="col">
+                    <a class="text-white text-decoration-none">Статус</a>
+                    <a class="text-white text-decoration-none arrow"
+                       href="${pageContext.request.contextPath}/user/profile?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
+                    <a class="text-white text-decoration-none arrow"
+                       href="${pageContext.request.contextPath}/user/profile?sortAction=sortStatus&type=DESC&page=1">&#129045;</a>
+                </th>
+                <th scope="col">
+                </th>
+                <th scope="col">
+                </th>
+            </tr>
+            </thead>
+            <tbody>
 
-            <td>${names.name}</td>
-            <td>${names.cardNumber}</td>
-            <td>${names.amount}</td>
-            <td>${names.status}</td>
-            <td><a href="${pageContext.request.contextPath}/topUp?id=${names.id}">Пополнить счет</a></td>
+            <c:forEach var="names" items="${requestScope.accountsPag}">
+                <tr>
+
+                    <td>${names.name}</td>
+                    <td>${names.cardNumber}</td>
+                    <td>${names.amount}</td>
+                    <td>${names.status}</td>
+                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/user/topUp?id=${names.id}">Пополнить
+                        счет</a></td>
+                    <c:choose>
+                        <c:when test="${names.status == 'unblocked'}">
+                            <td><a class="btn btn-primary"
+                                   href="${pageContext.request.contextPath}/user/profile?action=block&id=${names.id}">Заблокувати</a>
+                            </td>
+                        </c:when>
+                        <c:when test="${names.status == 'blocked'}">
+                            <td><a class="btn btn-primary"
+                                   href="${pageContext.request.contextPath}/user/profile?action=unblock&id=${names.id}">Розблокувати</a>
+                            </td>
+                        </c:when>
+                    </c:choose>
+                </tr>
+            </c:forEach>
+
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/user/addNewAccount">add new account</a>
+        </div>
+        <div class="d-flex justify-content-center">
             <c:choose>
-            <c:when test="${names.status == 'unblocked'}">
-                <td><a href="${pageContext.request.contextPath}/profile?action=block&id=${names.id}">Заблокувати</a></td>
-            </c:when>
-            <c:when test="${names.status == 'blocked'}">
-                <td><a href="${pageContext.request.contextPath}/profile?action=unblock&id=${names.id}">Надіслати запит на розблокування</a></td>
-            </c:when>
+                <c:when test="${sessionScope.profPage == 1 && requestScope.pagesCount >1}">
+                    <a class="btn btn-primary mx-1 mb-1"
+                       href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage+1}">&#129046</a>
+                </c:when>
+                <c:when test="${sessionScope.profPage == requestScope.pagesCount && sessionScope.profPage != 1}">
+                    <a class="btn btn-primary mx-1 mb-1"
+                       href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage-1}">&#129044</a>
+                </c:when>
+                <c:when test="${sessionScope.profPage > 1 && sessionScope.profPage < requestScope.pagesCount}">
+                    <a class="btn btn-primary mx-1 mb-1"
+                       href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage-1}">&#129044</a>
+                    <a class="btn btn-primary mx-1 mb-1"
+                       href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage+1}">&#129046</a>
+                </c:when>
             </c:choose>
-        </tr>
-    </c:forEach>
+        </div>
 
-</table>
-<c:choose>
-    <c:when test="${sessionScope.profPage == 1 && requestScope.pagesCount >1}">
-        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}">-></a>
-    </c:when>
-    <c:when test="${sessionScope.profPage == requestScope.pagesCount && sessionScope.profPage != 1}">
-        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}"><-</a>
-    </c:when>
-    <c:when test="${sessionScope.profPage > 1 && sessionScope.profPage < requestScope.pagesCount}">
-        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage-1}"><-</a>
-        <a href="${pageContext.request.contextPath}/profile?page=${sessionScope.profPage+1}">-></a>
-    </c:when>
-</c:choose>
-<a href="${pageContext.request.contextPath}/addNewAccount">add new account</a>
+    </div>
+    <div class="border border-2 border-primary mx-3 mt-5 secDiv">
+        <table class="table border-primary">
+            <tbody>
+            <tr>
+                <td>First name:</td>
+                <td>${sessionScope.user.firstName}</td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td>${sessionScope.user.lastName}</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td> ${sessionScope.user.email}</td>
+            </tr>
+            <tr>
+                <td>Phone number:</td>
+                <td> ${sessionScope.user.phoneNumber}</td>
+            </tr>
+            <tr>
+                <td>Кількість платежів:</td>
+                <td> ${sessionScope.user.paymentsCount}</td>
+            </tr>
+            <tr>
+                <td>Кількість рахунків:</td>
+                <td> ${sessionScope.user.accountsCount}</td>
+            </tr>
+            </tbody>
+        </table>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/user/editProfile">Edit profile</a>
+
+    </div>
+</div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.my.dao;
 
-import com.my.controllers.dto.RequestDTO;
+import com.my.dto.RequestDTO;
 
 import java.sql.*;
 import java.util.ArrayList;

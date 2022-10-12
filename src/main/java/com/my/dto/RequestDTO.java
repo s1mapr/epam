@@ -1,8 +1,4 @@
-package com.my.controllers.dto;
-
-import com.my.entities.Receipt;
-
-import java.util.Date;
+package com.my.dto;
 
 public class RequestDTO {
     private int accountId;

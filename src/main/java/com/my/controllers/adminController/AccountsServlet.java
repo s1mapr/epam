@@ -1,4 +1,4 @@
-package com.my.controllers;
+package com.my.controllers.adminController;
 
 import com.my.dao.AccountDAO;
 import com.my.entities.Account;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@WebServlet("/accounts")
+@WebServlet("/adm/accounts")
 public class AccountsServlet extends HttpServlet {
     private static final String GET_ACCOUNTS = "SELECT * FROM account JOIN user ON user.id = account.user_id LIMIT 10 OFFSET ?";
     private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name ";

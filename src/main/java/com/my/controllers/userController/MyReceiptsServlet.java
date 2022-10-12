@@ -1,4 +1,4 @@
-package com.my.controllers;
+package com.my.controllers.userController;
 
 import com.my.dao.ReceiptDAO;
 import com.my.entities.Receipt;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@WebServlet("/myReceipts")
+@WebServlet("/user/myReceipts")
 public class MyReceiptsServlet extends HttpServlet {
     public static String GET_RECEIPTS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? LIMIT 10 OFFSET ?";
     public static String GET_RECEIPTS_SORTED_BY_AMOUNT = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY amount ";

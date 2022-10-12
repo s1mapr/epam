@@ -13,7 +13,7 @@
     <title>Top up</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/topUp?id=${sessionScope.accountId}" method="post">
+<form action="${pageContext.request.contextPath}/user/topUp?id=${sessionScope.accountId}" method="post">
     <input name = cardNumber><br>
     <c:if test="${requestScope.valid.cardNumber == 'false'}">
         card number error<br>

@@ -11,67 +11,101 @@
 <head>
     <title>My receipts</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .arrow {
+            margin-left: -15px;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
-<table border="3">
-    <tr>
-        <th>
-            Назва
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortName&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortName&type=DESC&page=1">&#129045;</a>
-        </th>
-        <th>
-            Дата
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortDate&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortDate&type=DESC&page=1">&#129045;</a>
-        </th>
-        <th>
-            Мета платежу
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortPurpose&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortPurpose&type=DESC&page=1">&#129045;</a>
-        </th>
-        <th>
-            Ім'я аккаунту
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortAccount&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortAccount&type=DESC&page=1">&#129045;</a>
-        </th>
-        <th>
-            Сума
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortAmount&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortAmount&type=DESC&page=1">&#129045;</a>
-        </th>
-        <th>
-            Статус
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
-            <a href = "${pageContext.request.contextPath}/myReceipts?sortAction=sortStatus&type=DESC&page=1">&#129045;</a>
-        </th>
-
-    </tr>
-    <c:forEach var="receipts" items="${requestScope.list}">
+<div class="px-2 pt-4 ">
+    <table class="table border border-primary">
+        <thead class="table bg-primary">
         <tr>
-            <td>${receipts.name}</td>
-            <td>${receipts.date}</td>
-            <td>${receipts.purpose}</td>
-            <td>${receipts.accountName}</td>
-            <td>${receipts.amount}</td>
-            <td>${receipts.status}</td>
-            <td><a>Квитанція</a></td>
+            <th scope="col">
+                <a class="text-white text-decoration-none ">Назва</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortName&type=ASC&page=1">&#129047;</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortName&type=DESC&page=1">&#129045;</a>
+            </th>
+            <th scope="col">
+                <a class="text-white text-decoration-none">Дата</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortDate&type=ASC&page=1">&#129047;</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortDate&type=DESC&page=1">&#129045;</a>
+            </th>
+            <th scope="col">
+                <a class="text-white text-decoration-none">Мета платежу</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortPurpose&type=ASC&page=1">&#129047;</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortPurpose&type=DESC&page=1">&#129045;</a>
+            </th>
+            <th scope="col">
+                <a class="text-white text-decoration-none">Ім'я аккаунту</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortAccount&type=ASC&page=1">&#129047;</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortAccount&type=DESC&page=1">&#129045;</a>
+            </th>
+            <th scope="col">
+                <a class="text-white text-decoration-none">Сума</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortAmount&type=ASC&page=1">&#129047;</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortAmount&type=DESC&page=1">&#129045;</a>
+            </th>
+            <th scope="col">
+                <a class="text-white text-decoration-none">Статус</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
+                <a class="text-white text-decoration-none arrow"
+                   href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortStatus&type=DESC&page=1">&#129045;</a>
+            </th>
+            <th scope="col">
+            </th>
         </tr>
-    </c:forEach>
-</table>
-<c:choose>
+        </thead>
+        <tbody>
+        <c:forEach var="receipts" items="${requestScope.list}">
+            <tr>
+                <td>${receipts.name}</td>
+                <td>${receipts.date}</td>
+                <td>${receipts.purpose}</td>
+                <td>${receipts.accountName}</td>
+                <td>${receipts.amount}</td>
+                <td>${receipts.status}</td>
+                <td><a class="btn btn-primary">Квитанція</a></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<div class="d-flex justify-content-center"><c:choose>
     <c:when test="${sessionScope.recPage == 1 && requestScope.pagesCount >1}">
-        <a href="${pageContext.request.contextPath}/myReceipts?page=${sessionScope.recPage+1}" >-></a>
+        <a class="btn btn-primary mx-1 mb-1"
+           href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage+1}">&#129046;
+
+        </a>
     </c:when>
     <c:when test="${sessionScope.recPage == requestScope.pagesCount && sessionScope.recPage != 1}">
-        <a href="${pageContext.request.contextPath}/myReceipts?page=${sessionScope.recPage-1}" ><-</a>
+        <a class="btn btn-primary mx-1 mb-1"
+           href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage-1}">&#129044;
+        </a>
     </c:when>
     <c:when test="${sessionScope.recPage > 1 && sessionScope.recPage < requestScope.pagesCount}">
-        <a href="${pageContext.request.contextPath}/myReceipts?page=${sessionScope.recPage-1}" ><-</a>
-        <a href="${pageContext.request.contextPath}/myReceipts?page=${sessionScope.recPage+1}" >-></a>
+        <a class="btn btn-primary mx-1 mb-1"
+           href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage-1}">&#129044;
+        </a>
+        <a class="btn btn-primary mx-1 mb-1"
+           href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage+1}">&#129046;
+        </a>
     </c:when>
 </c:choose>
+</div>
 
 </body>
 </html>
