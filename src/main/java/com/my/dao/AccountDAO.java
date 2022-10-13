@@ -32,7 +32,7 @@ public class AccountDAO {
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
-            statement.setInt(2, (currentPage-1)*5);
+            statement.setInt(2, (currentPage-1)*8);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     int accountId = rs.getInt("id");

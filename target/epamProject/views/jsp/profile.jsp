@@ -18,7 +18,7 @@
 
         .firstDiv {
             width: 1050px;
-            height: 500px;
+            height: 550px;
 
         }
 
@@ -31,12 +31,31 @@
         .arrow {
             margin-left: -15px;
         }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 100%;
+            box-shadow: 0 10px 20px rgba(134, 134, 134, 0.35);
+
+        }
+
+        .div1 {
+            display: inline-block;
+            margin-left: 450px;
+        }
+
+        .div2 {
+            display: inline-block;
+            margin-left: 315px;
+
+        }
     </style>
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
 <div class="mainDiv">
-    <div class="pt-5 mt-5 mx-3 firstDiv">
+    <div class=" mt-5 mx-3 firstDiv">
         <table class="table border border-primary">
             <thead class="table bg-primary">
             <tr>
@@ -102,33 +121,40 @@
 
             </tbody>
         </table>
-        <div class="d-flex justify-content-end">
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/user/addNewAccount">add new account</a>
+        <div class="d-flex">
+            <div class="justify-content-center div1">
+                <c:choose>
+                    <c:when test="${sessionScope.profPage == 1 && requestScope.pagesCount >1}">
+                        <a class="btn btn-primary mx-1  mb-2"
+                           href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage+1}">&#129046</a>
+                    </c:when>
+                    <c:when test="${sessionScope.profPage == requestScope.pagesCount && sessionScope.profPage != 1}">
+                        <a class="btn btn-primary mx-1  mb-2"
+                           href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage-1}">&#129044</a>
+                    </c:when>
+                    <c:when test="${sessionScope.profPage > 1 && sessionScope.profPage < requestScope.pagesCount}">
+                        <a class="btn btn-primary mx-1  mb-2"
+                           href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage-1}">&#129044</a>
+                        <a class="btn btn-primary mx-1 mb-2 "
+                           href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage+1}">&#129046</a>
+                    </c:when>
+                </c:choose>
+            </div>
+            <div class="justify-content-end div2 ">
+                <a class="btn btn-primary mb-2 " href="${pageContext.request.contextPath}/user/addNewAccount">add new
+                    account</a>
+            </div>
         </div>
-        <div class="d-flex justify-content-center">
-            <c:choose>
-                <c:when test="${sessionScope.profPage == 1 && requestScope.pagesCount >1}">
-                    <a class="btn btn-primary mx-1 mb-1"
-                       href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage+1}">&#129046</a>
-                </c:when>
-                <c:when test="${sessionScope.profPage == requestScope.pagesCount && sessionScope.profPage != 1}">
-                    <a class="btn btn-primary mx-1 mb-1"
-                       href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage-1}">&#129044</a>
-                </c:when>
-                <c:when test="${sessionScope.profPage > 1 && sessionScope.profPage < requestScope.pagesCount}">
-                    <a class="btn btn-primary mx-1 mb-1"
-                       href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage-1}">&#129044</a>
-                    <a class="btn btn-primary mx-1 mb-1"
-                       href="${pageContext.request.contextPath}/user/profile?page=${sessionScope.profPage+1}">&#129046</a>
-                </c:when>
-            </c:choose>
-        </div>
-
     </div>
-    <div class="border border-2 border-primary mx-3 mt-5 secDiv">
+
+
+    <div class="shadow-lg mx-3 mt-5 secDiv px-4">
+        <div class="d-flex justify-content-center my-5">
+            <img src="${sessionScope.user.avatarURL}" class="avatar">
+        </div>
         <table class="table border-primary">
             <tbody>
-            <tr>
+            <tr >
                 <td>First name:</td>
                 <td>${sessionScope.user.firstName}</td>
             </tr>
@@ -154,8 +180,11 @@
             </tr>
             </tbody>
         </table>
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/user/editProfile">Edit profile</a>
-
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-primary mb-2"
+               href="${pageContext.request.contextPath}/user/editProfile">Edit profile
+            </a>
+        </div>
     </div>
 </div>
 </body>

@@ -3,9 +3,12 @@ package com.my.dao;
 import com.my.entities.Account;
 import com.my.entities.User;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserDAO {
     private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user JOIN role ON role.id = user.role_id WHERE login = ? AND password = ?";
@@ -15,6 +18,7 @@ public class UserDAO {
     private static final String UNBLOCK_USER = "UPDATE user SET status = \"unblocked\" WHERE id = ?";
     private static final String GET_ALL_USERS_COUNT = "SELECT COUNT(id) AS count FROM user WHERE role_id = '1'";
     private static final String UPDATE_USER_DATA = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE id = ?";
+    private static final String SET_USER_AVATAR = "UPDATE user SET avatar_url = ? WHERE id = ?";
     public static User getUserByLoginAndPassword(String login, String password) {
         User user = null;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -31,6 +35,13 @@ public class UserDAO {
                 String userEmail = rs.getString("email");
                 String userPhoneNumber = rs.getString("phone_number");
                 String userRole = rs.getString("name");
+                String avatarURL = rs.getString("avatar_url");
+                System.out.println(avatarURL);
+                if(Objects.isNull(avatarURL)){
+                    avatarURL = "\\epamProject\\upload\\default.png";
+                }else{
+                    avatarURL = avatarURL.split("target")[1];
+                }
                 int accountsCount = AccountDAO.getCountOfUsersAccounts(userId);
                 int paymentsCount = ReceiptDAO.getPaymentsCountOfUser(userId);
                 user = new User.Builder()
@@ -44,6 +55,7 @@ public class UserDAO {
                         .role(userRole)
                         .accountsCount(accountsCount)
                         .paymentsCount(paymentsCount)
+                        .avatarURL(avatarURL)
                         .build();
             }
         } catch (SQLException e) {
@@ -160,6 +172,17 @@ public class UserDAO {
         statement.setString(4, phoneNumber);
         statement.setInt(5, userId);
         statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setNewAvatar(String url, int userId){
+        try(Connection connection = DBManager.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(SET_USER_AVATAR)){
+            statement.setString(1, url);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

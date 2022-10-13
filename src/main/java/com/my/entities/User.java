@@ -13,6 +13,7 @@ public class User {
     private String status;
     private int accountsCount;
     private int paymentsCount;
+    private String avatarURL;
 
     public static class Builder{
         private User newUser;
@@ -65,11 +66,22 @@ public class User {
             newUser.status = status;
             return this;
         }
+        public Builder avatarURL(String avatarURL){
+            newUser.avatarURL = avatarURL;
+            return this;
+        }
         public User build(){
             return newUser;
         }
     }
 
+    public String getAvatarURL() {
+        return avatarURL;
+    }
+
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
+    }
 
     public int getId() {
         return id;

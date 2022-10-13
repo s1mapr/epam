@@ -18,7 +18,7 @@ import java.util.Objects;
 
 @WebServlet("/user/profile")
 public class ProfileServlet extends HttpServlet {
-    private static final String GET_USER_ACCOUNTS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? LIMIT 5 OFFSET ?";
+    private static final String GET_USER_ACCOUNTS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? LIMIT 8 OFFSET ?";
     private static final String GET_USER_ACCOUNTS_SORTED_BY_NAME = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY name ";
     private static final String GET_USER_ACCOUNTS_SORTED_BY_CARD_NUMBER = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY card.number ";
     private static final String GET_USER_ACCOUNTS_SORTED_BY_AMOUNT = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY card.amount ";
@@ -32,7 +32,7 @@ public class ProfileServlet extends HttpServlet {
         List<Account> list;
         req.removeAttribute("accounts");
         int listLength = AccountDAO.getCountOfUsersAccounts(user.getId());
-        int pagesCount = listLength % 5 == 0 ? listLength / 5 : listLength / 5 + 1;
+        int pagesCount = listLength % 8 == 0 ? listLength / 8 : listLength / 8 + 1;
         req.setAttribute("pagesCount", pagesCount);
         String action = req.getParameter("action");
         if (Objects.nonNull(action) && action.equals("block")) {
@@ -60,13 +60,13 @@ public class ProfileServlet extends HttpServlet {
             String type = req.getParameter("type");
             switch (action) {
                 case "sortName":
-                    return GET_USER_ACCOUNTS_SORTED_BY_NAME + type + " LIMIT 5 OFFSET ?";
+                    return GET_USER_ACCOUNTS_SORTED_BY_NAME + type + " LIMIT 8 OFFSET ?";
                 case "sortCardNumber":
-                    return GET_USER_ACCOUNTS_SORTED_BY_CARD_NUMBER + type + " LIMIT 5 OFFSET ?";
+                    return GET_USER_ACCOUNTS_SORTED_BY_CARD_NUMBER + type + " LIMIT 8 OFFSET ?";
                 case "sortAmount":
-                    return GET_USER_ACCOUNTS_SORTED_BY_AMOUNT + type + " LIMIT 5 OFFSET ?";
+                    return GET_USER_ACCOUNTS_SORTED_BY_AMOUNT + type + " LIMIT 8 OFFSET ?";
                 case "sortStatus":
-                    return GET_USER_ACCOUNTS_SORTED_BY_STATUS + type + " LIMIT 5 OFFSET ?";
+                    return GET_USER_ACCOUNTS_SORTED_BY_STATUS + type + " LIMIT 8 OFFSET ?";
             }
         }
         return GET_USER_ACCOUNTS;
