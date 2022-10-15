@@ -16,42 +16,112 @@
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
-<form action="${pageContext.request.contextPath}/utilitiesPayment" method="post">
-    Показання лічильника води: <input name="meter_w"><br>
-    <c:if test="${requestScope.valid.meterW == 'false'}">
-        meter error<br>
-    </c:if>
-    Сума: <input name="amount_w"><br>
-    <c:if test="${requestScope.valid.amountW == 'false'}">
-        payment amount error<br>
-    </c:if>
-    Показання лічильника елктроенергії:<input name="meter_e"><br>
-    <c:if test="${requestScope.valid.meterE == 'false'}">
-        meter error<br>
-    </c:if>
-    Сума: <input name="amount_e"><br>
-    <c:if test="${requestScope.valid.amountE == 'false'}">
-        payment amount error<br>
-    </c:if>
-    Показання лічильника елктроенергії:<input name="meter_g"><br>
-    <c:if test="${requestScope.valid.meterG == 'false'}">
-        meter error<br>
-    </c:if>
-    Сума: <input name="amount_g"><br>
-    <c:if test="${requestScope.valid.amountG == 'false'}">
-        payment amount error<br>
-    </c:if>
-    <select name="accountId" aria-label="Default select example">
-        <option value="${sessionScope.accounts.get(0).id}" selected>${sessionScope.accounts.get(0).name}</option>
-        <c:forEach var="names" items="${sessionScope.accounts}">
-            <c:if test="${names.status == 'unblocked'}">
-                <option value="${names.id}">${names.name}</option>
-            </c:if>
-        </c:forEach>
-    </select>
-    <input type="submit" value="Сплатити">
-    ${requestScope.notEnoughMoney}
+<div class="container-fluid vh-50" style="margin-top:50px">
+    <div class="rounded d-flex justify-content-center">
+        <div class="col-md-4 col-sm-12 shadow-lg px-5 pt-3 bg-light">
+            <div class="text-center">
+                <h3 class="text-primary">Оплата комунальних послуг</h3>
+            </div>
 
-</form>
+            <form action="${pageContext.request.contextPath}/user/utilitiesPayment" method="post">
+                <div class="p-2">
+
+                    <div class="input-group mt-2">
+                        <input name="meter_w" class="form-control" placeholder="Показання лічильника води">
+                    </div>
+                    <c:if test="${requestScope.valid.meterW == 'false'}">
+                        <div><cite style="color: red">meter error</cite></div>
+                    </c:if>
+
+                    <div class="input-group mt-2">
+                        <input name="amount_w" class="form-control" placeholder="Сума">
+                    </div>
+                    <c:if test="${requestScope.valid.amountW == 'false'}">
+                        <div><cite style="color: red">payment amount error</cite></div>
+                    </c:if>
+
+
+                    <div class="input-group mt-2">
+                        <input name="meter_e" class="form-control" placeholder="Показання лічильника елктроенергії">
+                    </div>
+                    <c:if test="${requestScope.valid.meterE == 'false'}">
+                        <div><cite style="color: red">meter error</cite></div>
+                    </c:if>
+
+                    <div class="input-group mt-2">
+                        <input name="amount_e" class="form-control" placeholder="Сума">
+                    </div>
+                    <c:if test="${requestScope.valid.amountE == 'false'}">
+                        <div><cite style="color: red">payment amount error</cite></div>
+                    </c:if>
+
+                    <div class="input-group mt-2">
+                        <input name="meter_g" class="form-control" placeholder="Показання лічильника газу">
+                    </div>
+                    <c:if test="${requestScope.valid.meterG == 'false'}">
+                        <div><cite style="color: red">meter error</cite></div>
+                    </c:if>
+
+                    <div class="input-group mt-2">
+                        <input name="amount_g" class="form-control" placeholder="Сума">
+                    </div>
+                    <c:if test="${requestScope.valid.amountG == 'false'}">
+                        <div><cite style="color: red">payment amount error</cite></div>
+                    </c:if>
+
+                    <div class="mt-2">
+                        <c:choose>
+                            <c:when test="${sessionScope.accounts.size() == 0}">
+                                <select class="form-select" name="accountId" aria-label="Default select example">
+
+                                    <option value="none" selected>У вас немає рахунків</option>
+                                </select>
+                            </c:when>
+                            <c:when test="${sessionScope.accounts.size() > 0 && sessionScope.accounts.size() <= 5}">
+                                <select class="form-select" class="form-control"
+                                        onfocus='this.size=${sessionScope.accounts.size()+1};' onblur='this.size=1;'
+                                        onchange='this.size=1; this.blur();' name="accountId"
+                                        aria-label="Default select example">
+
+                                    <option value="${sessionScope.accounts.get(0).id}"
+                                            selected>${sessionScope.accounts.get(0).name}</option>
+                                    <c:forEach var="names" items="${sessionScope.accounts}">
+                                        <c:if test="${names.status == 'unblocked'}">
+                                            <option value="${names.id}">${names.name}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </c:when>
+                            <c:when test="${sessionScope.accounts.size() > 5}">
+                                <select class="form-select" class="form-control" onfocus='this.size=5;'
+                                        onblur='this.size=1;' onchange='this.size=1; this.blur();' name="accountId"
+                                        aria-label="Default select example">
+
+                                    <option value="${sessionScope.accounts.get(0).id}"
+                                            selected>${sessionScope.accounts.get(0).name}</option>
+                                    <c:forEach var="names" items="${sessionScope.accounts}">
+                                        <c:if test="${names.status == 'unblocked'}">
+                                            <option value="${names.id}">${names.name}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+
+                            </c:when>
+
+                        </c:choose>
+                    </div>
+                    <div class="text-center"><cite style="color: red">${requestScope.notEnoughMoney}</cite></div>
+                    <div class="form-row text-center">
+                        <button class="btn btn-primary text-center mt-3" type="submit">
+                            Сплатити
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

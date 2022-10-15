@@ -11,19 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.CacheRequest;
 import java.util.Objects;
 
-@WebServlet("/user/topUp")
-public class topUpAccountServlet extends HttpServlet {
+import static com.my.utils.HttpConstants.*;
+
+@WebServlet(USER_TOP_UP_PATH)
+public class TopUpAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("topUpAccountServlet#doGet");
+        System.out.println("TopUpAccountServlet#doGet");
         HttpSession session = req.getSession();
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
         req.setAttribute("valid", validation);
-        if(Objects.isNull(session.getAttribute("accountId"))) {
+        if (Objects.isNull(session.getAttribute("accountId"))) {
             String id = req.getParameter("id");
             session.setAttribute("accountId", id);
         }
@@ -32,7 +33,7 @@ public class topUpAccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("topUpAccountServlet#doPost");
+        System.out.println("TopUpAccountServlet#doPost");
         HttpSession session = req.getSession();
         String id = session.getAttribute("accountId").toString();
         Validation validation = new Validation();
@@ -41,17 +42,17 @@ public class topUpAccountServlet extends HttpServlet {
                 req.getParameter("expiryDate"),
                 req.getParameter("cvv"),
                 req.getParameter("amount"));
-        if(!isValid){
+        if (!isValid) {
             session.setAttribute("valid", validation);
-            resp.sendRedirect("/epamProject/user/topUp");
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_TOP_UP_PATH);
             return;
         }
         int cardId = AccountDAO.getCardId(Integer.parseInt(id));
         double amount = Double.parseDouble(req.getParameter("amount"));
         double currentAmount = CardDAO.getAmount(cardId);
-        double newAmount = currentAmount+amount;
+        double newAmount = currentAmount + amount;
         CardDAO.updateAmount(newAmount, cardId);
         session.removeAttribute("accountId");
-        resp.sendRedirect("/epamProject/user/profile");
+        resp.sendRedirect(MAIN_SERVLET_PATH + USER_PROFILE_PATH);
     }
 }

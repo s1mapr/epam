@@ -16,11 +16,18 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@WebServlet("/authorization")
+import static com.my.utils.HttpConstants.*;
+
+@WebServlet(AUTHORIZATION_PATH)
 public class AuthorizationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("AuthorizationServlet#doGet");
+        HttpSession session = req.getSession();
+        if (Objects.nonNull(session.getAttribute("youAreBlocked"))) {
+            session.removeAttribute("youAreBlocked");
+            req.setAttribute("youAreBlocked", "blocked");
+        }
         req.getRequestDispatcher("/views/jsp/authorization.jsp").forward(req, resp);
     }
 
@@ -31,23 +38,24 @@ public class AuthorizationServlet extends HttpServlet {
         String password = req.getParameter("password");
         User user = UserDAO.getUserByLoginAndPassword(login, password);
         HttpSession session = req.getSession();
-        if(Objects.isNull(user)) {
+        if (Objects.isNull(user)) {
             session.setAttribute("error", "wrong login or password");
-            resp.sendRedirect("/epamProject/authorization");
+            resp.sendRedirect(MAIN_SERVLET_PATH + AUTHORIZATION_PATH);
             return;
         }
-
+        if (user.getStatus().equals("blocked")) {
+            session.setAttribute("youAreBlocked", "Ваш акаунт заблоковано");
+            resp.sendRedirect(MAIN_SERVLET_PATH + AUTHORIZATION_PATH);
+            return;
+        }
         List<Account> list = AccountDAO.getUserAccountsWithoutPagination(user.getId());
-        if(!list.isEmpty()){
-            session.setAttribute("accounts", list);
-
-        }
+        session.setAttribute("accounts", list);
         session.setAttribute("user", user);
-        if(user.getRole().equals("admin")){
-            resp.sendRedirect("/epamProject/adm/accounts");
+        if (user.getRole().equals("admin")) {
+            resp.sendRedirect(MAIN_SERVLET_PATH + ADMIN_ACCOUNTS_PATH);
             return;
         }
-        resp.sendRedirect("/epamProject/mainPage");
+        resp.sendRedirect(MAIN_SERVLET_PATH + MAIN_PAGE_PATH);
 
     }
 }

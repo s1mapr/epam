@@ -16,26 +16,79 @@
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
-<form action="${pageContext.request.contextPath}/phoneRecharge" method="post">
-    Номер телефону: <input name="phone"><br>
-    <c:if test="${requestScope.valid.phoneNumber == 'false'}">
-        phone number error<br>
-    </c:if>
-    Сума: <input name="amount"><br>
-    <c:if test="${requestScope.valid.paymentAmount == 'false'}">
-        payment amount error<br>
-    </c:if>
-    <select name="accountId" aria-label="Default select example">
-        <option value="${sessionScope.accounts.get(0).id}" selected>${sessionScope.accounts.get(0).name}</option>
-        <c:forEach var="names" items="${sessionScope.accounts}">
-            <c:if test="${names.status == 'unblocked'}">
-                <option value="${names.id}">${names.name}</option>
-            </c:if>
-        </c:forEach>
-    </select>
-    <input type="submit" value="Сплатити">
-    ${requestScope.notEnoughMoney}
 
-</form>
+<div class="container-fluid vh-50" style="margin-top:100px">
+    <div class="rounded d-flex justify-content-center">
+        <div class="col-md-4 col-sm-12 shadow-lg px-5 pt-5 bg-light">
+            <div class="text-center">
+                <h3 class="text-primary">Поповнення телефону</h3>
+            </div>
+
+            <form action="${pageContext.request.contextPath}/user/phoneRecharge" method="post">
+                <div class="p-4">
+                    <div class="input-group mt-3">
+                        <input name="phone" class="form-control" placeholder="Номер телефону">
+                    </div>
+                    <c:if test="${requestScope.valid.phoneNumber == 'false'}">
+                        <div><cite style="color: red">phone number error</cite></div>
+                    </c:if>
+                    <div class="input-group mt-3">
+                        <input name="amount" class="form-control" placeholder="Сума">
+                    </div>
+                    <c:if test="${requestScope.valid.paymentAmount == 'false'}">
+                        <div><cite style="color: red">payment amount error</cite></div>
+                    </c:if>
+                    <div class="mt-3">
+                        <c:choose>
+                            <c:when test="${sessionScope.accounts.size() == 0}">
+                                <select class="form-select" name="accountId" aria-label="Default select example">
+
+                                    <option value="none" selected>У вас немає рахунків</option>
+                                </select>
+                            </c:when>
+                            <c:when test="${sessionScope.accounts.size() > 0 && sessionScope.accounts.size() <= 5}">
+                                <select class="form-select" class="form-control"
+                                        onfocus='this.size=${sessionScope.accounts.size()+1};' onblur='this.size=1;'
+                                        onchange='this.size=1; this.blur();' name="accountId"
+                                        aria-label="Default select example">
+
+                                    <option value="${sessionScope.accounts.get(0).id}"
+                                            selected>${sessionScope.accounts.get(0).name}</option>
+                                    <c:forEach var="names" items="${sessionScope.accounts}">
+                                        <c:if test="${names.status == 'unblocked'}">
+                                            <option value="${names.id}">${names.name}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </c:when>
+                            <c:when test="${sessionScope.accounts.size() > 5}">
+                                <select class="form-select" class="form-control" onfocus='this.size=5;'
+                                        onblur='this.size=1;' onchange='this.size=1; this.blur();' name="accountId"
+                                        aria-label="Default select example">
+
+                                    <option value="${sessionScope.accounts.get(0).id}"
+                                            selected>${sessionScope.accounts.get(0).name}</option>
+                                    <c:forEach var="names" items="${sessionScope.accounts}">
+                                        <c:if test="${names.status == 'unblocked'}">
+                                            <option value="${names.id}">${names.name}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+
+                            </c:when>
+
+                        </c:choose>
+                    </div>
+                    <div class="text-center"><cite style="color: red">${requestScope.notEnoughMoney}</cite></div>
+                    <div class="form-row text-center">
+                        <button class="btn btn-primary text-center mt-5" type="submit">
+                            Поповнити
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

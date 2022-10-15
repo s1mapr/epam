@@ -84,7 +84,8 @@
         </tbody>
     </table>
 </div>
-<div class="d-flex justify-content-center"><c:choose>
+<div class="d-flex justify-content-center">
+    <c:choose>
     <c:when test="${sessionScope.recPage == 1 && requestScope.pagesCount >1}">
         <a class="btn btn-primary mx-1 mb-1"
            href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage+1}">&#129046;

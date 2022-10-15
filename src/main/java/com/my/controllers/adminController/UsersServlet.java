@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-@WebServlet("/adm/users")
+import static com.my.utils.HttpConstants.*;
+@WebServlet(ADMIN_USERS_PATH)
 public class UsersServlet extends HttpServlet {
     private static final String GET_USERS = "SELECT * FROM user WHERE role_id = '1' LIMIT 10 OFFSET ?";
     private static final String GET_USERS_SORTED_BY_LOGIN = "SELECT * FROM user WHERE role_id = '1' ORDER BY login ";

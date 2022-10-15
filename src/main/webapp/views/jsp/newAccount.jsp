@@ -12,28 +12,114 @@
 <head>
     <title>New Account</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/topUpForm.css">
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/user/addNewAccount" method="post">
-  Name: <input name = "name"><br>
-  <c:if test="${requestScope.valid.accountName == 'false'}">
-    account name error<br>
-  </c:if>
-  Card number: <input name="card"><br>
-  <c:if test="${requestScope.valid.cardNumber == 'false'}">
-    card number error<br>
-  </c:if>
-  Expiration date: <input name = "date"><br>
-  <c:if test="${requestScope.valid.expirationDate == 'false'}">
-    expiration date error<br>
-  </c:if>
-  CVV: <input name="cvv"><br>
-  <c:if test="${requestScope.valid.cvv == 'false'}">
-    cvv error<br>
-  </c:if>
-  <input  value = "Create new Account" type="submit">
-</form>
-<a href = "${pageContext.request.contextPath}/user/profile">Back to profile</a>
+<jsp:include page="/views/jsp/header.jsp"/>
+
+<div class="container mt-5 mb-4">
+
+  <div class="card-container">
+
+    <div class="front">
+      <div class="image">
+        <img src="${pageContext.request.contextPath}/views/img/chip.png">
+        <img src="${pageContext.request.contextPath}/views/img/visa.png">
+      </div>
+      <div class="card-number-box">################</div>
+      <div class="flexbox">
+        <div class="box">
+          <span>card holder</span>
+          <div class="card-holder-name">full name</div>
+        </div>
+        <div class="box">
+          <span>expires</span>
+          <div class="expiration">
+            <span class="exp-input">mm/yy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="back">
+      <div class="stripe"></div>
+      <div class="box">
+        <span>cvv</span>
+        <div class="cvv-box"></div>
+        <img src="${pageContext.request.contextPath}/views/img/visa.png" alt="">
+      </div>
+    </div>
+
+  </div>
+  <form action="${pageContext.request.contextPath}/user/addNewAccount?id=${sessionScope.accountId}" method="post">
+    <div class="inputBox">
+      <input type="text" maxlength="16" class="card-number-input" name="card" placeholder="card number">
+    </div>
+    <c:if test="${requestScope.valid.cardNumber == 'false'}">
+      card number error<br>
+    </c:if>
+    <div class="inputBox">
+      <input type="text" class="card-holder-input" placeholder="card holder">
+    </div>
+    <div class="flexbox">
+      <div class="inputBox">
+        <input class="expy-input" name="date" placeholder="expiration date">
+        <br>
+        <c:if test="${requestScope.valid.expirationDate == 'false'}">
+          expiry date error<br>
+        </c:if>
+      </div>
+
+      <div class="inputBox">
+        <input type="text" maxlength="4" class="cvv-input" name="cvv" placeholder="cvv">
+        <br>
+        <c:if test="${requestScope.valid.cvv == 'false'}">
+          cvv error<br>
+        </c:if>
+      </div>
+
+      <div class="inputBox">
+        <input type="text" name="name" placeholder="Account name">
+        <br>
+        <c:if test="${requestScope.valid.accountName == 'false'}">
+          account name error<br>
+        </c:if>
+      </div>
+    </div>
+    <input type="submit" value="Create new account" class="submit-btn">
+  </form>
+
+</div>
+
+
+<script>
+
+  document.querySelector('.card-number-input').oninput = () => {
+    document.querySelector('.card-number-box').innerText = document.querySelector('.card-number-input').value;
+  }
+
+  document.querySelector('.card-holder-input').oninput = () => {
+    document.querySelector('.card-holder-name').innerText = document.querySelector('.card-holder-input').value;
+  }
+
+  document.querySelector('.expy-input').oninput = () => {
+    document.querySelector('.exp-input').innerText = document.querySelector('.expy-input').value;
+  }
+
+  document.querySelector('.cvv-input').onmouseenter = () => {
+    document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(-180deg)';
+    document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
+  }
+
+  document.querySelector('.cvv-input').onmouseleave = () => {
+    document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(0deg)';
+    document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(180deg)';
+  }
+
+  document.querySelector('.cvv-input').oninput = () => {
+    document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
+  }
+
+</script>
 </body>
 </html>

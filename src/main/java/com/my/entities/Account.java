@@ -1,9 +1,5 @@
 package com.my.entities;
 
-import com.my.controllers.servicesPayments.PhoneRechargeServlet;
-
-import java.util.Date;
-
 public class Account {
     private String name;
     private int id;

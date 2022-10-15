@@ -12,8 +12,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import static com.my.utils.HttpConstants.*;
 
-@WebServlet("/adm/accounts")
+@WebServlet(ADMIN_ACCOUNTS_PATH)
 public class AccountsServlet extends HttpServlet {
     private static final String GET_ACCOUNTS = "SELECT * FROM account JOIN user ON user.id = account.user_id LIMIT 10 OFFSET ?";
     private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name ";

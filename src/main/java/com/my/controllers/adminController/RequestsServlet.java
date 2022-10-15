@@ -13,8 +13,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import static com.my.utils.HttpConstants.*;
 
-@WebServlet("/adm/requests")
+@WebServlet(ADMIN_REQUESTS_PATH)
 public class RequestsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

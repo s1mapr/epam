@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-
-@WebServlet("/user/myReceipts")
+import static com.my.utils.HttpConstants.*;
+@WebServlet(USER_RECEIPTS_PATH)
 public class MyReceiptsServlet extends HttpServlet {
     public static String GET_RECEIPTS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? LIMIT 10 OFFSET ?";
     public static String GET_RECEIPTS_SORTED_BY_AMOUNT = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY amount ";

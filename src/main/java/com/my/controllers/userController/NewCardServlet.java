@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/user/addNewAccount")
+import static com.my.utils.HttpConstants.*;
+
+@WebServlet(USER_NEW_CARD_PATH)
 public class NewCardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,14 +35,14 @@ public class NewCardServlet extends HttpServlet {
         Validation validation = new Validation();
         boolean isValid = validation.newCardValidation(req.getParameter("name"),
                 req.getParameter("card"), req.getParameter("date"), req.getParameter("cvv"));
-        if(!isValid){
+        if (!isValid) {
             session.setAttribute("valid", validation);
-            resp.sendRedirect("/epamProject/user/addNewAccount");
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_NEW_CARD_PATH);
             return;
         }
         String cardNumber = req.getParameter("card");
         if (!CardDAO.checkCardNumber(cardNumber)) {
-            resp.sendRedirect("/epamProject/user/addNewAccount");
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_NEW_CARD_PATH);
             return;
         }
         User user = (User) session.getAttribute("user");
@@ -48,7 +50,7 @@ public class NewCardServlet extends HttpServlet {
                 req.getParameter("date"),
                 req.getParameter("cvv"));
         AccountDAO.addNewAccount(req.getParameter("name"), cardId, user.getId());
-        user.setAccountsCount(user.getAccountsCount()+1);
-        resp.sendRedirect("/epamProject/user/profile");
+        user.setAccountsCount(user.getAccountsCount() + 1);
+        resp.sendRedirect(MAIN_SERVLET_PATH + USER_PROFILE_PATH);
     }
 }

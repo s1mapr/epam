@@ -1,4 +1,4 @@
-package com.my.controllers.servicesPayments;
+package com.my.controllers.userController.servicesPayments;
 
 import com.my.dao.AccountDAO;
 import com.my.dao.CardDAO;
@@ -15,54 +15,64 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebServlet("/phoneRecharge")
-public class PhoneRechargeServlet extends HttpServlet {
+import static com.my.utils.HttpConstants.*;
+
+@WebServlet(USER_UTILITIES_PAYMENT_PATH)
+public class UtilitiesPaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("PhoneRecharge#doGet");
+        System.out.println("UtilitiesPaymentServlet#doGet");
         HttpSession session = req.getSession();
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
         req.setAttribute("valid", validation);
-        if(Objects.nonNull(session.getAttribute("notEnoughMoney"))){
+        if (Objects.nonNull(session.getAttribute("notEnoughMoney"))) {
             session.removeAttribute("notEnoughMoney");
             req.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
         }
         session.removeAttribute("purposeId");
-        session.setAttribute("purposeId", 1);
-        req.getRequestDispatcher("/views/jsp/options/phoneRecharge.jsp").forward(req,resp);
+        session.setAttribute("purposeId", 4);
+        req.getRequestDispatcher("/views/jsp/options/utilitiesPayment.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("PhoneRecharge#doPost");
+        System.out.println("UtilitiesPaymentServlet#doPost");
         HttpSession session = req.getSession();
         Validation validation = new Validation();
-        boolean isValid = validation.phoneRechargeValidation(req.getParameter("phone"), req.getParameter("amount"));
-        if(!isValid){
+        boolean isValid = validation.utilitiesPaymentValidation(req.getParameter("meter_w"),
+                req.getParameter("meter_e"), req.getParameter("meter_g"), req.getParameter("amount_w"),
+                req.getParameter("amount_e"), req.getParameter("amount_g"));
+        if (!isValid) {
             session.setAttribute("valid", validation);
-            resp.sendRedirect("/epamProject/phoneRecharge");
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_UTILITIES_PAYMENT_PATH);
             return;
         }
+        int meter_w = Integer.parseInt(req.getParameter("meter_w"));
+        int meter_e = Integer.parseInt(req.getParameter("meter_e"));
+        int meter_g = Integer.parseInt(req.getParameter("meter_g"));
+        double amount_w = Double.parseDouble(req.getParameter("amount_w"));
+        double amount_e = Double.parseDouble(req.getParameter("amount_e"));
+        double amount_g = Double.parseDouble(req.getParameter("amount_g"));
+
         User user = (User) session.getAttribute("user");
-        String number = req.getParameter("phone");
         int purposeId = Integer.parseInt(session.getAttribute("purposeId").toString());
-        double amount = Double.parseDouble(req.getParameter("amount"));
+        double amount = amount_w + amount_e + amount_g;
         int accountId = Integer.parseInt(req.getParameter("accountId"));
         int cardId = AccountDAO.getCardId(accountId);
         double oldAmount = CardDAO.getAmount(cardId);
         double newAmount = oldAmount - amount;
-
-        if(newAmount<0){
+        if (newAmount < 0) {
             session.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
-            resp.sendRedirect("/epamProject/phoneRecharge");
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_UTILITIES_PAYMENT_PATH);
             return;
         }
-        int serviceId = ReceiptDAO.createNewEntryInPhoneService(number);
-        ReceiptDAO.createEntryInReceipt(accountId, purposeId,amount, serviceId, user.getId());
+
+        int serviceId = ReceiptDAO.createNewEntryInUtilitiesService(meter_w, meter_e, meter_g, amount_w, amount_e, amount_g);
+        ReceiptDAO.createEntryInReceipt(accountId, purposeId, amount, serviceId, user.getId());
 
         CardDAO.updateAmount(newAmount, cardId);
-        user.setPaymentsCount(user.getPaymentsCount()+1);
-        resp.sendRedirect("/epamProject/mainPage");
+        user.setPaymentsCount(user.getPaymentsCount() + 1);
+        resp.sendRedirect(MAIN_SERVLET_PATH + MAIN_PAGE_PATH);
     }
 }

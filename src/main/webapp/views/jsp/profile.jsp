@@ -115,6 +115,9 @@
                                    href="${pageContext.request.contextPath}/user/profile?action=unblock&id=${names.id}">Розблокувати</a>
                             </td>
                         </c:when>
+                        <c:when test="${names.status == 'pending'}">
+                            <td>Запит надіслано</td>
+                        </c:when>
                     </c:choose>
                 </tr>
             </c:forEach>

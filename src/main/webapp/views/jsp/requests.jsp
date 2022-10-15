@@ -11,44 +11,70 @@
 <head>
     <title>Requests</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .div-tb{
+            margin-right: 250px;
+            margin-left: 250px;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
-<table border="3">
-    <tr>
-        <th>
-            <a>Название</a>
-        </th>
-        <th>
-            <a>Номер картки</a></th>
-        <th>
-            <a>Баланс</a>
-        </th>
-        <th>
-            <a>Статус</a>
-        </th>
-    </tr>
+<div class="px-2 pt-4 div-tb">
+    <table class="table border border-primary">
+        <thead class="table bg-primary">
+        <tr>
+            <th scope="col">
+                <a class="text-white text-decoration-none ">Назва</a>
+            </th>
+            <th scope="col">
+                <a class="text-white text-decoration-none">Кількість платежів</a>
+            </th>
 
-<c:forEach var="request" items="${requestScope.requests}">
-    <tr>
-        <td>${request.accountName}</td>
-        <td>${request.status}</td>
-        <td>${request.paymentCount}</td>
-        <td><a href="${pageContext.request.contextPath}/adm/requests?action=unblock&id=${request.accountId}">Розблокувати</a></td>
-    </tr>
-</c:forEach>
-</table>
-<c:choose>
-    <c:when test="${sessionScope.reqPage == 1 && requestScope.pagesCount >1}">
-        <a href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage+1}">-></a>
-    </c:when>
-    <c:when test="${sessionScope.reqPage == requestScope.pagesCount && sessionScope.reqPage != 1}">
-        <a href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage-1}"><-</a>
-    </c:when>
-    <c:when test="${sessionScope.reqPage > 1 && sessionScope.reqPage < requestScope.pagesCount}">
-        <a href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage-1}"><-</a>
-        <a href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage+1}">-></a>
-    </c:when>
-</c:choose>
+
+            <th scope="col">
+                <a class="text-white text-decoration-none">Статус</a>
+            </th>
+
+            <th scope="col">
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="request" items="${requestScope.requests}">
+            <tr>
+                <td>${request.accountName}</td>
+                <td>${request.paymentCount}</td>
+                <td>${request.status}</td>
+                <td><a class="btn btn-primary mx-1 "
+                       href="${pageContext.request.contextPath}/adm/requests?action=unblock&id=${request.accountId}">Розблокувати</a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<div class="d-flex justify-content-center">
+    <c:choose>
+        <c:when test="${sessionScope.reqPage == 1 && requestScope.pagesCount >1}">
+            <a class="btn btn-primary mx-1 mb-1"
+               href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage+1}">&#129046;
+            </a>
+        </c:when>
+        <c:when test="${sessionScope.reqPage == requestScope.pagesCount && sessionScope.reqPage != 1}">
+            <a class="btn btn-primary mx-1 mb-1"
+               href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage-1}">&#129044;
+            </a>
+        </c:when>
+        <c:when test="${sessionScope.reqPage > 1 && sessionScope.reqPage < requestScope.pagesCount}">
+            <a class="btn btn-primary mx-1 mb-1"
+               href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage-1}">&#129044;
+            </a>
+            <a class="btn btn-primary mx-1 mb-1"
+               href="${pageContext.request.contextPath}/adm/requests?page=${sessionScope.reqPage+1}">&#129046;
+            </a>
+        </c:when>
+    </c:choose>
+</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.my.controllers.servicesPayments;
+package com.my.controllers.userController.servicesPayments;
 
 import com.my.dao.AccountDAO;
 import com.my.dao.CardDAO;
@@ -14,12 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
+import static com.my.utils.HttpConstants.*;
 
-@WebServlet("/servicesPayment")
-public class ServicesPaymentServlet extends HttpServlet {
+@WebServlet(USER_FINES_PAYMENT_PATH)
+public class FinesPaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("ServicesPaymentServlet#doGet");
+        System.out.println("finesPaymentServlet#doGet");
         HttpSession session = req.getSession();
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
@@ -29,25 +30,27 @@ public class ServicesPaymentServlet extends HttpServlet {
             req.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
         }
         session.removeAttribute("purposeId");
-        session.setAttribute("purposeId", 2);
-        req.getRequestDispatcher("/views/jsp/options/servicesPayment.jsp").forward(req, resp);
+        session.setAttribute("purposeId", 5);
+        req.getRequestDispatcher("/views/jsp/options/finesPayment.jsp").forward(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("ServicesPaymentServlet#doPost");
+        System.out.println("finesPaymentServlet#doPost");
         HttpSession session = req.getSession();
         Validation validation = new Validation();
-        boolean isValid = validation.servicesPaymentValidation(req.getParameter("card"),
-                req.getParameter("name"), req.getParameter("amount"));
+        boolean isValid = validation.finesPaymentValidation(req.getParameter("firstName"), req.getParameter("patronymic"),
+                req.getParameter("lastName"), req.getParameter("number"), req.getParameter("amount"));
         if(!isValid){
             session.setAttribute("valid", validation);
-            resp.sendRedirect("/epamProject/servicesPayment");
+            resp.sendRedirect(MAIN_SERVLET_PATH+USER_FINES_PAYMENT_PATH);
             return;
         }
         User user = (User) session.getAttribute("user");
-        String cardNumber = req.getParameter("card");
-        String serviceName = req.getParameter("name");
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        String patronymic = req.getParameter("patronymic");
+        String fineNumber = req.getParameter("number");
         int purposeId = Integer.parseInt(session.getAttribute("purposeId").toString());
         double amount = Double.parseDouble(req.getParameter("amount"));
         int accountId = Integer.parseInt(req.getParameter("accountId"));
@@ -56,14 +59,16 @@ public class ServicesPaymentServlet extends HttpServlet {
         double newAmount = oldAmount - amount;
         if(newAmount<0){
             session.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
-            resp.sendRedirect("/epamProject/servicesPayment");
+            resp.sendRedirect(MAIN_SERVLET_PATH+USER_FINES_PAYMENT_PATH);
             return;
         }
-        int serviceId = ReceiptDAO.createNewEntryInServService(cardNumber, serviceName);
+        int serviceId = ReceiptDAO.createNewEntryInFinesService(firstName, lastName, patronymic, fineNumber);
         ReceiptDAO.createEntryInReceipt(accountId, purposeId, amount, serviceId, user.getId());
 
         CardDAO.updateAmount(newAmount, cardId);
         user.setPaymentsCount(user.getPaymentsCount()+1);
-        resp.sendRedirect("/epamProject/mainPage");
+        resp.sendRedirect(MAIN_SERVLET_PATH+MAIN_PAGE_PATH);
+
+
     }
 }

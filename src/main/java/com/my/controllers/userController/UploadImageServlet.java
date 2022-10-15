@@ -1,4 +1,4 @@
-package com.my.controllers;
+package com.my.controllers.userController;
 
 import com.my.dao.UserDAO;
 import com.my.entities.User;
@@ -15,12 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-@WebServlet("/upload")
-public class uploadImageServlet extends HttpServlet {
+import static com.my.utils.HttpConstants.*;
+
+@WebServlet(USER_UPLOAD_PATH)
+public class UploadImageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -62,7 +63,7 @@ public class uploadImageServlet extends HttpServlet {
                     // Get the uploaded file parameters
 
                     // Write the file
-                    file = new File(filePath + "\\" + user.getId() + "\\avatar" + new File(filePath + "\\" + user.getId() + "\\").listFiles().length+ ".png");
+                    file = new File(filePath + "\\" + user.getId() + "\\avatar" + new File(filePath + "\\" + user.getId() + "\\").listFiles().length + ".png");
                     fileItem.write(file);
                 }
             }
@@ -76,6 +77,6 @@ public class uploadImageServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/epamProject/user/editProfile");
+        resp.sendRedirect(MAIN_SERVLET_PATH + USER_EDIT_PROFILE_PATH);
     }
 }

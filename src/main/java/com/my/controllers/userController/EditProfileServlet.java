@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-@WebServlet("/user/editProfile")
+import static com.my.utils.HttpConstants.*;
+@WebServlet(USER_EDIT_PROFILE_PATH)
 public class EditProfileServlet extends HttpServlet {
 
     @Override
@@ -44,7 +44,7 @@ public class EditProfileServlet extends HttpServlet {
                 req.getParameter("phoneNumber"));
         if(!isValid){
             session.setAttribute("valid", validation);
-            resp.sendRedirect("/epamProject/user/editProfile");
+            resp.sendRedirect(MAIN_SERVLET_PATH+USER_EDIT_PROFILE_PATH);
             return;
         }
         String firstName = req.getParameter("firstName");
@@ -58,6 +58,6 @@ public class EditProfileServlet extends HttpServlet {
         user.setPhoneNumber(phoneNumber);
         session.removeAttribute("user");
         session.setAttribute("user", user);
-        resp.sendRedirect("/epamProject/user/profile");
+        resp.sendRedirect(MAIN_SERVLET_PATH + USER_PROFILE_PATH);
     }
 }

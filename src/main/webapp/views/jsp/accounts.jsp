@@ -11,64 +11,108 @@
 <head>
   <title>Accounts</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .arrow {
+      margin-left: -15px;
+    }
+  </style>
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
-<table border="3">
-  <tr>
-    <th>
-      Назва
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortAccountName&type=ASC&page=1">&#129047;</a>
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortAccountName&type=DESC&page=1">&#129045;</a>
-    </th>
-    <th>
-      Логін
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortLogin&type=ASC&page=1">&#129047;</a>
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortLogin&type=DESC&page=1">&#129045;</a>
-    </th>
-    <th>
-      Ім'я
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortName&type=ASC&page=1">&#129047;</a>
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortName&type=DESC&page=1">&#129045;</a>
-    </th>
-    <th>
-      Прізвище
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortLastName&type=ASC&page=1">&#129047;</a>
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortLastName&type=DESC&page=1">&#129045;</a>
-    </th>
-    <th>Кількість операцій</th>
-    <th>
-      Статус
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
-      <a href = "${pageContext.request.contextPath}/adm/accounts?sortAction=sortStatus&type=DESC&page=1">&#129045;</a>
-    </th>
-  </tr>
-  <c:forEach var="accounts" items="${requestScope.list}">
+<div class="px-2 pt-4 ">
+  <table class="table border border-primary">
+    <thead class="table bg-primary">
     <tr>
-      <td>${accounts.name}</td>
-      <td>${accounts.userLogin}</td>
-      <td>${accounts.userFirstName}</td>
-      <td>${accounts.userLastName}</td>
-      <td>${accounts.paymentsCount}</td>
-      <td>${accounts.status}</td>
-      <td><a href="${pageContext.request.contextPath}/adm/accounts?action=block&id=${accounts.id}">Заблокувати</a></td>
-      <td><a href="${pageContext.request.contextPath}/adm/accounts?action=unblock&id=${accounts.id}">Розблокувати</a></td>
+      <th scope="col">
+        <a class="text-white text-decoration-none ">Назва</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortAccountName&type=ASC&page=1">&#129047;</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortAccountName&type=DESC&page=1">&#129045;</a>
+      </th>
+      <th scope="col">
+        <a class="text-white text-decoration-none">Логін</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortLogin&type=ASC&page=1">&#129047;</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortLogin&type=DESC&page=1">&#129045;</a>
+      </th>
+
+      <th scope="col">
+        <a class="text-white text-decoration-none">Ім'я</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortName&type=ASC&page=1">&#129047;</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortName&type=DESC&page=1">&#129045;</a>
+      </th>
+
+      <th scope="col">
+        <a class="text-white text-decoration-none">Прізвище</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortLastName&type=ASC&page=1">&#129047;</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortLastName&type=DESC&page=1">&#129045;</a>
+      </th>
+
+      <th scope="col">
+        <a class="text-white text-decoration-none">Кількість рахунків</a>
+      </th>
+
+      <th scope="col">
+        <a class="text-white text-decoration-none">Статус</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
+        <a class="text-white text-decoration-none arrow"
+           href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortStatus&type=ASC&page=1">&#129045;</a>
+      </th>
+
+      <th scope="col">
+      </th>
+
+      <th scope="col">
+      </th>
     </tr>
-  </c:forEach>
-</table>
-<c:choose>
-  <c:when test="${sessionScope.accPage == 1 && requestScope.pagesCount >1}">
-    <a href="${pageContext.request.contextPath}/adm/accounts?page=${sessionScope.accPage+1}" >-></a>
-  </c:when>
-  <c:when test="${sessionScope.accPage == requestScope.pagesCount && sessionScope.accPage != 1}">
-    <a href="${pageContext.request.contextPath}/adm/accounts?page=${sessionScope.accPage-1}" ><-</a>
-  </c:when>
-  <c:when test="${sessionScope.accPage > 1 && sessionScope.accPage < requestScope.pagesCount}">
-    <a href="${pageContext.request.contextPath}/adm/accounts?page=${sessionScope.accPage-1}" ><-</a>
-    <a href="${pageContext.request.contextPath}/adm/accounts?page=${sessionScope.accPage+1}" >-></a>
-  </c:when>
-</c:choose>
+    </thead>
+    <tbody>
+    <c:forEach var="accounts" items="${requestScope.list}">
+      <tr>
+        <td>${accounts.name}</td>
+        <td>${accounts.userLogin}</td>
+        <td>${accounts.userFirstName}</td>
+        <td>${accounts.userLastName}</td>
+        <td>${accounts.paymentsCount}</td>
+        <td>${accounts.status}</td>
+        <td><a class="btn btn-primary mx-1 "
+               href="${pageContext.request.contextPath}/adm/accounts?action=block&id=${accounts.id}">Заблокувати</a></td>
+        <td><a class="btn btn-primary mx-1 "
+               href="${pageContext.request.contextPath}/adm/accounts?action=unblock&id=${accounts.id}">Розблокувати</a></td>
+      </tr>
+    </c:forEach>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex justify-content-center">
+  <c:choose>
+    <c:when test="${sessionScope.accPage == 1 && requestScope.pagesCount >1}">
+      <a class="btn btn-primary mx-1 mb-1"
+         href="${pageContext.request.contextPath}/adm/accounts?page=${sessionScope.accPage+1}" >&#129046;
 
-
+      </a>
+    </c:when>
+    <c:when test="${sessionScope.accPage == requestScope.pagesCount && sessionScope.accPage != 1}">
+      <a class="btn btn-primary mx-1 mb-1"
+         href="${pageContext.request.contextPath}/adm/accounts?page=${sessionScope.accPage-1}">&#129044;
+      </a>
+    </c:when>
+    <c:when test="${sessionScope.accPage > 1 && sessionScope.accPage < requestScope.pagesCount}">
+      <a class="btn btn-primary mx-1 mb-1"
+         href="${pageContext.request.contextPath}/adm/accounts?page=${sessionScope.accPage-1}">&#129044;
+      </a>
+      <a class="btn btn-primary mx-1 mb-1"
+         href="${pageContext.request.contextPath}/adm/accounts?page=${sessionScope.accPage+1}">&#129046;
+      </a>
+    </c:when>
+  </c:choose>
+</div>
 </body>
 </html>

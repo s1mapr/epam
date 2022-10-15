@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: S1ma
@@ -6,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -26,12 +28,15 @@
                     <div class="input-group mb-3">
                         <input name="password" type="password" class="form-control" placeholder="Пароль">
                     </div>
+                    <c:if test="${requestScope.youAreBlocked != null}">
+                    <div><cite style="color: red">Ваш акаунт заблоковано</cite></div>
+                    </c:if>
                     <div class="form-row text-center">
-                        <button class="btn btn-primary text-center mt-2" type="submit">
+                        <button class="btn btn-primary text-center mt-4" type="submit">
                             Авторизуватися
                         </button>
                     </div>
-                    <p class="text-center mt-5">Ще не зареєстровані?
+                    <p class="text-center mt-4">Ще не зареєстровані?
                         <a href="${pageContext.request.contextPath}/registration" class="text-decoration-none">Зареєструватися</a>
                     </p>
                 </div>

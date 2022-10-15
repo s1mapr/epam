@@ -44,14 +44,14 @@
                 <img src="${sessionScope.user.avatarURL}" class="avatar">
             </div>
             <div class="d-flex justify-content-end mb-2">
-                <a class="edit-btn btn bg-primary">Редагувати</a>
+                <a class="edit-btn btn bg-primary text-white">Редагувати</a>
             </div>
-            <form action="${pageContext.request.contextPath}/upload" method="post"
+            <form action="${pageContext.request.contextPath}/user/upload" method="post"
                   enctype="multipart/form-data" class="edit-form">
                 <div class="p-2">
                     <div class="input-group d-flex justify-content-end">
                         <label for="files" class="btn btn-outline-primary my-2 btn-sm">Вибрати зображення</label>
-                        <input id="files" style="display: none" type="file" name="file" size="1"/>
+                        <input id="files" style="display: none" type="file" name="file"/>
                     </div>
                     <div class="input-group mb-1 d-flex justify-content-center">
                         <input class="sub-btn btn btn-primary" type="submit" value="Завантажити файл"/>

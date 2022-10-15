@@ -36,7 +36,7 @@ public class UserDAO {
                 String userPhoneNumber = rs.getString("phone_number");
                 String userRole = rs.getString("name");
                 String avatarURL = rs.getString("avatar_url");
-                System.out.println(avatarURL);
+                String userStatus = rs.getString("status");
                 if(Objects.isNull(avatarURL)){
                     avatarURL = "\\epamProject\\upload\\default.png";
                 }else{
@@ -56,6 +56,7 @@ public class UserDAO {
                         .accountsCount(accountsCount)
                         .paymentsCount(paymentsCount)
                         .avatarURL(avatarURL)
+                        .status(userStatus)
                         .build();
             }
         } catch (SQLException e) {
