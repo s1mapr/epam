@@ -1,8 +1,12 @@
 package com.my.dao;
 
+import com.my.dto.ReceiptDTO;
 import com.my.entities.Receipt;
+import com.my.entities.User;
+import com.sun.net.httpserver.HttpsServer;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,6 +24,11 @@ public class ReceiptDAO {
     private static final String GET_PAYMENTS_COUNT_OF_USER_BY_ID = "SELECT COUNT(user_id) AS count FROM receipt WHERE user_id = ?";
     private static final String GET_ALL_PAYMENTS = "SELECT * FROM receipt";
     private static final String UPDATE_STATUS_BY_ID = "UPDATE receipt SET status = \"sent\" WHERE id = ?";
+    private static final String GET_DATA_FOR_PDF_PHONE = "SELECT * FROM receipt JOIN account ON account.id = receipt.account_id JOIN card ON card.id = account.card_id JOIN phone_service ON phone_service.id = receipt.service_id WHERE receipt.id = ?";
+    private static final String GET_DATA_FOR_PDF_SERVICES = "SELECT * FROM receipt JOIN account ON account.id = receipt.account_id JOIN card ON card.id = account.card_id JOIN serv_service ON serv_service.id = receipt.service_id WHERE receipt.id = ?";
+    private static final String GET_DATA_FOR_PDF_CARD = "SELECT * FROM receipt JOIN account ON account.id = receipt.account_id JOIN card ON card.id = account.card_id JOIN trans_service ON trans_service.id = receipt.service_id WHERE receipt.id = ?";
+    private static final String GET_DATA_FOR_PDF_UTILITIES = "SELECT * FROM receipt JOIN account ON account.id = receipt.account_id JOIN card ON card.id = account.card_id JOIN utilities_service ON utilities_service.id = receipt.service_id WHERE receipt.id = ?";
+    private static final String GET_DATA_FOR_PDF_FINES = "SELECT * FROM receipt JOIN account ON account.id = receipt.account_id JOIN card ON card.id = account.card_id JOIN fine_service ON fine_service.id = receipt.service_id WHERE receipt.id = ?";
     public static int createNewEntryInPhoneService(String phoneNumber) {
         int phoneId = -1;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -145,6 +154,7 @@ public class ReceiptDAO {
             statement.setInt(2, (currentPage-1)*10);
             try(ResultSet rs = statement.executeQuery()){
                 while(rs.next()){
+                    int id = rs.getInt("receipt.id");
                     String name = rs.getString("name");
                     Date date = rs.getDate("date");
                     String purpose = rs.getString("purpose.name");
@@ -154,6 +164,7 @@ public class ReceiptDAO {
                     receipt = new Receipt.Builder()
                             .name(name)
                             .date(date)
+                            .id(id)
                             .purpose(purpose)
                             .accountName(accountName)
                             .status(status)
@@ -225,5 +236,190 @@ public class ReceiptDAO {
         }
     }
 
+    public static ReceiptDTO getReceiptInfoPhone(int receiptId ,HttpSession session){
+        ReceiptDTO receipt = null;
+        try(Connection connection = DBManager.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_PHONE)){
+            statement.setInt(1, receiptId);
+            try(ResultSet rs = statement.executeQuery()){
+                rs.next();
+                User user = (User)session.getAttribute("user");
+                String paymentName = rs.getString("receipt.name");
+                Date paymentDate = rs.getDate("receipt.date");
+                String userCard = rs.getString("card.number");
+                String userFirstName = user.getFirstName();
+                String userLastName = user.getLastName();
+                String phoneNumber = rs.getString("phone_service.number");
+                double amount = rs.getDouble("receipt.amount");
+                String paymentStatus = rs.getString("receipt.status");
+                receipt = new ReceiptDTO.Builder()
+                        .paymentName(paymentName)
+                        .paymentDate(paymentDate)
+                        .userCard(userCard)
+                        .userFirstName(userFirstName)
+                        .userLastName(userLastName)
+                        .phoneNumber(phoneNumber)
+                        .amount(amount)
+                        .paymentStatus(paymentStatus)
+                        .build();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return receipt;
+    }
 
+    public static ReceiptDTO getReceiptInfoService(int receiptId, HttpSession session){
+        ReceiptDTO receipt = null;
+        try(Connection connection = DBManager.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_SERVICES)){
+            statement.setInt(1, receiptId);
+            try(ResultSet rs = statement.executeQuery()){
+                rs.next();
+                User user = (User)session.getAttribute("user");
+                String paymentName = rs.getString("receipt.name");
+                Date paymentDate = rs.getDate("receipt.date");
+                String userCard = rs.getString("card.number");
+                String userFirstName = user.getFirstName();
+                String userLastName = user.getLastName();
+                String paymentCardNumber = rs.getString("serv_service.card");
+                String purpose = rs.getString("serv_service.service");
+                double amount = rs.getDouble("receipt.amount");
+                String paymentStatus = rs.getString("receipt.status");
+                receipt = new ReceiptDTO.Builder()
+                        .paymentName(paymentName)
+                        .paymentDate(paymentDate)
+                        .userCard(userCard)
+                        .userFirstName(userFirstName)
+                        .userLastName(userLastName)
+                        .paymentCardNumber(paymentCardNumber)
+                        .purpose(purpose)
+                        .amount(amount)
+                        .paymentStatus(paymentStatus)
+                        .build();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return receipt;
+    }
+
+    public static ReceiptDTO getReceiptInfoCard(int receiptId, HttpSession session){
+        ReceiptDTO receipt = null;
+        try(Connection connection = DBManager.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_CARD)) {
+            statement.setInt(1, receiptId);
+            try(ResultSet rs = statement.executeQuery()){
+                rs.next();
+                User user = (User)session.getAttribute("user");
+                String paymentName = rs.getString("receipt.name");
+                Date paymentDate = rs.getDate("receipt.date");
+                String userCard = rs.getString("card.number");
+                String userFirstName = user.getFirstName();
+                String userLastName = user.getLastName();
+                String paymentCardNumber = rs.getString("trans_service.number");
+                String paymentFirstName = rs.getString("trans_service.first_name");
+                String paymentLastName = rs.getString("trans_service.last_name");
+                double amount = rs.getDouble("receipt.amount");
+                String paymentStatus = rs.getString("receipt.status");
+                receipt = new ReceiptDTO.Builder()
+                        .paymentName(paymentName)
+                        .paymentDate(paymentDate)
+                        .userCard(userCard)
+                        .userFirstName(userFirstName)
+                        .userLastName(userLastName)
+                        .paymentCardNumber(paymentCardNumber)
+                        .paymentFirstName(paymentFirstName)
+                        .paymentLastName(paymentLastName)
+                        .amount(amount)
+                        .paymentStatus(paymentStatus)
+                        .build();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return receipt;
+    }
+
+    public static ReceiptDTO getReceiptInfoUtilities(int receiptId, HttpSession session){
+        ReceiptDTO receipt = null;
+        try(Connection connection = DBManager.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_UTILITIES)) {
+            statement.setInt(1, receiptId);
+            try(ResultSet rs = statement.executeQuery()){
+                rs.next();
+                User user = (User)session.getAttribute("user");
+                String paymentName = rs.getString("receipt.name");
+                Date paymentDate = rs.getDate("receipt.date");
+                String userCard = rs.getString("card.number");
+                String userFirstName = user.getFirstName();
+                String userLastName = user.getLastName();
+                String meterW = rs.getString("meter_reading_water");
+                String meterE = rs.getString("meter_reading_electricity");
+                String meterG = rs.getString("meter_reading_gas");
+                double amountW = rs.getDouble("amount_water");
+                double amountE = rs.getDouble("amount_electricity");
+                double amountG = rs.getDouble("amount_gas");
+                double amount = rs.getDouble("receipt.amount");
+                String paymentStatus = rs.getString("receipt.status");
+                receipt = new ReceiptDTO.Builder()
+                        .paymentName(paymentName)
+                        .paymentDate(paymentDate)
+                        .userCard(userCard)
+                        .userFirstName(userFirstName)
+                        .userLastName(userLastName)
+                        .meterW(meterW)
+                        .meterE(meterE)
+                        .meterG(meterG)
+                        .amountW(amountW)
+                        .amountE(amountE)
+                        .amountG(amountG)
+                        .amount(amount)
+                        .paymentStatus(paymentStatus)
+                        .build();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return receipt;
+    }
+
+    public static ReceiptDTO getReceiptInfoFines(int receiptId, HttpSession session){
+        ReceiptDTO receipt = null;
+        try(Connection connection = DBManager.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_FINES)){
+            statement.setInt(1, receiptId);
+            try(ResultSet rs = statement.executeQuery()){
+                rs.next();
+                User user = (User)session.getAttribute("user");
+                String paymentName = rs.getString("receipt.name");
+                Date paymentDate = rs.getDate("receipt.date");
+                String userCard = rs.getString("card.number");
+                String userFirstName = user.getFirstName();
+                String userLastName = user.getLastName();
+                String paymentFirstName = rs.getString("fine_service.first_name");
+                String paymentLastName = rs.getString("fine_service.last_name");
+                String paymentPatronymic = rs.getString("fine_service.patronymic");
+                String fineNumber = rs.getString("fine_service.number");
+                double amount = rs.getDouble("receipt.amount");
+                String paymentStatus = rs.getString("receipt.status");
+                receipt = new ReceiptDTO.Builder()
+                        .paymentName(paymentName)
+                        .paymentDate(paymentDate)
+                        .userCard(userCard)
+                        .userFirstName(userFirstName)
+                        .userLastName(userLastName)
+                        .paymentFirstName(paymentFirstName)
+                        .paymentLastName(paymentLastName)
+                        .paymentPatronymic(paymentPatronymic)
+                        .fineNumber(fineNumber)
+                        .amount(amount)
+                        .paymentStatus(paymentStatus)
+                        .build();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return receipt;
+    }
 }

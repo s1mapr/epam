@@ -78,7 +78,7 @@
                 <td>${receipts.accountName}</td>
                 <td>${receipts.amount}</td>
                 <td>${receipts.status}</td>
-                <td><a class="btn btn-primary">Квитанція</a></td>
+                <td><a href="${pageContext.request.contextPath}/user/download?id=${receipts.id}&purpose=${receipts.purpose}&name=${receipts.name}&date=${receipts.date}" class="btn btn-primary">Квитанція</a></td>
             </tr>
         </c:forEach>
         </tbody>
@@ -86,26 +86,26 @@
 </div>
 <div class="d-flex justify-content-center">
     <c:choose>
-    <c:when test="${sessionScope.recPage == 1 && requestScope.pagesCount >1}">
-        <a class="btn btn-primary mx-1 mb-1"
-           href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage+1}">&#129046;
+        <c:when test="${sessionScope.recPage == 1 && requestScope.pagesCount >1}">
+            <a class="btn btn-primary mx-1 mb-1"
+               href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage+1}">&#129046;
 
-        </a>
-    </c:when>
-    <c:when test="${sessionScope.recPage == requestScope.pagesCount && sessionScope.recPage != 1}">
-        <a class="btn btn-primary mx-1 mb-1"
-           href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage-1}">&#129044;
-        </a>
-    </c:when>
-    <c:when test="${sessionScope.recPage > 1 && sessionScope.recPage < requestScope.pagesCount}">
-        <a class="btn btn-primary mx-1 mb-1"
-           href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage-1}">&#129044;
-        </a>
-        <a class="btn btn-primary mx-1 mb-1"
-           href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage+1}">&#129046;
-        </a>
-    </c:when>
-</c:choose>
+            </a>
+        </c:when>
+        <c:when test="${sessionScope.recPage == requestScope.pagesCount && sessionScope.recPage != 1}">
+            <a class="btn btn-primary mx-1 mb-1"
+               href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage-1}">&#129044;
+            </a>
+        </c:when>
+        <c:when test="${sessionScope.recPage > 1 && sessionScope.recPage < requestScope.pagesCount}">
+            <a class="btn btn-primary mx-1 mb-1"
+               href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage-1}">&#129044;
+            </a>
+            <a class="btn btn-primary mx-1 mb-1"
+               href="${pageContext.request.contextPath}/user/myReceipts?page=${sessionScope.recPage+1}">&#129046;
+            </a>
+        </c:when>
+    </c:choose>
 </div>
 
 </body>

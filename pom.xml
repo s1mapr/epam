@@ -54,6 +54,18 @@
       <version>2.11.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>itextpdf</artifactId>
+      <version>5.5.12</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+      <version>1.69</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>epamProject</finalName>

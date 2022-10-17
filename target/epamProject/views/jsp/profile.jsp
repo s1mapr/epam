@@ -47,7 +47,7 @@
 
         .div2 {
             display: inline-block;
-            margin-left: 315px;
+            margin-left: 300px;
 
         }
     </style>

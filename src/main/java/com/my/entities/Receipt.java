@@ -3,6 +3,7 @@ package com.my.entities;
 import java.util.Date;
 
 public class Receipt {
+    private int id;
     private String name;
     private Date date;
     private String status;
@@ -18,6 +19,10 @@ public class Receipt {
 
         public Receipt.Builder name(String name) {
             newReceipt.name = name;
+            return this;
+        }
+        public Receipt.Builder id(int id) {
+            newReceipt.id = id;
             return this;
         }
 
@@ -49,6 +54,14 @@ public class Receipt {
         public Receipt build() {
             return newReceipt;
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

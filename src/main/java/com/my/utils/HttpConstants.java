@@ -19,6 +19,7 @@ public class HttpConstants {
     public static final String USER_PROFILE_PATH = USER_PATH + "/profile";
     public static final String USER_TOP_UP_PATH = USER_PATH + "/topUp";
     public static final String USER_UPLOAD_PATH = USER_PATH + "/upload";
+    public static final String USER_CREATE_PDF = USER_PATH + "/download";
     public static final String AUTHORIZATION_PATH = "/authorization";
     public static final String LOGOUT_PATH = "/logout";
     public static final String MAIN_PAGE_PATH = "/mainPage";
