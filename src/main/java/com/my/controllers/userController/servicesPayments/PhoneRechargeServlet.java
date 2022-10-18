@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
+
 import static com.my.utils.HttpConstants.*;
 
 @WebServlet(USER_PHONE_RECHARGE_PATH)
@@ -26,13 +27,13 @@ public class PhoneRechargeServlet extends HttpServlet {
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
         req.setAttribute("valid", validation);
-        if(Objects.nonNull(session.getAttribute("notEnoughMoney"))){
+        if (Objects.nonNull(session.getAttribute("notEnoughMoney"))) {
             session.removeAttribute("notEnoughMoney");
             req.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
         }
         session.removeAttribute("purposeId");
         session.setAttribute("purposeId", 1);
-        req.getRequestDispatcher("/views/jsp/options/phoneRecharge.jsp").forward(req,resp);
+        req.getRequestDispatcher("/views/jsp/options/phoneRecharge.jsp").forward(req, resp);
     }
 
     @Override
@@ -41,9 +42,9 @@ public class PhoneRechargeServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Validation validation = new Validation();
         boolean isValid = validation.phoneRechargeValidation(req.getParameter("phone"), req.getParameter("amount"));
-        if(!isValid){
+        if (!isValid) {
             session.setAttribute("valid", validation);
-            resp.sendRedirect(MAIN_SERVLET_PATH+USER_PHONE_RECHARGE_PATH);
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_PHONE_RECHARGE_PATH);
             return;
         }
         User user = (User) session.getAttribute("user");
@@ -55,16 +56,16 @@ public class PhoneRechargeServlet extends HttpServlet {
         double oldAmount = CardDAO.getAmount(cardId);
         double newAmount = oldAmount - amount;
 
-        if(newAmount<0){
+        if (newAmount < 0) {
             session.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
-            resp.sendRedirect(MAIN_SERVLET_PATH+USER_PHONE_RECHARGE_PATH);
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_PHONE_RECHARGE_PATH);
             return;
         }
         int serviceId = ReceiptDAO.createNewEntryInPhoneService(number);
-        ReceiptDAO.createEntryInReceipt(accountId, purposeId,amount, serviceId, user.getId());
+        ReceiptDAO.createEntryInReceipt(accountId, purposeId, amount, serviceId, user.getId());
 
         CardDAO.updateAmount(newAmount, cardId);
-        user.setPaymentsCount(user.getPaymentsCount()+1);
-        resp.sendRedirect(MAIN_SERVLET_PATH+MAIN_PAGE_PATH);
+        user.setPaymentsCount(user.getPaymentsCount() + 1);
+        resp.sendRedirect(MAIN_SERVLET_PATH + MAIN_PAGE_PATH);
     }
 }

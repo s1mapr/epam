@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 import static com.my.utils.HttpConstants.*;
+
 @WebServlet(USER_EDIT_PROFILE_PATH)
 public class EditProfileServlet extends HttpServlet {
 
@@ -34,7 +36,7 @@ public class EditProfileServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("EditProfileServlet#doPost");
         HttpSession session = req.getSession();
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         int userId = user.getId();
         Validation validation = new Validation();
         boolean isValid = validation.updateProfileValidation(
@@ -42,16 +44,16 @@ public class EditProfileServlet extends HttpServlet {
                 req.getParameter("lastName"),
                 req.getParameter("email"),
                 req.getParameter("phoneNumber"));
-        if(!isValid){
+        if (!isValid) {
             session.setAttribute("valid", validation);
-            resp.sendRedirect(MAIN_SERVLET_PATH+USER_EDIT_PROFILE_PATH);
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_EDIT_PROFILE_PATH);
             return;
         }
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         String email = req.getParameter("email");
         String phoneNumber = req.getParameter("phoneNumber");
-        UserDAO.updateUserData(firstName,lastName,email,phoneNumber,userId);
+        UserDAO.updateUserData(firstName, lastName, email, phoneNumber, userId);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);

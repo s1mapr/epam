@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
 import static com.my.utils.HttpConstants.*;
+
 @WebServlet(USER_PROFILE_PATH)
 public class ProfileServlet extends HttpServlet {
     private static final String GET_USER_ACCOUNTS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? LIMIT 8 OFFSET ?";

@@ -10,6 +10,7 @@ public class Receipt {
     private String accountName;
     private String purpose;
     private Double amount;
+
     public static class Builder {
         private Receipt newReceipt;
 
@@ -21,6 +22,7 @@ public class Receipt {
             newReceipt.name = name;
             return this;
         }
+
         public Receipt.Builder id(int id) {
             newReceipt.id = id;
             return this;

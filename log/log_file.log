@@ -1,0 +1,53 @@
+2022-10-18 14:28:02 INFO  ReceiptDAO:52 - add new entry in phone_service table with phone number:+380976288888
+2022-10-18 14:29:01 INFO  ReceiptDAO:52 - add new entry in phone_service table with phone number:+380976284216
+2022-10-18 17:05:55 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:05:55 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:05:55 INFO  UserDAO:65 - select user with login 1
+2022-10-18 17:05:55 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:05:58 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:05:58 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:05:58 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:07:17 INFO  UserDAO:248 - update avatar of user with id: 3
+2022-10-18 17:07:17 INFO  UploadImageServlet:66 - upload new avatar
+2022-10-18 17:13:01 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:13:01 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:13:01 INFO  UserDAO:65 - select user with login 1
+2022-10-18 17:13:01 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:13:02 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:13:02 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:13:02 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:13:20 INFO  UserDAO:248 - update avatar of user with id: 3
+2022-10-18 17:13:20 INFO  UploadImageServlet:67 - upload new avatar
+2022-10-18 17:17:51 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:17:51 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:17:51 INFO  UserDAO:65 - select user with login 1
+2022-10-18 17:17:51 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:17:53 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:17:53 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:17:53 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:20:14 INFO  UserDAO:248 - update avatar of user with id: 3
+2022-10-18 17:20:14 INFO  UploadImageServlet:69 - upload new avatar
+2022-10-18 17:20:37 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:20:37 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:20:37 INFO  UserDAO:65 - select user with login 1
+2022-10-18 17:20:37 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:20:39 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:20:39 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:20:39 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:21:08 INFO  UserDAO:248 - update avatar of user with id: 3
+2022-10-18 17:21:08 INFO  UploadImageServlet:70 - upload new avatar
+2022-10-18 17:21:18 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:21:18 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:21:18 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:21:32 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:21:32 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:21:32 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:21:48 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:21:48 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:21:48 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:22:01 INFO  UserDAO:248 - update avatar of user with id: 3
+2022-10-18 17:22:01 INFO  UploadImageServlet:70 - upload new avatar
+2022-10-18 17:22:03 INFO  UserDAO:226 - update data of user with id: 3
+2022-10-18 17:22:03 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:22:03 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:22:03 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3

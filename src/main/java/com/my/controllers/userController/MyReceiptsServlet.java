@@ -13,7 +13,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
 import static com.my.utils.HttpConstants.*;
+
 @WebServlet(USER_RECEIPTS_PATH)
 public class MyReceiptsServlet extends HttpServlet {
     public static String GET_RECEIPTS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? LIMIT 10 OFFSET ?";
@@ -28,16 +30,16 @@ public class MyReceiptsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("MyReceiptsServlet#doGet");
         HttpSession session = req.getSession();
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         ReceiptDAO.updateStatus();
         int listLength = ReceiptDAO.getPaymentsCountOfUser(user.getId());
-        int pagesCount = listLength%10==0?listLength/10:listLength/10+1;
+        int pagesCount = listLength % 10 == 0 ? listLength / 10 : listLength / 10 + 1;
         req.setAttribute("pagesCount", pagesCount);
         List<Receipt> list;
 
-        if(Objects.nonNull(session.getAttribute("query"))&&Objects.isNull(req.getParameter("sortAction"))){
+        if (Objects.nonNull(session.getAttribute("query")) && Objects.isNull(req.getParameter("sortAction"))) {
             list = getReceipts(req, session, user, session.getAttribute("query").toString());
-        }else{
+        } else {
             String query = getQuery(req);
             list = getReceipts(req, session, user, query);
         }
@@ -45,11 +47,11 @@ public class MyReceiptsServlet extends HttpServlet {
         req.getRequestDispatcher("/views/jsp/myReceipts.jsp").forward(req, resp);
     }
 
-    private static String getQuery(HttpServletRequest req){
+    private static String getQuery(HttpServletRequest req) {
         String action = req.getParameter("sortAction");
-        if(Objects.nonNull(action)){
+        if (Objects.nonNull(action)) {
             String type = req.getParameter("type");
-            switch (action){
+            switch (action) {
                 case "sortAmount":
                     return GET_RECEIPTS_SORTED_BY_AMOUNT + type + " LIMIT 10 OFFSET ?";
                 case "sortName":
@@ -68,22 +70,19 @@ public class MyReceiptsServlet extends HttpServlet {
     }
 
 
-
-
     private static List<Receipt> getReceipts(HttpServletRequest req, HttpSession session, User user, String query) {
         session.removeAttribute("query");
         session.setAttribute("query", query);
         Object pageNumberStr = session.getAttribute("recPage");
         int pageNumber;
-        if(Objects.nonNull(req.getParameter("page"))){
+        if (Objects.nonNull(req.getParameter("page"))) {
             pageNumber = Integer.parseInt(req.getParameter("page"));
             session.removeAttribute("recPage");
             session.setAttribute("recPage", pageNumber);
-        }else if(Objects.isNull(pageNumberStr)){
+        } else if (Objects.isNull(pageNumberStr)) {
             pageNumber = 1;
             session.setAttribute("recPage", pageNumber);
-        }
-        else{
+        } else {
             pageNumber = Integer.parseInt(session.getAttribute("recPage").toString());
         }
         return ReceiptDAO.getUsersReceiptsWithPagination(user.getId(), pageNumber, query);

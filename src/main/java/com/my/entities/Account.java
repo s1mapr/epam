@@ -10,6 +10,7 @@ public class Account {
     private String userLastName;
     private int paymentsCount;
     private String cardNumber;
+
     public static class Builder {
         private Account newAccount;
 
@@ -21,38 +22,47 @@ public class Account {
             newAccount.name = name;
             return this;
         }
+
         public Account.Builder id(int id) {
             newAccount.id = id;
             return this;
         }
+
         public Account.Builder amount(Double amount) {
             newAccount.amount = amount;
             return this;
         }
+
         public Account.Builder status(String status) {
             newAccount.status = status;
             return this;
         }
+
         public Account.Builder userLogin(String userLogin) {
             newAccount.userLogin = userLogin;
             return this;
         }
+
         public Account.Builder userFirstName(String userFirstName) {
             newAccount.userFirstName = userFirstName;
             return this;
         }
+
         public Account.Builder userLastName(String userLastName) {
             newAccount.userLastName = userLastName;
             return this;
         }
+
         public Account.Builder paymentsCount(int paymentsCount) {
             newAccount.paymentsCount = paymentsCount;
             return this;
         }
+
         public Account.Builder cardNumber(String cardNumber) {
             newAccount.cardNumber = cardNumber;
             return this;
         }
+
         public Account build() {
             return newAccount;
         }

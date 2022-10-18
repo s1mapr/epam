@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
 import static com.my.utils.HttpConstants.*;
 
 @WebServlet(ADMIN_ACCOUNTS_PATH)
@@ -22,11 +23,12 @@ public class AccountsServlet extends HttpServlet {
     private static final String GET_ACCOUNTS_SORTED_BY_USER_NAME = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.first_name ";
     private static final String GET_ACCOUNTS_SORTED_BY_USER_LAST_NAME = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY user.last_name ";
     private static final String GET_ACCOUNTS_SORTED_BY_STATUS = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.status ";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         int listLength = AccountDAO.getAllAccountsCount();
-        int pagesCount = listLength%10==0?listLength/10:listLength/10+1;
+        int pagesCount = listLength % 10 == 0 ? listLength / 10 : listLength / 10 + 1;
         req.setAttribute("pagesCount", pagesCount);
         List<Account> accounts;
         String action = req.getParameter("action");
@@ -35,22 +37,22 @@ public class AccountsServlet extends HttpServlet {
         } else if (Objects.nonNull(action) && action.equals("unblock")) {
             AccountDAO.unblockAccount(Integer.parseInt(req.getParameter("id")));
         }
-        if(Objects.nonNull(session.getAttribute("accountQuery"))&&Objects.isNull(req.getParameter("sortAction"))){
+        if (Objects.nonNull(session.getAttribute("accountQuery")) && Objects.isNull(req.getParameter("sortAction"))) {
             accounts = getAccounts(req, session, session.getAttribute("accountQuery").toString());
-        }else{
+        } else {
             String query = getQuery(req);
-            accounts = getAccounts(req, session,  query);
+            accounts = getAccounts(req, session, query);
         }
 
         req.setAttribute("list", accounts);
         req.getRequestDispatcher("/views/jsp/accounts.jsp").forward(req, resp);
     }
 
-    private static String getQuery(HttpServletRequest req){
+    private static String getQuery(HttpServletRequest req) {
         String action = req.getParameter("sortAction");
-        if(Objects.nonNull(action)){
+        if (Objects.nonNull(action)) {
             String type = req.getParameter("type");
-            switch (action){
+            switch (action) {
                 case "sortAccountName":
                     return GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME + type + " LIMIT 10 OFFSET ?";
                 case "sortLogin":
@@ -72,15 +74,14 @@ public class AccountsServlet extends HttpServlet {
 
         Object pageNumberStr = session.getAttribute("accPage");
         int pageNumber;
-        if(Objects.nonNull(req.getParameter("page"))){
+        if (Objects.nonNull(req.getParameter("page"))) {
             pageNumber = Integer.parseInt(req.getParameter("page"));
             session.removeAttribute("accPage");
             session.setAttribute("accPage", pageNumber);
-        }else if(Objects.isNull(pageNumberStr)){
+        } else if (Objects.isNull(pageNumberStr)) {
             pageNumber = 1;
             session.setAttribute("accPage", pageNumber);
-        }
-        else{
+        } else {
             pageNumber = Integer.parseInt(session.getAttribute("accPage").toString());
         }
         return AccountDAO.accountPagination(pageNumber, query);

@@ -5,6 +5,7 @@ import com.itextpdf.text.pdf.PdfEncodings;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.my.dao.ReceiptDAO;
 import com.my.dto.ReceiptDTO;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,6 +23,8 @@ import static com.my.utils.HttpConstants.*;
 
 @WebServlet(USER_CREATE_PDF)
 public class PdfCreatorServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(PdfCreatorServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Document document = new Document();
@@ -30,18 +33,22 @@ public class PdfCreatorServlet extends HttpServlet {
         HttpSession session = req.getSession();
         try {
             PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
+            log.info("create instance of PdfWriter");
         } catch (DocumentException e) {
-            throw new RuntimeException(e);
+            log.error("problem with creating instance of PdfWriter");
+            log.error("Exception -  " + e);
         }
         Font font = FontFactory.getFont(fontPath, "Cp1251", true);
 
         document.setMargins(2, 2, 2, 2);
-        Image image;
+        Image image = null;
         try {
             image = Image.getInstance(imgPath);
             image.setAlignment(2);
+            log.info("create instance of Image");
         } catch (BadElementException e) {
-            throw new RuntimeException(e);
+            log.error("problem with creating instance of Image");
+            log.error("Exception -  " + e);
         }
         String purpose = req.getParameter("purpose");
         DateTimeFormatter formatter
@@ -73,8 +80,10 @@ public class PdfCreatorServlet extends HttpServlet {
                     document.add(new Paragraph("Сума поповнення: " + receipt.getAmount(), font));
                     document.add(new Paragraph("Статус платежу: " + receipt.getPaymentStatus(), font));
                     document.add(image);
+                    log.info("generate pdf report for phone recharge");
                 } catch (DocumentException e) {
-                    throw new RuntimeException(e);
+                    log.error("problem with generating pdf report for phone recharge");
+                    log.error("Exception -  " + e);
                 }
                 document.close();
                 break;
@@ -98,8 +107,10 @@ public class PdfCreatorServlet extends HttpServlet {
                     document.add(new Paragraph("Сума платежу: " + receipt.getAmount(), font));
                     document.add(new Paragraph("Статус платежу: " + receipt.getPaymentStatus(), font));
                     document.add(image);
+                    log.info("generate pdf report for service payment");
                 } catch (DocumentException e) {
-                    throw new RuntimeException(e);
+                    log.error("problem with generating pdf report for service payment");
+                    log.error("Exception -  " + e);
                 }
                 document.close();
                 break;
@@ -124,8 +135,10 @@ public class PdfCreatorServlet extends HttpServlet {
                     document.add(new Paragraph("Сума переказу: " + receipt.getAmount(), font));
                     document.add(new Paragraph("Статус переказу: " + receipt.getPaymentStatus(), font));
                     document.add(image);
+                    log.info("generate pdf report for card transfer");
                 } catch (DocumentException e) {
-                    throw new RuntimeException(e);
+                    log.error("problem with generating pdf report for card transfer");
+                    log.error("Exception -  " + e);
                 }
                 document.close();
                 break;
@@ -153,8 +166,10 @@ public class PdfCreatorServlet extends HttpServlet {
                     document.add(new Paragraph("Загальна сума: " + receipt.getAmount(), font));
                     document.add(new Paragraph("Статус оплати: " + receipt.getPaymentStatus(), font));
                     document.add(image);
+                    log.info("generate pdf report for utilities payment");
                 } catch (DocumentException e) {
-                    throw new RuntimeException(e);
+                    log.error("problem with generating pdf report for utilities payment");
+                    log.error("Exception -  " + e);
                 }
                 document.close();
                 break;
@@ -180,8 +195,10 @@ public class PdfCreatorServlet extends HttpServlet {
                     document.add(new Paragraph("Сума: " + receipt.getAmount(), font));
                     document.add(new Paragraph("Статус оплати: " + receipt.getPaymentStatus(), font));
                     document.add(image);
+                    log.info("generate pdf report for fines payment");
                 } catch (DocumentException e) {
-                    throw new RuntimeException(e);
+                    log.error("problem with generating pdf report for fines payment");
+                    log.error("Exception -  " + e);
                 }
                 document.close();
                 break;

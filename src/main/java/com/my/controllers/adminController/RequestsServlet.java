@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
 import static com.my.utils.HttpConstants.*;
 
 @WebServlet(ADMIN_REQUESTS_PATH)
@@ -21,7 +22,7 @@ public class RequestsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("RequestsServlet#doGet");
         HttpSession session = req.getSession();
-        if(Objects.nonNull(req.getParameter("action")) && req.getParameter("action").equals("unblock")){
+        if (Objects.nonNull(req.getParameter("action")) && req.getParameter("action").equals("unblock")) {
             AccountDAO.unblockAccount(Integer.parseInt(req.getParameter("id")));
             RequestDAO.acceptRequest(Integer.parseInt(req.getParameter("id")));
         }

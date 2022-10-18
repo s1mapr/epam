@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import static com.my.utils.HttpConstants.*;
+
 @WebServlet(ADMIN_USERS_PATH)
 public class UsersServlet extends HttpServlet {
     private static final String GET_USERS = "SELECT * FROM user WHERE role_id = '1' LIMIT 10 OFFSET ?";
@@ -29,7 +31,7 @@ public class UsersServlet extends HttpServlet {
         System.out.println("UsersServlet#doGet");
         HttpSession session = req.getSession();
         int listLength = UserDAO.getAllUsersCount();
-        int pagesCount = listLength%10==0?listLength/10:listLength/10+1;
+        int pagesCount = listLength % 10 == 0 ? listLength / 10 : listLength / 10 + 1;
         req.setAttribute("pagesCount", pagesCount);
         List<User> users;
         String action = req.getParameter("action");
@@ -38,22 +40,22 @@ public class UsersServlet extends HttpServlet {
         } else if (Objects.nonNull(action) && action.equals("unblock")) {
             UserDAO.unblockUser(Integer.parseInt(req.getParameter("id")));
         }
-        if(Objects.nonNull(session.getAttribute("usersQuery"))&&Objects.isNull(req.getParameter("sortAction"))){
+        if (Objects.nonNull(session.getAttribute("usersQuery")) && Objects.isNull(req.getParameter("sortAction"))) {
             users = getUsers(req, session, session.getAttribute("usersQuery").toString());
-        }else{
+        } else {
             String query = getQuery(req);
-            users = getUsers(req, session,  query);
+            users = getUsers(req, session, query);
         }
 
         req.setAttribute("list", users);
         req.getRequestDispatcher("/views/jsp/users.jsp").forward(req, resp);
     }
 
-    private static String getQuery(HttpServletRequest req){
+    private static String getQuery(HttpServletRequest req) {
         String action = req.getParameter("sortAction");
-        if(Objects.nonNull(action)){
+        if (Objects.nonNull(action)) {
             String type = req.getParameter("type");
-            switch (action){
+            switch (action) {
                 case "sortLogin":
                     return GET_USERS_SORTED_BY_LOGIN + type + " LIMIT 10 OFFSET ?";
                 case "sortName":
@@ -76,15 +78,14 @@ public class UsersServlet extends HttpServlet {
         session.setAttribute("usersQuery", query);
         Object pageNumberStr = session.getAttribute("userPage");
         int pageNumber;
-        if(Objects.nonNull(req.getParameter("page"))){
+        if (Objects.nonNull(req.getParameter("page"))) {
             pageNumber = Integer.parseInt(req.getParameter("page"));
             session.removeAttribute("userPage");
             session.setAttribute("userPage", pageNumber);
-        }else if(Objects.isNull(pageNumberStr)){
+        } else if (Objects.isNull(pageNumberStr)) {
             pageNumber = 1;
             session.setAttribute("userPage", pageNumber);
-        }
-        else{
+        } else {
             pageNumber = Integer.parseInt(session.getAttribute("userPage").toString());
         }
 

@@ -5,6 +5,7 @@ import com.my.entities.User;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ import static com.my.utils.HttpConstants.*;
 
 @WebServlet(USER_UPLOAD_PATH)
 public class UploadImageServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(UploadImageServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,24 +34,15 @@ public class UploadImageServlet extends HttpServlet {
         ServletContext context = req.getServletContext();
         String filePath = context.getInitParameter("file-upload");
         User user = (User) session.getAttribute("user");
-        // Verify the content type
-        String contentType = req.getContentType();
 
         DiskFileItemFactory factory = new DiskFileItemFactory();
-        // maximum size that will be stored in memory
         factory.setSizeThreshold(maxMemSize);
-
-        // Location to save data that is larger than maxMemSize.
         factory.setRepository(new File("c:\\temp"));
 
-        // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);
-
-        // maximum file size to be uploaded.
         upload.setSizeMax(maxFileSize);
 
         try {
-            // Parse the request to get file items.
             List<FileItem> fileItems = upload.parseRequest(req);
 
             File dir = new File(filePath + "\\" + user.getId() + "\\");
@@ -57,12 +50,13 @@ public class UploadImageServlet extends HttpServlet {
                 dir.mkdir();
             }
 
-            // Process the uploaded file items
             for (FileItem fileItem : fileItems) {
                 if (!fileItem.isFormField()) {
-                    // Get the uploaded file parameters
-
-                    // Write the file
+                    String fileName = new File(fileItem.getName()).getName();
+                    if (!fileName.endsWith(".jpg") && !fileName.endsWith(".png")) {
+                        resp.sendRedirect(MAIN_SERVLET_PATH + USER_EDIT_PROFILE_PATH);
+                        return;
+                    }
                     file = new File(filePath + "\\" + user.getId() + "\\avatar" + new File(filePath + "\\" + user.getId() + "\\").listFiles().length + ".png");
                     fileItem.write(file);
                 }
@@ -74,8 +68,10 @@ public class UploadImageServlet extends HttpServlet {
                 session.removeAttribute("user");
                 session.setAttribute("user", user);
             }
+            log.info("upload new avatar");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("problem with uploading new avatar");
+            log.error("Exception -  " + e);
         }
         resp.sendRedirect(MAIN_SERVLET_PATH + USER_EDIT_PROFILE_PATH);
     }

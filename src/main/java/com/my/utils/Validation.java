@@ -82,7 +82,7 @@ public class Validation {
         return this.meterW && this.meterE && this.meterG && this.amountW && this.amountE && this.amountG;
     }
 
-    public boolean updateProfileValidation(String firstName, String lastName, String email, String phoneNumber){
+    public boolean updateProfileValidation(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = checkFirstName(firstName);
         this.lastName = checkLastName(lastName);
         this.email = checkEmail(email);
@@ -90,12 +90,12 @@ public class Validation {
         return this.firstName && this.lastName && this.email && this.phoneNumber;
     }
 
-    public boolean topUpValidation(String cardNumber, String expiryDate, String cvv, String amount){
+    public boolean topUpValidation(String cardNumber, String expiryDate, String cvv, String amount) {
         this.cardNumber = checkCardNumber(cardNumber);
         this.expirationDate = checkExpirationDate(expiryDate);
         this.cvv = checkCVV(cvv);
         this.paymentAmount = checkPaymentAmount(amount);
-        return this.cardNumber&&this.expirationDate&&this.cvv&&this.paymentAmount;
+        return this.cardNumber && this.expirationDate && this.cvv && this.paymentAmount;
     }
 
     private static boolean checkLogin(String login) {

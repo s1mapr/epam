@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
+
 import static com.my.utils.HttpConstants.*;
+
 @WebServlet(USER_SERVICES_PAYMENT_PATH)
 public class ServicesPaymentServlet extends HttpServlet {
     @Override
@@ -24,7 +26,7 @@ public class ServicesPaymentServlet extends HttpServlet {
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
         req.setAttribute("valid", validation);
-        if(Objects.nonNull(session.getAttribute("notEnoughMoney"))){
+        if (Objects.nonNull(session.getAttribute("notEnoughMoney"))) {
             session.removeAttribute("notEnoughMoney");
             req.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
         }
@@ -40,9 +42,9 @@ public class ServicesPaymentServlet extends HttpServlet {
         Validation validation = new Validation();
         boolean isValid = validation.servicesPaymentValidation(req.getParameter("card"),
                 req.getParameter("name"), req.getParameter("amount"));
-        if(!isValid){
+        if (!isValid) {
             session.setAttribute("valid", validation);
-            resp.sendRedirect(MAIN_SERVLET_PATH+USER_SERVICES_PAYMENT_PATH);
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_SERVICES_PAYMENT_PATH);
             return;
         }
         User user = (User) session.getAttribute("user");
@@ -54,16 +56,16 @@ public class ServicesPaymentServlet extends HttpServlet {
         int cardId = AccountDAO.getCardId(accountId);
         double oldAmount = CardDAO.getAmount(cardId);
         double newAmount = oldAmount - amount;
-        if(newAmount<0){
+        if (newAmount < 0) {
             session.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
-            resp.sendRedirect(MAIN_SERVLET_PATH+USER_SERVICES_PAYMENT_PATH);
+            resp.sendRedirect(MAIN_SERVLET_PATH + USER_SERVICES_PAYMENT_PATH);
             return;
         }
         int serviceId = ReceiptDAO.createNewEntryInServService(cardNumber, serviceName);
         ReceiptDAO.createEntryInReceipt(accountId, purposeId, amount, serviceId, user.getId());
 
         CardDAO.updateAmount(newAmount, cardId);
-        user.setPaymentsCount(user.getPaymentsCount()+1);
-        resp.sendRedirect(MAIN_SERVLET_PATH+MAIN_PAGE_PATH);
+        user.setPaymentsCount(user.getPaymentsCount() + 1);
+        resp.sendRedirect(MAIN_SERVLET_PATH + MAIN_PAGE_PATH);
     }
 }
