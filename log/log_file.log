@@ -274,3 +274,28 @@
 2022-10-19 20:27:56 INFO  ReceiptDAO:300 - select all payments
 2022-10-19 20:27:56 INFO  ReceiptDAO:279 - select payment count of user with id: 3
 2022-10-19 20:27:56 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-19 20:45:43 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-19 20:45:43 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:45:43 INFO  UserDAO:65 - select user with login 1
+2022-10-19 20:45:43 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-19 20:45:44 INFO  ReceiptDAO:300 - select all payments
+2022-10-19 20:45:44 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:45:44 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-19 20:45:46 INFO  ReceiptDAO:300 - select all payments
+2022-10-19 20:45:46 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:45:46 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-19 20:45:47 INFO  ReceiptDAO:300 - select all payments
+2022-10-19 20:45:47 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:45:47 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-19 20:45:48 INFO  ReceiptDAO:300 - select all payments
+2022-10-19 20:45:48 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:45:48 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-19 20:45:49 INFO  ReceiptDAO:300 - select all payments
+2022-10-19 20:45:49 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:45:49 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-19 20:45:50 INFO  ReceiptDAO:300 - select all payments
+2022-10-19 20:45:50 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:45:50 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-19 20:45:51 INFO  ReceiptDAO:300 - select all payments
+2022-10-19 20:45:51 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:45:51 INFO  ReceiptDAO:245 - select of user receipts
