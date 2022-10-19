@@ -51,3 +51,226 @@
 2022-10-18 17:22:03 INFO  AccountDAO:211 - select accounts count of user with id: 3
 2022-10-18 17:22:03 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
 2022-10-18 17:22:03 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:25:38 INFO  AccountDAO:194 - select card number of account with id: 10
+2022-10-18 17:25:38 INFO  CardDAO:83 - get amount of card with id 9
+2022-10-18 17:25:38 INFO  ReceiptDAO:52 - add new entry in phone_service table with phone number: +380976284216
+2022-10-18 17:25:38 INFO  ReceiptDAO:205 - add new entry in receipt table with purpose id: 1; and service id: 30
+2022-10-18 17:25:38 INFO  CardDAO:63 - update amount of card with id: 9
+2022-10-18 17:25:58 INFO  AccountDAO:194 - select card number of account with id: 30
+2022-10-18 17:25:58 INFO  CardDAO:83 - get amount of card with id 29
+2022-10-18 17:25:58 INFO  ReceiptDAO:81 - add new entry in serv_service table with card number: 1234788741556896
+2022-10-18 17:25:58 INFO  ReceiptDAO:205 - add new entry in receipt table with purpose id: 2; and service id: 10
+2022-10-18 17:25:58 INFO  CardDAO:63 - update amount of card with id: 29
+2022-10-18 17:26:00 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:26:00 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:26:00 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:26:03 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:26:03 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:26:03 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:26:03 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:26:03 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:26:03 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:26:10 INFO  PdfCreatorServlet:36 - create instance of PdfWriter
+2022-10-18 17:26:10 INFO  PdfCreatorServlet:48 - create instance of Image
+2022-10-18 17:26:10 INFO  ReceiptDAO:355 - select receipt(phone recharge) info with id: 72
+2022-10-18 17:26:10 INFO  PdfCreatorServlet:83 - generate pdf report for phone recharge
+2022-10-18 17:30:16 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:16 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:16 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:30:19 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:30:19 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:30:19 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:30:45 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:45 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:45 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:30:47 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:47 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:47 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:30:48 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:48 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:48 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:30:49 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:49 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:49 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:30:50 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:50 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:50 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:30:51 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:51 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:51 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:30:52 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:52 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:52 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:30:54 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:54 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:54 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:30:54 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:30:54 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:30:54 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:31:04 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:31:04 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:31:04 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:31:05 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:31:05 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:31:05 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:31:07 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 17:31:07 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 17:31:07 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 17:31:09 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:31:09 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:31:09 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 17:31:10 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 17:31:10 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 17:31:10 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:06:10 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:06:10 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:06:10 INFO  UserDAO:65 - select user with login 1
+2022-10-18 18:06:10 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:06:14 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 18:06:14 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:06:14 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:06:17 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:06:17 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 18:06:17 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:06:43 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 18:06:43 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:06:43 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:06:45 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 18:06:45 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:06:45 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:06:45 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:06:46 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 18:06:46 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:06:47 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 18:06:47 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:06:47 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:07:05 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 18:07:05 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:07:05 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:07:06 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 18:07:06 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:07:06 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:07:08 INFO  PdfCreatorServlet:36 - create instance of PdfWriter
+2022-10-18 18:07:08 INFO  PdfCreatorServlet:48 - create instance of Image
+2022-10-18 18:07:08 INFO  ReceiptDAO:355 - select receipt(phone recharge) info with id: 18
+2022-10-18 18:07:08 INFO  PdfCreatorServlet:83 - generate pdf report for phone recharge
+2022-10-18 18:10:52 INFO  UserDAO:109 - check user for registration where login = 
+2022-10-18 18:11:03 INFO  UserDAO:109 - check user for registration where login = 
+2022-10-18 18:11:18 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:11:18 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:11:18 INFO  UserDAO:65 - select user with login 1
+2022-10-18 18:11:18 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:12:25 INFO  UserDAO:109 - check user for registration where login = 
+2022-10-18 18:12:47 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:12:47 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:12:47 INFO  UserDAO:65 - select user with login 1
+2022-10-18 18:12:47 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:12:53 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:12:53 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 18:12:53 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:13:20 INFO  UserDAO:248 - update avatar of user with id: 3
+2022-10-18 18:13:20 INFO  UploadImageServlet:71 - upload new avatar
+2022-10-18 18:13:38 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 18:13:38 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:13:38 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:14:22 INFO  PdfCreatorServlet:36 - create instance of PdfWriter
+2022-10-18 18:14:22 INFO  PdfCreatorServlet:48 - create instance of Image
+2022-10-18 18:14:22 INFO  ReceiptDAO:355 - select receipt(phone recharge) info with id: 18
+2022-10-18 18:14:22 INFO  PdfCreatorServlet:83 - generate pdf report for phone recharge
+2022-10-18 18:16:12 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 18:16:12 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:16:12 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:16:13 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:16:13 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 18:16:13 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:16:18 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:16:18 INFO  AccountDAO:116 - block account with id: 13
+2022-10-18 18:16:18 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 18:16:18 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:16:23 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:16:23 INFO  AccountDAO:158 - set pending status to account with id: 13
+2022-10-18 18:16:23 INFO  RequestDAO:78 - create new request for account with id: 13
+2022-10-18 18:16:23 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 18:16:23 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:16:31 INFO  AccountDAO:211 - select accounts count of user with id: 1
+2022-10-18 18:16:31 INFO  ReceiptDAO:279 - select payment count of user with id: 1
+2022-10-18 18:16:31 INFO  UserDAO:65 - select user with login admin
+2022-10-18 18:16:31 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 1
+2022-10-18 18:16:31 INFO  AccountDAO:177 - select count of all accounts
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 10
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 11
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 12
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 13
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 14
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 15
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 16
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 17
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 18
+2022-10-18 18:16:31 INFO  ReceiptDAO:262 - select payment count of account with id: 19
+2022-10-18 18:16:31 INFO  AccountDAO:246 - select accounts
+2022-10-18 18:16:34 INFO  RequestDAO:95 - select count of all request
+2022-10-18 18:16:34 INFO  ReceiptDAO:262 - select payment count of account with id: 13
+2022-10-18 18:16:34 INFO  RequestDAO:39 - select all request
+2022-10-18 18:16:40 INFO  AccountDAO:137 - unblock account with id: 13
+2022-10-18 18:16:40 INFO  RequestDAO:57 - accept request where account id = 13
+2022-10-18 18:16:40 INFO  RequestDAO:95 - select count of all request
+2022-10-18 18:16:40 INFO  RequestDAO:39 - select all request
+2022-10-18 18:16:43 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:16:43 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:16:43 INFO  UserDAO:65 - select user with login 1
+2022-10-18 18:16:43 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:16:44 INFO  ReceiptDAO:300 - select all payments
+2022-10-18 18:16:44 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-18 18:16:44 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-18 18:16:46 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:16:46 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 18:16:46 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-18 18:17:26 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-18 18:17:26 INFO  AccountDAO:116 - block account with id: 13
+2022-10-18 18:17:26 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 3
+2022-10-18 18:17:26 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-19 20:03:21 INFO  AccountDAO:211 - select accounts count of user with id: 5
+2022-10-19 20:03:21 INFO  ReceiptDAO:279 - select payment count of user with id: 5
+2022-10-19 20:03:21 INFO  UserDAO:65 - select user with login serhii
+2022-10-19 20:03:21 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 5
+2022-10-19 20:06:42 INFO  AccountDAO:211 - select accounts count of user with id: 10
+2022-10-19 20:06:42 INFO  ReceiptDAO:279 - select payment count of user with id: 10
+2022-10-19 20:06:42 INFO  UserDAO:65 - select user with login Kostya
+2022-10-19 20:06:42 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 10
+2022-10-19 20:06:44 INFO  AccountDAO:211 - select accounts count of user with id: 10
+2022-10-19 20:06:44 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 10
+2022-10-19 20:06:44 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 10
+2022-10-19 20:21:30 INFO  ReceiptDAO:317 - update of status in receipt with id: 69
+2022-10-19 20:21:30 INFO  ReceiptDAO:317 - update of status in receipt with id: 70
+2022-10-19 20:21:30 INFO  ReceiptDAO:317 - update of status in receipt with id: 71
+2022-10-19 20:21:30 INFO  ReceiptDAO:317 - update of status in receipt with id: 72
+2022-10-19 20:21:30 INFO  ReceiptDAO:317 - update of status in receipt with id: 73
+2022-10-19 20:21:30 INFO  ReceiptDAO:300 - select all payments
+2022-10-19 20:21:30 INFO  ReceiptDAO:279 - select payment count of user with id: 10
+2022-10-19 20:21:30 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-19 20:21:31 INFO  AccountDAO:211 - select accounts count of user with id: 10
+2022-10-19 20:21:31 INFO  AccountDAO:67 - select user accounts(with pagination) where user id = 10
+2022-10-19 20:21:31 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 10
+2022-10-19 20:22:56 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-19 20:22:56 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:22:56 INFO  UserDAO:65 - select user with login 1
+2022-10-19 20:22:56 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-19 20:23:43 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-19 20:23:43 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:23:43 INFO  UserDAO:65 - select user with login 1
+2022-10-19 20:23:43 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-19 20:24:29 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-19 20:24:30 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:24:30 INFO  UserDAO:65 - select user with login 1
+2022-10-19 20:24:30 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-19 20:25:49 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-19 20:25:49 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:25:49 INFO  UserDAO:65 - select user with login 1
+2022-10-19 20:25:49 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-19 20:26:52 INFO  AccountDAO:211 - select accounts count of user with id: 3
+2022-10-19 20:26:52 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:26:52 INFO  UserDAO:65 - select user with login 1
+2022-10-19 20:26:52 INFO  AccountDAO:98 - select user accounts(without pagination) where user id = 3
+2022-10-19 20:27:56 INFO  ReceiptDAO:300 - select all payments
+2022-10-19 20:27:56 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-19 20:27:56 INFO  ReceiptDAO:245 - select of user receipts

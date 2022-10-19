@@ -6,12 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="m" uri="/WEB-INF/custom.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<style>
-    a{margin-left: 10px}
-</style>
+    <style>
+        a {
+            margin-left: 10px
+        }
+    </style>
 </head>
 <body>
 
@@ -34,15 +37,20 @@
                                 <a href="#" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown"
                                    onclick="return false">Створити новий платіж</a>
                                 <div class="dropdown-menu">
-                                    <a href="${pageContext.request.contextPath}/user/phoneRecharge" class="dropdown-item">Поповнення
+                                    <a href="${pageContext.request.contextPath}/user/phoneRecharge"
+                                       class="dropdown-item">Поповнення
                                         телефону</a>
-                                    <a href="${pageContext.request.contextPath}/user/servicesPayment" class="dropdown-item">Оплата
+                                    <a href="${pageContext.request.contextPath}/user/servicesPayment"
+                                       class="dropdown-item">Оплата
                                         посуг</a>
-                                    <a href="${pageContext.request.contextPath}/user/cardTransfer" class="dropdown-item">Переказ
+                                    <a href="${pageContext.request.contextPath}/user/cardTransfer"
+                                       class="dropdown-item">Переказ
                                         на картку</a>
-                                    <a href="${pageContext.request.contextPath}/user/utilitiesPayment" class="dropdown-item">Оплата
+                                    <a href="${pageContext.request.contextPath}/user/utilitiesPayment"
+                                       class="dropdown-item">Оплата
                                         комунальний послуг</a>
-                                    <a href="${pageContext.request.contextPath}/user/finesPayment" class="dropdown-item">Оплата
+                                    <a href="${pageContext.request.contextPath}/user/finesPayment"
+                                       class="dropdown-item">Оплата
                                         штрафів</a>
                                 </div>
                             </div>
@@ -53,6 +61,7 @@
                         </li>
                     </ul>
                     <span class="navbar-text">
+                        <a class="text-decoration-none"><m:today/></a>
                 <a href="${pageContext.request.contextPath}/user/profile" class="text-decoration-none">Profile</a>
                 <a href="${pageContext.request.contextPath}/logout" class="text-decoration-none">
                     <i><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -82,7 +91,8 @@
                             <a class="nav-link active" href="${pageContext.request.contextPath}/adm/users">Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="${pageContext.request.contextPath}/adm/requests">Requests</a>
+                            <a class="nav-link active"
+                               href="${pageContext.request.contextPath}/adm/requests">Requests</a>
                         </li>
                     </ul>
                     <span class="navbar-text">

@@ -1,7 +1,6 @@
 package com.my.controllers.userController;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfEncodings;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.my.dao.ReceiptDAO;
 import com.my.dto.ReceiptDTO;
