@@ -7,9 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
-    <title>Requests</title>
+    <title><fmt:message key="requests"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .div-tb{
@@ -25,15 +28,15 @@
         <thead class="table bg-primary">
         <tr>
             <th scope="col">
-                <a class="text-white text-decoration-none ">Назва</a>
+                <a class="text-white text-decoration-none "><fmt:message key="accountName"/></a>
             </th>
             <th scope="col">
-                <a class="text-white text-decoration-none">Кількість платежів</a>
+                <a class="text-white text-decoration-none"><fmt:message key="paymentsCount"/></a>
             </th>
 
 
             <th scope="col">
-                <a class="text-white text-decoration-none">Статус</a>
+                <a class="text-white text-decoration-none"><fmt:message key="status"/></a>
             </th>
 
             <th scope="col">
@@ -47,7 +50,7 @@
                 <td>${request.paymentCount}</td>
                 <td>${request.status}</td>
                 <td><a class="btn btn-primary mx-1 "
-                       href="${pageContext.request.contextPath}/adm/requests?action=unblock&id=${request.accountId}">Розблокувати</a>
+                       href="${pageContext.request.contextPath}/adm/requests?action=unblock&id=${request.accountId}"><fmt:message key="unblock"/></a>
                 </td>
             </tr>
         </c:forEach>

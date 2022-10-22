@@ -7,9 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
-  <title>Accounts</title>
+  <title><fmt:message key="accounts"/></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .arrow {
@@ -24,14 +27,14 @@
     <thead class="table bg-primary">
     <tr>
       <th scope="col">
-        <a class="text-white text-decoration-none ">Назва</a>
+        <a class="text-white text-decoration-none "><fmt:message key="accountName"/></a>
         <a class="text-white text-decoration-none arrow"
            href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortAccountName&type=ASC&page=1">&#129047;</a>
         <a class="text-white text-decoration-none arrow"
            href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortAccountName&type=DESC&page=1">&#129045;</a>
       </th>
       <th scope="col">
-        <a class="text-white text-decoration-none">Логін</a>
+        <a class="text-white text-decoration-none"><fmt:message key="login"/></a>
         <a class="text-white text-decoration-none arrow"
            href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortLogin&type=ASC&page=1">&#129047;</a>
         <a class="text-white text-decoration-none arrow"
@@ -39,7 +42,7 @@
       </th>
 
       <th scope="col">
-        <a class="text-white text-decoration-none">Ім'я</a>
+        <a class="text-white text-decoration-none"><fmt:message key="fName"/></a>
         <a class="text-white text-decoration-none arrow"
            href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortName&type=ASC&page=1">&#129047;</a>
         <a class="text-white text-decoration-none arrow"
@@ -47,7 +50,7 @@
       </th>
 
       <th scope="col">
-        <a class="text-white text-decoration-none">Прізвище</a>
+        <a class="text-white text-decoration-none"><fmt:message key="lName"/></a>
         <a class="text-white text-decoration-none arrow"
            href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortLastName&type=ASC&page=1">&#129047;</a>
         <a class="text-white text-decoration-none arrow"
@@ -55,11 +58,11 @@
       </th>
 
       <th scope="col">
-        <a class="text-white text-decoration-none">Кількість рахунків</a>
+        <a class="text-white text-decoration-none"><fmt:message key="paymentsCount"/></a>
       </th>
 
       <th scope="col">
-        <a class="text-white text-decoration-none">Статус</a>
+        <a class="text-white text-decoration-none"><fmt:message key="status"/></a>
         <a class="text-white text-decoration-none arrow"
            href="${pageContext.request.contextPath}/adm/accounts?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
         <a class="text-white text-decoration-none arrow"
@@ -83,9 +86,9 @@
         <td>${accounts.paymentsCount}</td>
         <td>${accounts.status}</td>
         <td><a class="btn btn-primary mx-1 "
-               href="${pageContext.request.contextPath}/adm/accounts?action=block&id=${accounts.id}">Заблокувати</a></td>
+               href="${pageContext.request.contextPath}/adm/accounts?action=block&id=${accounts.id}"><fmt:message key="block"/></a></td>
         <td><a class="btn btn-primary mx-1 "
-               href="${pageContext.request.contextPath}/adm/accounts?action=unblock&id=${accounts.id}">Розблокувати</a></td>
+               href="${pageContext.request.contextPath}/adm/accounts?action=unblock&id=${accounts.id}"><fmt:message key="unblock"/></a></td>
       </tr>
     </c:forEach>
     </tbody>

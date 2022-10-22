@@ -7,9 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="u" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
-    <title>Profile</title>
+    <title><fmt:message key="profile"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .mainDiv {
@@ -26,10 +30,6 @@
             width: 550px;
             height: 550px;
 
-        }
-
-        .arrow {
-            margin-left: -15px;
         }
 
         .avatar {
@@ -51,6 +51,7 @@
 
         }
     </style>
+    <u:arrow arrow="arrow"/>
 </head>
 <body>
 <jsp:include page="/views/jsp/header.jsp"/>
@@ -60,28 +61,28 @@
             <thead class="table bg-primary">
             <tr>
                 <th scope="col">
-                    <a class="text-white text-decoration-none">Назва</a>
+                    <a class="text-white text-decoration-none"><fmt:message key="accountName"/></a>
                     <a class="text-white text-decoration-none arrow"
                        href="${pageContext.request.contextPath}/user/profile?sortAction=sortName&type=ASC&page=1">&#129047;</a>
                     <a class="text-white text-decoration-none arrow"
                        href="${pageContext.request.contextPath}/user/profile?sortAction=sortName&type=DESC&page=1">&#129045;</a>
                 </th>
                 <th scope="col">
-                    <a class="text-white text-decoration-none">Номер картки</a>
+                    <a class="text-white text-decoration-none"><fmt:message key="cardNumber"/></a>
                     <a class="text-white text-decoration-none arrow"
                        href="${pageContext.request.contextPath}/user/profile?sortAction=sortCardNumber&type=ASC&page=1">&#129047;</a>
                     <a class="text-white text-decoration-none arrow"
                        href="${pageContext.request.contextPath}/user/profile?sortAction=sortCardNumber&type=DESC&page=1">&#129045;</a>
                 </th>
                 <th scope="col">
-                    <a class="text-white text-decoration-none">Баланс</a>
+                    <a class="text-white text-decoration-none"><fmt:message key="balance"/></a>
                     <a class="text-white text-decoration-none arrow"
                        href="${pageContext.request.contextPath}/user/profile?sortAction=sortAmount&type=ASC&page=1">&#129047;</a>
                     <a class="text-white text-decoration-none arrow"
                        href="${pageContext.request.contextPath}/user/profile?sortAction=sortAmount&type=DESC&page=1">&#129045;</a>
                 </th>
                 <th scope="col">
-                    <a class="text-white text-decoration-none">Статус</a>
+                    <a class="text-white text-decoration-none"><fmt:message key="status"/></a>
                     <a class="text-white text-decoration-none arrow"
                        href="${pageContext.request.contextPath}/user/profile?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
                     <a class="text-white text-decoration-none arrow"
@@ -102,21 +103,22 @@
                     <td>${names.cardNumber}</td>
                     <td>${names.amount}</td>
                     <td>${names.status}</td>
-                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/user/topUp?id=${names.id}">Пополнить
-                        счет</a></td>
+                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/user/topUp?id=${names.id}"><fmt:message key="topUpAccount"/></a></td>
                     <c:choose>
                         <c:when test="${names.status == 'unblocked'}">
                             <td><a class="btn btn-primary"
-                                   href="${pageContext.request.contextPath}/user/profile?action=block&id=${names.id}">Заблокувати</a>
+                                   href="${pageContext.request.contextPath}/user/profile?action=block&id=${names.id}"><fmt:message key="block"/></a>
                             </td>
                         </c:when>
                         <c:when test="${names.status == 'blocked'}">
                             <td><a class="btn btn-primary"
-                                   href="${pageContext.request.contextPath}/user/profile?action=unblock&id=${names.id}">Розблокувати</a>
+                                   href="${pageContext.request.contextPath}/user/profile?action=unblock&id=${names.id}"><fmt:message key="unblock"/></a>
                             </td>
                         </c:when>
                         <c:when test="${names.status == 'pending'}">
-                            <td>Запит надіслано</td>
+                            <td>
+                                <fmt:message key="reqMsg"/>
+                            </td>
                         </c:when>
                     </c:choose>
                 </tr>
@@ -144,8 +146,7 @@
                 </c:choose>
             </div>
             <div class="justify-content-end div2 ">
-                <a class="btn btn-primary mb-2 " href="${pageContext.request.contextPath}/user/addNewAccount">add new
-                    account</a>
+                <a class="btn btn-primary mb-2 " href="${pageContext.request.contextPath}/user/addNewAccount"><fmt:message key="addNewAcc"/></a>
             </div>
         </div>
     </div>
@@ -158,35 +159,34 @@
         <table class="table border-primary">
             <tbody>
             <tr >
-                <td>First name:</td>
+                <td><fmt:message key="fName"/>:</td>
                 <td>${sessionScope.user.firstName}</td>
             </tr>
             <tr>
-                <td>Last name:</td>
+                <td><fmt:message key="lName"/>:</td>
                 <td>${sessionScope.user.lastName}</td>
             </tr>
             <tr>
-                <td>Email:</td>
+                <td><fmt:message key="email"/>:</td>
                 <td> ${sessionScope.user.email}</td>
             </tr>
             <tr>
-                <td>Phone number:</td>
+                <td><fmt:message key="phoneNumber"/>:</td>
                 <td> ${sessionScope.user.phoneNumber}</td>
             </tr>
             <tr>
-                <td>Кількість платежів:</td>
+                <td><fmt:message key="paymentsCount"/>:</td>
                 <td> ${sessionScope.user.paymentsCount}</td>
             </tr>
             <tr>
-                <td>Кількість рахунків:</td>
+                <td><fmt:message key="accountsCount"/>:</td>
                 <td> ${sessionScope.user.accountsCount}</td>
             </tr>
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
             <a class="btn btn-primary mb-2"
-               href="${pageContext.request.contextPath}/user/editProfile">Edit profile
-            </a>
+               href="${pageContext.request.contextPath}/user/editProfile"><fmt:message key="editProfile"/></a>
         </div>
     </div>
 </div>

@@ -24,10 +24,12 @@ public class AuthorizationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("AuthorizationServlet#doGet");
         HttpSession session = req.getSession();
+        session.setAttribute("url", MAIN_SERVLET_PATH + AUTHORIZATION_PATH);
         if (Objects.nonNull(session.getAttribute("youAreBlocked"))) {
             session.removeAttribute("youAreBlocked");
             req.setAttribute("youAreBlocked", "blocked");
         }
+
         req.getRequestDispatcher("/views/jsp/authorization.jsp").forward(req, resp);
     }
 
@@ -55,7 +57,6 @@ public class AuthorizationServlet extends HttpServlet {
             resp.sendRedirect(MAIN_SERVLET_PATH + ADMIN_ACCOUNTS_PATH);
             return;
         }
-        resp.sendRedirect(MAIN_SERVLET_PATH + MAIN_PAGE_PATH);
-
+        resp.sendRedirect(MAIN_SERVLET_PATH + USER_RECEIPTS_PATH);
     }
 }

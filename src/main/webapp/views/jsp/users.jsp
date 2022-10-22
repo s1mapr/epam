@@ -7,9 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
-    <title>Users</title>
+    <title><fmt:message key="users"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .arrow {
@@ -24,7 +27,7 @@
         <thead class="table bg-primary">
         <tr>
             <th scope="col">
-                <a class="text-white text-decoration-none ">Логін</a>
+                <a class="text-white text-decoration-none "><fmt:message key="login"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/adm/users?sortAction=sortLogin&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
@@ -32,7 +35,7 @@
             </th>
 
             <th scope="col">
-                <a class="text-white text-decoration-none">Ім'я</a>
+                <a class="text-white text-decoration-none"><fmt:message key="fName"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/adm/users?sortAction=sortName&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
@@ -40,7 +43,7 @@
             </th>
 
             <th scope="col">
-                <a class="text-white text-decoration-none">Прізвище</a>
+                <a class="text-white text-decoration-none"><fmt:message key="lName"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/adm/users?sortAction=sortLastName&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
@@ -48,7 +51,7 @@
             </th>
 
             <th scope="col">
-                <a class="text-white text-decoration-none">Пошта</a>
+                <a class="text-white text-decoration-none"><fmt:message key="email"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/adm/users?sortAction=sortEmail&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
@@ -56,7 +59,7 @@
             </th>
 
             <th scope="col">
-                <a class="text-white text-decoration-none">Номер телефону</a>
+                <a class="text-white text-decoration-none"><fmt:message key="phoneNumber"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/adm/users?sortAction=sortPhoneNumber&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
@@ -64,11 +67,11 @@
             </th>
 
             <th scope="col">
-                <a class="text-white text-decoration-none">Кількість платежів</a>
+                <a class="text-white text-decoration-none"><fmt:message key="paymentsCount"/></a>
             </th>
 
             <th scope="col">
-                <a class="text-white text-decoration-none">Статус</a>
+                <a class="text-white text-decoration-none"><fmt:message key="status"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/adm/users?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
@@ -93,10 +96,10 @@
                 <td>${users.paymentsCount}</td>
                 <td>${users.status}</td>
                 <td><a class="btn btn-primary mx-1 "
-                       href="${pageContext.request.contextPath}/adm/users?action=block&id=${users.id}">Заблокувати</a>
+                       href="${pageContext.request.contextPath}/adm/users?action=block&id=${users.id}"><fmt:message key="block"/></a>
                 </td>
                 <td><a class="btn btn-primary mx-1 "
-                       href="${pageContext.request.contextPath}/adm/users?action=unblock&id=${users.id}">Розблокувати</a>
+                       href="${pageContext.request.contextPath}/adm/users?action=unblock&id=${users.id}"><fmt:message key="unblock"/></a>
                 </td>
             </tr>
         </c:forEach>

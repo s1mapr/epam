@@ -8,9 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="u" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
-    <title>My receipts</title>
+    <title><fmt:message key="myPayments"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <u:arrow arrow="arrow"/>
 </head>
@@ -21,42 +24,42 @@
         <thead class="table bg-primary">
         <tr>
             <th scope="col">
-                <a class="text-white text-decoration-none ">Назва</a>
+                <a class="text-white text-decoration-none "><fmt:message key="paymentName"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortName&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortName&type=DESC&page=1">&#129045;</a>
             </th>
             <th scope="col">
-                <a class="text-white text-decoration-none">Дата</a>
+                <a class="text-white text-decoration-none"><fmt:message key="paymentDate"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortDate&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortDate&type=DESC&page=1">&#129045;</a>
             </th>
             <th scope="col">
-                <a class="text-white text-decoration-none">Мета платежу</a>
+                <a class="text-white text-decoration-none"><fmt:message key="paymentPurpose"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortPurpose&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortPurpose&type=DESC&page=1">&#129045;</a>
             </th>
             <th scope="col">
-                <a class="text-white text-decoration-none">Ім'я аккаунту</a>
+                <a class="text-white text-decoration-none"><fmt:message key="accountName"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortAccount&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortAccount&type=DESC&page=1">&#129045;</a>
             </th>
             <th scope="col">
-                <a class="text-white text-decoration-none">Сума</a>
+                <a class="text-white text-decoration-none"><fmt:message key="paymentAmount"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortAmount&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortAmount&type=DESC&page=1">&#129045;</a>
             </th>
             <th scope="col">
-                <a class="text-white text-decoration-none">Статус</a>
+                <a class="text-white text-decoration-none"><fmt:message key="status"/></a>
                 <a class="text-white text-decoration-none arrow"
                    href="${pageContext.request.contextPath}/user/myReceipts?sortAction=sortStatus&type=ASC&page=1">&#129047;</a>
                 <a class="text-white text-decoration-none arrow"
@@ -75,7 +78,7 @@
                 <td>${receipts.accountName}</td>
                 <td>${receipts.amount}</td>
                 <td>${receipts.status}</td>
-                <td><a href="${pageContext.request.contextPath}/user/download?id=${receipts.id}&purpose=${receipts.purpose}&name=${receipts.name}&date=${receipts.date}" class="btn btn-primary">Квитанція</a></td>
+                <td><a href="${pageContext.request.contextPath}/user/download?id=${receipts.id}&purpose=${receipts.purpose}&name=${receipts.name}&date=${receipts.date}" class="btn btn-primary"><fmt:message key="receipt"/></a></td>
             </tr>
         </c:forEach>
         </tbody>

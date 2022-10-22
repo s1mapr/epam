@@ -68,7 +68,7 @@ public class FinesPaymentServlet extends HttpServlet {
 
         CardDAO.updateAmount(newAmount, cardId);
         user.setPaymentsCount(user.getPaymentsCount() + 1);
-        resp.sendRedirect(MAIN_SERVLET_PATH + MAIN_PAGE_PATH);
+        resp.sendRedirect(MAIN_SERVLET_PATH + USER_RECEIPTS_PATH);
 
 
     }

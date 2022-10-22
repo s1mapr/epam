@@ -7,10 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
-    <title>New Account</title>
+    <title><fmt:message key="addNewAcc"/></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/topUpForm.css">
 </head>
@@ -53,17 +55,17 @@
   </div>
   <form action="${pageContext.request.contextPath}/user/addNewAccount?id=${sessionScope.accountId}" method="post">
     <div class="inputBox">
-      <input type="text" maxlength="16" class="card-number-input" name="card" placeholder="card number">
+      <input type="text" maxlength="16" class="card-number-input" name="card" placeholder="<fmt:message key="cardNumber"/>">
     </div>
     <c:if test="${requestScope.valid.cardNumber == 'false'}">
       card number error<br>
     </c:if>
     <div class="inputBox">
-      <input type="text" class="card-holder-input" placeholder="card holder">
+      <input type="text" class="card-holder-input" placeholder="<fmt:message key="cardHolder"/>">
     </div>
     <div class="flexbox">
       <div class="inputBox">
-        <input class="expy-input" name="date" placeholder="expiration date">
+        <input class="expy-input" name="date" placeholder="<fmt:message key="expiry"/>">
         <br>
         <c:if test="${requestScope.valid.expirationDate == 'false'}">
           expiry date error<br>
@@ -71,7 +73,7 @@
       </div>
 
       <div class="inputBox">
-        <input type="text" maxlength="4" class="cvv-input" name="cvv" placeholder="cvv">
+        <input type="text" maxlength="4" class="cvv-input" name="cvv" placeholder="<fmt:message key="cvv"/>">
         <br>
         <c:if test="${requestScope.valid.cvv == 'false'}">
           cvv error<br>
@@ -79,14 +81,14 @@
       </div>
 
       <div class="inputBox">
-        <input type="text" name="name" placeholder="Account name">
+        <input type="text" name="name" placeholder="<fmt:message key="accountName"/>">
         <br>
         <c:if test="${requestScope.valid.accountName == 'false'}">
           account name error<br>
         </c:if>
       </div>
     </div>
-    <input type="submit" value="Create new account" class="submit-btn">
+    <input type="submit" value="<fmt:message key="createAccount"/>" class="submit-btn">
   </form>
 
 </div>

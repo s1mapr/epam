@@ -8,6 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="m" uri="/WEB-INF/custom.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
     <style>
@@ -19,50 +22,67 @@
 <body>
 
 <c:choose>
-    <c:when test="${sessionScope.user == null}">
-        <a href="${pageContext.request.contextPath}/authorization">authorization</a>
-        <a href="${pageContext.request.contextPath}/mainPage">Main Page</a>
+    <c:when test="${sessionScope.user==null}">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse justify-content-end">
+            <span class="navbar-text">
+
+        <c:if test="${sessionScope.lang == 'uk'}">
+            <b><a class="text-decoration-none text-dark" style="opacity: 0.3;"
+                  href="${pageContext.request.contextPath}/changeLang?lang=en">${sessionScope.lang}</a></b>
+        </c:if>
+        <c:if test="${sessionScope.lang == 'en'}">
+            <b><a class="text-decoration-none text-dark" style="opacity: 0.3;"
+                  href="${pageContext.request.contextPath}/changeLang?lang=uk">${sessionScope.lang}</a></b>
+        </c:if>
+                <b><a class="text-decoration-none text-dark" style="opacity: 0.3;"><m:today/></a></b>
+            </span>
+                </div>
+            </div>
+        </nav>
     </c:when>
     <c:when test="${sessionScope.user.role == 'user'}">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                               href="${pageContext.request.contextPath}/mainPage">Home</a>
-                        </li>
                         <li class="nav-item ">
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown"
-                                   onclick="return false">Створити новий платіж</a>
+                                   onclick="return false"><fmt:message key="newPayment"/></a>
                                 <div class="dropdown-menu">
                                     <a href="${pageContext.request.contextPath}/user/phoneRecharge"
-                                       class="dropdown-item">Поповнення
-                                        телефону</a>
+                                       class="dropdown-item"><fmt:message key="phoneRecharge"/></a>
                                     <a href="${pageContext.request.contextPath}/user/servicesPayment"
-                                       class="dropdown-item">Оплата
-                                        посуг</a>
+                                       class="dropdown-item"><fmt:message key="servPayment"/></a>
                                     <a href="${pageContext.request.contextPath}/user/cardTransfer"
-                                       class="dropdown-item">Переказ
-                                        на картку</a>
+                                       class="dropdown-item"><fmt:message key="cardTransfer"/></a>
                                     <a href="${pageContext.request.contextPath}/user/utilitiesPayment"
-                                       class="dropdown-item">Оплата
-                                        комунальний послуг</a>
+                                       class="dropdown-item"><fmt:message key="utilitiesPayment"/></a>
                                     <a href="${pageContext.request.contextPath}/user/finesPayment"
-                                       class="dropdown-item">Оплата
-                                        штрафів</a>
+                                       class="dropdown-item"><fmt:message key="finesPayment"/></a>
                                 </div>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="${pageContext.request.contextPath}/user/myReceipts">My
-                                payments</a>
+                            <a class="nav-link active"
+                               href="${pageContext.request.contextPath}/user/myReceipts"><fmt:message
+                                    key="myPayments"/></a>
                         </li>
                     </ul>
                     <span class="navbar-text">
+                        <c:if test="${sessionScope.lang == 'uk'}">
+                            <a class="text-decoration-none"
+                               href="${pageContext.request.contextPath}/changeLang?lang=en">${sessionScope.lang}</a>
+                        </c:if>
+                        <c:if test="${sessionScope.lang == 'en'}">
+                            <a class="text-decoration-none"
+                               href="${pageContext.request.contextPath}/changeLang?lang=uk">${sessionScope.lang}</a>
+                        </c:if>
                         <a class="text-decoration-none"><m:today/></a>
-                <a href="${pageContext.request.contextPath}/user/profile" class="text-decoration-none">Profile</a>
+                <a href="${pageContext.request.contextPath}/user/profile" class="text-decoration-none"><fmt:message
+                        key="profile"/></a>
                 <a href="${pageContext.request.contextPath}/logout" class="text-decoration-none">
                     <i><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                             class="bi bi-box-arrow-right" viewBox="0 0 20 20">
@@ -85,17 +105,27 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page"
-                               href="${pageContext.request.contextPath}/adm/accounts">Accounts</a>
+                               href="${pageContext.request.contextPath}/adm/accounts"><fmt:message key="accounts"/></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="${pageContext.request.contextPath}/adm/users">Users</a>
+                            <a class="nav-link active" href="${pageContext.request.contextPath}/adm/users"><fmt:message
+                                    key="users"/></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active"
-                               href="${pageContext.request.contextPath}/adm/requests">Requests</a>
+                               href="${pageContext.request.contextPath}/adm/requests"><fmt:message key="requests"/></a>
                         </li>
                     </ul>
                     <span class="navbar-text">
+                        <c:if test="${sessionScope.lang == 'uk'}">
+                            <a class="text-decoration-none"
+                               href="${pageContext.request.contextPath}/changeLang?lang=en">${sessionScope.lang}</a>
+                        </c:if>
+                        <c:if test="${sessionScope.lang == 'en'}">
+                            <a class="text-decoration-none"
+                               href="${pageContext.request.contextPath}/changeLang?lang=uk">${sessionScope.lang}</a>
+                        </c:if>
+                        <a class="text-decoration-none"><m:today/></a>
                 <a href="${pageContext.request.contextPath}/logout" class="text-decoration-none">
                     <i><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                             class="bi bi-box-arrow-right" viewBox="0 0 20 20">
