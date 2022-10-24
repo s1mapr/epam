@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import static com.my.utils.HttpConstants.*;
 import static org.mockito.Mockito.*;
-
 public class LangServletTest {
     @Test
     public void LangTest() throws IOException, ServletException {

@@ -14,6 +14,7 @@ import static org.mockito.Mockito.*;
 
 
 public class LogOutTest {
+
     @Test
     public void LogOutTest() throws IOException, ServletException {
 
