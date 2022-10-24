@@ -33,8 +33,12 @@
                         <input name="password" type="password" class="form-control" placeholder="<fmt:message key="password"/>">
                     </div>
                     <c:if test="${requestScope.youAreBlocked != null}">
-                    <div><cite style="color: red">Ваш акаунт заблоковано</cite></div>
+                    <div><cite style="color: red; font-size:11px"><fmt:message key="blockMsg"/></cite></div>
                     </c:if>
+                    <c:if test="${requestScope.loginError != null}">
+                        <div><cite style="color: red; font-size:11px"><fmt:message key="logInError"/></cite></div>
+                    </c:if>
+
                     <div class="form-row text-center">
                         <button class="btn btn-primary text-center mt-4" type="submit">
                             <fmt:message key="logIn"/>

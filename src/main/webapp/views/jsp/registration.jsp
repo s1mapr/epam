@@ -30,37 +30,40 @@
                         <input name="login" class="form-control" placeholder="<fmt:message key="login"/>">
                     </div>
                     <c:if test="${requestScope.valid.login == 'false'}">
-                        <div><cite style="color: red">login error</cite></div>
+                        <cite style="color: red; font-size:11px"><fmt:message key="loginError"/></cite>
                     </c:if>
                     <div class="input-group mt-3">
                         <input name="password" type="password" class="form-control" placeholder="<fmt:message key="password"/>">
                     </div>
                     <c:if test="${requestScope.valid.password == 'false'}">
-                        <cite style="color: red">password error</cite>
+                        <cite style="color: red; font-size:11px"><fmt:message key="passwordError"/></cite>
                     </c:if>
                     <div class="input-group mt-3">
                         <input name="firstName" class="form-control" placeholder="<fmt:message key="fName"/>">
                     </div>
                     <c:if test="${requestScope.valid.firstName == 'false'}">
-                        <cite style="color: red">error first name</cite>
+                        <cite style="color: red; font-size:11px"><fmt:message key="firstNameError"/></cite>
                     </c:if>
                     <div class="input-group mt-3">
                         <input name="lastName" class="form-control" placeholder="<fmt:message key="lName"/>">
                     </div>
                     <c:if test="${requestScope.valid.lastName == 'false'}">
-                        <cite style="color: red">error last name</cite>
+                        <cite style="color: red; font-size:11px"><fmt:message key="lastNameError"/></cite>
                     </c:if>
                     <div class="input-group mt-3">
                         <input name="email" class="form-control" placeholder="<fmt:message key="email"/>">
                     </div>
                     <c:if test="${requestScope.valid.email == 'false'}">
-                        <cite style="color: red">error email</cite>
+                        <cite style="color: red; font-size:11px"><fmt:message key="emailError"/></cite>
                     </c:if>
                     <div class="input-group mt-3">
                         <input name="phoneNumber" class="form-control" placeholder="<fmt:message key="phoneNumber"/>">
                     </div>
                     <c:if test="${requestScope.valid.phoneNumber == 'false'}">
-                        <cite style="color: red">error phone number</cite>
+                        <cite style="color: red; font-size:11px"><fmt:message key="phoneNumberError"/></cite>
+                    </c:if>
+                    <c:if test="${requestScope.regError != null}">
+                        <cite style="color: red; font-size:11px"><fmt:message key="regError"/></cite>
                     </c:if>
                     <div class="form-row text-center">
                         <button class="btn btn-primary text-center mt-1" type="submit">

@@ -54,6 +54,7 @@ public class UploadImageServlet extends HttpServlet {
                 if (!fileItem.isFormField()) {
                     String fileName = new File(fileItem.getName()).getName();
                     if (!fileName.endsWith(".jpg") && !fileName.endsWith(".png")) {
+                        session.setAttribute("imageError","msg");
                         resp.sendRedirect(MAIN_SERVLET_PATH + USER_EDIT_PROFILE_PATH);
                         return;
                     }

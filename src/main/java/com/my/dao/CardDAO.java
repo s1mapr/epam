@@ -108,6 +108,7 @@ public class CardDAO {
         return cardNumber == null;
     }
 
+
     private static void close(PreparedStatement statement) {
         try {
             statement.close();

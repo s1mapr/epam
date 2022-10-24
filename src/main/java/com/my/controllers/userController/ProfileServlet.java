@@ -50,7 +50,8 @@ public class ProfileServlet extends HttpServlet {
             list = getAccounts(req, session, user, query);
         }
         List<Account> accountList = AccountDAO.getUserAccountsWithoutPagination(user.getId());
-        session.removeAttribute("accounts");
+        int notBlockedAccountCount = (int)accountList.stream().filter(x -> x.getStatus().equals("unblocked")).count();
+        session.setAttribute("accLength", notBlockedAccountCount);
         session.setAttribute("accounts", accountList);
         req.setAttribute("accountsPag", list);
         req.getRequestDispatcher("/views/jsp/profile.jsp").forward(req, resp);

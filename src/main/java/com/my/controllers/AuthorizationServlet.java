@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.my.utils.HttpConstants.*;
 
@@ -24,10 +25,13 @@ public class AuthorizationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("AuthorizationServlet#doGet");
         HttpSession session = req.getSession();
-        session.setAttribute("url", MAIN_SERVLET_PATH + AUTHORIZATION_PATH);
         if (Objects.nonNull(session.getAttribute("youAreBlocked"))) {
             session.removeAttribute("youAreBlocked");
-            req.setAttribute("youAreBlocked", "blocked");
+            req.setAttribute("youAreBlocked", "msg");
+        }
+        if (Objects.nonNull(session.getAttribute("loginError"))) {
+            session.removeAttribute("loginError");
+            req.setAttribute("loginError", "msg");
         }
 
         req.getRequestDispatcher("/views/jsp/authorization.jsp").forward(req, resp);
@@ -41,17 +45,19 @@ public class AuthorizationServlet extends HttpServlet {
         User user = UserDAO.getUserByLoginAndPassword(login, password);
         HttpSession session = req.getSession();
         if (Objects.isNull(user)) {
-            session.setAttribute("error", "wrong login or password");
+            session.setAttribute("loginError", "msg");
             resp.sendRedirect(MAIN_SERVLET_PATH + AUTHORIZATION_PATH);
             return;
         }
         if (user.getStatus().equals("blocked")) {
-            session.setAttribute("youAreBlocked", "Ваш акаунт заблоковано");
+            session.setAttribute("youAreBlocked", "msg");
             resp.sendRedirect(MAIN_SERVLET_PATH + AUTHORIZATION_PATH);
             return;
         }
         List<Account> list = AccountDAO.getUserAccountsWithoutPagination(user.getId());
         session.setAttribute("accounts", list);
+        int notBlockedAccountCount = (int)list.stream().filter(x -> x.getStatus().equals("unblocked")).count();
+        session.setAttribute("accLength", notBlockedAccountCount);
         session.setAttribute("user", user);
         if (user.getRole().equals("admin")) {
             resp.sendRedirect(MAIN_SERVLET_PATH + ADMIN_ACCOUNTS_PATH);

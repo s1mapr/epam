@@ -14,6 +14,7 @@ public class AccountDAO {
     private static final String UNBLOCK_USER_ACCOUNT = "UPDATE account SET status = \"unblocked\" WHERE id = ?";
     private static final String GET_ALL_ACCOUNTS_COUNT = "SELECT COUNT(id) AS count FROM account";
     private static final String GET_CARD_ID = "SELECT * FROM account WHERE id = ?";
+    private static final String GET_ACCOUNT_NAME = "SELECT * FROM account WHERE name = ? && user_id = ?";
     private static final String GET_COUNT_OF_USERS_ACCOUNTS = "SELECT COUNT(user_id) AS count FROM account WHERE user_id = ?";
     private static final String CHANGE_STATUS_TO_PENDING = "UPDATE account SET status = \"pending\" WHERE id = ?";
 
@@ -249,6 +250,25 @@ public class AccountDAO {
             log.error("Exception -  " + e);
         }
         return accounts;
+    }
+
+    public static boolean checkAccountName(String accountName, int userId){
+        boolean checker = false;
+        try(Connection connection = DBManager.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_ACCOUNT_NAME)) {
+            statement.setString(1, accountName);
+            statement.setInt(2, userId);
+            try(ResultSet rs = statement.executeQuery()){
+                if(rs.next()) {
+                    checker = true;
+                }
+            }
+            log.info("check account name for availability with name: " + accountName);
+        } catch (SQLException e) {
+            log.error("problem with checking account name for availability with name: " + accountName);
+            log.error("Exception -  " + e);
+        }
+        return checker;
     }
 
     private static void close(PreparedStatement statement) {

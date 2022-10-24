@@ -32,25 +32,25 @@
                         <input name="phone" class="form-control" placeholder="<fmt:message key="phoneNumber"/>">
                     </div>
                     <c:if test="${requestScope.valid.phoneNumber == 'false'}">
-                        <div><cite style="color: red">phone number error</cite></div>
+                        <cite style="color: red; font-size:11px"><fmt:message key="phoneNumberError"/></cite>
                     </c:if>
                     <div class="input-group mt-3">
                         <input name="amount" class="form-control" placeholder="<fmt:message key="paymentAmount"/>">
                     </div>
                     <c:if test="${requestScope.valid.paymentAmount == 'false'}">
-                        <div><cite style="color: red">payment amount error</cite></div>
+                        <cite style="color: red; font-size:11px"><fmt:message key="amountError"/></cite>
                     </c:if>
                     <div class="mt-3">
                         <c:choose>
-                            <c:when test="${sessionScope.accounts.size() == 0}">
+                            <c:when test="${sessionScope.accLength == 0}">
                                 <select class="form-select" name="accountId" aria-label="Default select example">
 
                                     <option value="none" selected><fmt:message key="noAccounts"/></option>
                                 </select>
                             </c:when>
-                            <c:when test="${sessionScope.accounts.size() > 0 && sessionScope.accounts.size() <= 5}">
+                            <c:when test="${sessionScope.accLength > 0 && sessionScope.accLength <= 5}">
                                 <select class="form-select" class="form-control"
-                                        onfocus='this.size=${sessionScope.accounts.size()+1};' onblur='this.size=1;'
+                                        onfocus='this.size=${sessionScope.accLength+1};' onblur='this.size=1;'
                                         onchange='this.size=1; this.blur();' name="accountId"
                                         aria-label="Default select example">
                                     <c:forEach var="names" items="${sessionScope.accounts}">
@@ -60,7 +60,7 @@
                                     </c:forEach>
                                 </select>
                             </c:when>
-                            <c:when test="${sessionScope.accounts.size() > 5}">
+                            <c:when test="${sessionScope.accLength > 5}">
                                 <select class="form-select" class="form-control" onfocus='this.size=5;'
                                         onblur='this.size=1;' onchange='this.size=1; this.blur();' name="accountId"
                                         aria-label="Default select example">
@@ -76,12 +76,17 @@
 
                         </c:choose>
                     </div>
-                    <div class="text-center"><cite style="color: red">${requestScope.notEnoughMoney}</cite></div>
-                    <div class="form-row text-center">
-                        <button class="btn btn-primary text-center mt-5" type="submit">
-                            <fmt:message key="topUp"/>
-                        </button>
-                    </div>
+                    <c:if test="${requestScope.notEnoughMoney != null}">
+                        <div><cite style="color: red; font-size:11px"><fmt:message key="notEnoughMoney"/></cite></div>
+                    </c:if>
+                    <c:if test="${sessionScope.accLength >0}">
+
+                        <div class="form-row text-center">
+                            <button class="btn btn-primary text-center mt-5" type="submit">
+                                <fmt:message key="topUp"/>
+                            </button>
+                        </div>
+                    </c:if>
                 </div>
             </form>
         </div>

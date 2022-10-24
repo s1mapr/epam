@@ -17,6 +17,6 @@ public class LogOutServlet extends HttpServlet {
         System.out.println("LogOutServlet#doGet");
         HttpSession session = req.getSession();
         session.invalidate();
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+        resp.sendRedirect(MAIN_SERVLET_PATH+MAIN_PAGE_PATH);
     }
 }

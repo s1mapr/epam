@@ -21,6 +21,7 @@ public class Validation {
     private boolean amountW;
     private boolean amountE;
     private boolean amountG;
+    private boolean cardHolder;
 
     public boolean registrationValidation(String login, String password, String firstName,
                                           String lastName, String email, String phoneNumber) {
@@ -63,12 +64,13 @@ public class Validation {
         return this.firstName && this.patronymic && this.lastName && this.fineNumber && this.paymentAmount;
     }
 
-    public boolean newCardValidation(String accountName, String cardNumber, String expirationDate, String cvv) {
+    public boolean newCardValidation(String accountName, String cardNumber, String expirationDate, String cvv, String cardHolder) {
         this.accountName = checkAccountName(accountName);
         this.cardNumber = checkCardNumber(cardNumber);
         this.expirationDate = checkExpirationDate(expirationDate);
         this.cvv = checkCVV(cvv);
-        return this.accountName && this.cardNumber && this.expirationDate && this.cvv;
+        this.cardHolder=checkCardHolder(cardHolder);
+        return this.accountName && this.cardNumber && this.expirationDate && this.cvv&&this.cardHolder;
     }
 
     public boolean utilitiesPaymentValidation(String meterW, String meterE, String meterG,
@@ -90,12 +92,13 @@ public class Validation {
         return this.firstName && this.lastName && this.email && this.phoneNumber;
     }
 
-    public boolean topUpValidation(String cardNumber, String expiryDate, String cvv, String amount) {
+    public boolean topUpValidation(String cardNumber, String expiryDate, String cvv, String amount, String cardHolder) {
         this.cardNumber = checkCardNumber(cardNumber);
         this.expirationDate = checkExpirationDate(expiryDate);
         this.cvv = checkCVV(cvv);
         this.paymentAmount = checkPaymentAmount(amount);
-        return this.cardNumber && this.expirationDate && this.cvv && this.paymentAmount;
+        this.cardHolder=checkCardHolder(cardHolder);
+        return this.cardNumber && this.expirationDate && this.cvv && this.paymentAmount && this.cardHolder;
     }
 
     private static boolean checkLogin(String login) {
@@ -156,6 +159,9 @@ public class Validation {
 
     private static boolean checkMeter(String meter) {
         return meter.matches("^[0-9]{1,5}+$");
+    }
+    private static boolean checkCardHolder(String cardHolder){
+        return cardHolder.matches("^((?:[A-Za-z]+ ?){1,3})$");
     }
 
 
@@ -237,5 +243,9 @@ public class Validation {
 
     public boolean isAmountG() {
         return amountG;
+    }
+
+    public boolean isCardHolder() {
+        return cardHolder;
     }
 }

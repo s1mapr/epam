@@ -41,7 +41,8 @@ public class TopUpAccountServlet extends HttpServlet {
                 req.getParameter("cardNumber"),
                 req.getParameter("expiryDate"),
                 req.getParameter("cvv"),
-                req.getParameter("amount"));
+                req.getParameter("amount"),
+                req.getParameter("cardHolder"));
         if (!isValid) {
             session.setAttribute("valid", validation);
             resp.sendRedirect(MAIN_SERVLET_PATH + USER_TOP_UP_PATH);

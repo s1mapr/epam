@@ -29,7 +29,7 @@ public class PhoneRechargeServlet extends HttpServlet {
         req.setAttribute("valid", validation);
         if (Objects.nonNull(session.getAttribute("notEnoughMoney"))) {
             session.removeAttribute("notEnoughMoney");
-            req.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
+            req.setAttribute("notEnoughMoney", "msg");
         }
         session.removeAttribute("purposeId");
         session.setAttribute("purposeId", 1);

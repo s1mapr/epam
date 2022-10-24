@@ -61,34 +61,37 @@
                     </div>
                 </div>
             </form>
+            <c:if test="${requestScope.imageError != null}">
+                <cite style="color: red; font-size:11px"><fmt:message key="imageError"/></cite>
+            </c:if>
             <form action="${pageContext.request.contextPath}/user/editProfile" method="post">
                 <div class="input-group">
                     <input name="firstName" class="form-control" value="${sessionScope.user.firstName}"
                            placeholder="<fmt:message key="fName"/>"/>
                 </div>
                 <c:if test="${requestScope.valid.firstName == 'false'}">
-                    <cite style="color: red">first name error</cite>
+                    <cite style="color: red; font-size:11px"><fmt:message key="firstNameError"/></cite>
                 </c:if>
                 <div class="input-group mt-3">
                     <input name="lastName" class="form-control" value="${sessionScope.user.lastName}"
                            placeholder="<fmt:message key="lName"/>">
                 </div>
                 <c:if test="${requestScope.valid.lastName == 'false'}">
-                    <cite style="color: red">last name error</cite>
+                    <cite style="color: red; font-size:11px"><fmt:message key="lastNameError"/></cite>
                 </c:if>
                 <div class="input-group mt-3">
                     <input name="email" placeholder="<fmt:message key="email"/>" class="form-control"
                            value="${sessionScope.user.email}">
                 </div>
                 <c:if test="${requestScope.valid.email == 'false'}">
-                    <cite style="color: red">email error</cite>
+                    <cite style="color: red; font-size:11px"><fmt:message key="emailError"/></cite>
                 </c:if>
                 <div class="input-group mt-3">
                     <input name="phoneNumber" placeholder="<fmt:message key="phoneNumber"/>" class="form-control"
                            value="${sessionScope.user.phoneNumber}">
                 </div>
                 <c:if test="${requestScope.valid.phoneNumber == 'false'}">
-                    <cite style="color: red">phoneNumber error</cite>
+                    <cite style="color: red; font-size:11px"><fmt:message key="phoneNumberError"/></cite>
                 </c:if>
                 <div class="d-flex justify-content-center">
                     <input class="btn btn-primary text-center mt-2" type="submit" value="<fmt:message key="saveChanges"/>">

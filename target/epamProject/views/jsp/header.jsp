@@ -14,7 +14,7 @@
 <html>
 <head>
     <style>
-        a {
+        .mrg {
             margin-left: 10px
         }
     </style>
@@ -29,14 +29,14 @@
             <span class="navbar-text">
 
         <c:if test="${sessionScope.lang == 'uk'}">
-            <b><a class="text-decoration-none text-dark" style="opacity: 0.3;"
+            <b><a class="text-decoration-none text-dark mrg" style="opacity: 0.3;"
                   href="${pageContext.request.contextPath}/changeLang?lang=en">${sessionScope.lang}</a></b>
         </c:if>
         <c:if test="${sessionScope.lang == 'en'}">
-            <b><a class="text-decoration-none text-dark" style="opacity: 0.3;"
+            <b><a class="text-decoration-none text-dark mrg" style="opacity: 0.3;"
                   href="${pageContext.request.contextPath}/changeLang?lang=uk">${sessionScope.lang}</a></b>
         </c:if>
-                <b><a class="text-decoration-none text-dark" style="opacity: 0.3;"><m:today/></a></b>
+                <b><a class="text-decoration-none text-dark mrg" style="opacity: 0.3;"><m:today/></a></b>
             </span>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item ">
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown"
+                                <a href="#" class="nav-link active dropdown-toggle mrg" data-bs-toggle="dropdown"
                                    onclick="return false"><fmt:message key="newPayment"/></a>
                                 <div class="dropdown-menu">
                                     <a href="${pageContext.request.contextPath}/user/phoneRecharge"
@@ -66,24 +66,24 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active"
+                            <a class="nav-link active mrg"
                                href="${pageContext.request.contextPath}/user/myReceipts"><fmt:message
                                     key="myPayments"/></a>
                         </li>
                     </ul>
-                    <span class="navbar-text">
+                    <span class="navbar-text mrg">
                         <c:if test="${sessionScope.lang == 'uk'}">
                             <a class="text-decoration-none"
                                href="${pageContext.request.contextPath}/changeLang?lang=en">${sessionScope.lang}</a>
                         </c:if>
                         <c:if test="${sessionScope.lang == 'en'}">
-                            <a class="text-decoration-none"
+                            <a class="text-decoration-none mrg"
                                href="${pageContext.request.contextPath}/changeLang?lang=uk">${sessionScope.lang}</a>
                         </c:if>
-                        <a class="text-decoration-none"><m:today/></a>
-                <a href="${pageContext.request.contextPath}/user/profile" class="text-decoration-none"><fmt:message
+                        <a class="text-decoration-none mrg"><m:today/></a>
+                <a href="${pageContext.request.contextPath}/user/profile" class="text-decoration-none mrg"><fmt:message
                         key="profile"/></a>
-                <a href="${pageContext.request.contextPath}/logout" class="text-decoration-none">
+                <a href="${pageContext.request.contextPath}/logout" class="text-decoration-none mrg">
                     <i><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                             class="bi bi-box-arrow-right" viewBox="0 0 20 20">
   <path fill-rule="evenodd"
@@ -104,29 +104,29 @@
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
+                            <a class="nav-link active mrg" aria-current="page"
                                href="${pageContext.request.contextPath}/adm/accounts"><fmt:message key="accounts"/></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="${pageContext.request.contextPath}/adm/users"><fmt:message
+                            <a class="nav-link active mrg" href="${pageContext.request.contextPath}/adm/users"><fmt:message
                                     key="users"/></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active"
+                            <a class="nav-link active mrg"
                                href="${pageContext.request.contextPath}/adm/requests"><fmt:message key="requests"/></a>
                         </li>
                     </ul>
                     <span class="navbar-text">
                         <c:if test="${sessionScope.lang == 'uk'}">
-                            <a class="text-decoration-none"
+                            <a class="text-decoration-none mrg"
                                href="${pageContext.request.contextPath}/changeLang?lang=en">${sessionScope.lang}</a>
                         </c:if>
                         <c:if test="${sessionScope.lang == 'en'}">
-                            <a class="text-decoration-none"
+                            <a class="text-decoration-none mrg"
                                href="${pageContext.request.contextPath}/changeLang?lang=uk">${sessionScope.lang}</a>
                         </c:if>
-                        <a class="text-decoration-none"><m:today/></a>
-                <a href="${pageContext.request.contextPath}/logout" class="text-decoration-none">
+                        <a class="text-decoration-none mrg"><m:today/></a>
+                <a href="${pageContext.request.contextPath}/logout" class="text-decoration-none mrg">
                     <i><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                             class="bi bi-box-arrow-right" viewBox="0 0 20 20">
   <path fill-rule="evenodd"

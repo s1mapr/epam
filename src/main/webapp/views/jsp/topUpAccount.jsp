@@ -59,17 +59,20 @@
             <input type="text" maxlength="16" class="card-number-input" name="cardNumber" placeholder="<fmt:message key="cardNumber"/>">
         </div>
         <c:if test="${requestScope.valid.cardNumber == 'false'}">
-            card number error<br>
+            <cite style="color: red; font-size:11px"><fmt:message key="cardNumberError"/></cite>
         </c:if>
         <div class="inputBox">
-            <input type="text" class="card-holder-input" placeholder="<fmt:message key="cardHolder"/>">
+            <input type="text" class="card-holder-input" name="cardHolder" placeholder="<fmt:message key="cardHolder"/>">
         </div>
+        <c:if test="${requestScope.valid.cardHolder == 'false'}">
+            <cite style="color: red; font-size:11px"><fmt:message key="cardHolderError"/></cite>
+        </c:if>
         <div class="flexbox">
             <div class="inputBox">
                 <input class="expy-input" name="expiryDate" placeholder="<fmt:message key="expiry"/>">
                 <br>
                 <c:if test="${requestScope.valid.expirationDate == 'false'}">
-                    expiry date error<br>
+                    <cite style="color: red; font-size:11px"><fmt:message key="expiryError"/></cite>
                 </c:if>
             </div>
 
@@ -77,14 +80,14 @@
                 <input type="text" maxlength="4" class="cvv-input" name="cvv" placeholder="<fmt:message key="cvv"/>">
                 <br>
                 <c:if test="${requestScope.valid.cvv == 'false'}">
-                    cvv error<br>
+                    <cite style="color: red; font-size:11px"><fmt:message key="cvvError"/></cite>
                 </c:if>
             </div>
             <div class="inputBox">
                 <input type="text" name="amount" placeholder="<fmt:message key="paymentAmount"/>">
                 <br>
                 <c:if test="${requestScope.valid.paymentAmount == 'false'}">
-                    amount error<br>
+                    <cite style="color: red; font-size:11px"><fmt:message key="amountError"/></cite>
                 </c:if>
             </div>
         </div>

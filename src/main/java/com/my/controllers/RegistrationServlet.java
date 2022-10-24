@@ -4,6 +4,7 @@ import com.my.dao.DBManager;
 import com.my.dao.UserDAO;
 import com.my.utils.Validation;
 
+import javax.print.attribute.standard.JobKOctets;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Objects;
 
 import static com.my.utils.HttpConstants.*;
 
@@ -20,6 +22,10 @@ public class RegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("RegistrationServlet#doGet");
         HttpSession session = req.getSession();
+        if(Objects.nonNull(session.getAttribute("regError"))){
+            session.removeAttribute("regError");
+            req.setAttribute("regError", "msg");
+        }
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
         req.setAttribute("valid", validation);
@@ -54,7 +60,7 @@ public class RegistrationServlet extends HttpServlet {
 
             resp.sendRedirect(MAIN_SERVLET_PATH + AUTHORIZATION_PATH);
         } else {
-            session.setAttribute("isOk", "user with same login already exists");
+            session.setAttribute("regError", "msg");
             resp.sendRedirect(MAIN_SERVLET_PATH + REGISTRATION_PATH);
         }
     }

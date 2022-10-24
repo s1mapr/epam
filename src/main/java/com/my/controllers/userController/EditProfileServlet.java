@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import static com.my.utils.HttpConstants.*;
 
@@ -26,6 +27,10 @@ public class EditProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("EditProfileServlet#doGet");
         HttpSession session = req.getSession();
+        if(Objects.nonNull(session.getAttribute("imageError"))){
+            session.removeAttribute("imageError");
+            req.setAttribute("imageError", "msg");
+        }
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
         req.setAttribute("valid", validation);
