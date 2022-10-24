@@ -33,7 +33,6 @@ public class AuthorizationServlet extends HttpServlet {
             session.removeAttribute("loginError");
             req.setAttribute("loginError", "msg");
         }
-
         req.getRequestDispatcher("/views/jsp/authorization.jsp").forward(req, resp);
     }
 

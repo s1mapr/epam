@@ -4244,3 +4244,73 @@
 2022-10-24 14:43:26 INFO  CardDAO:83 - get amount of card with id 31
 2022-10-24 14:43:37 INFO  AccountDAO:195 - select card number of account with id: 32
 2022-10-24 14:43:37 INFO  CardDAO:83 - get amount of card with id 31
+2022-10-24 18:20:43 INFO  AccountDAO:212 - select accounts count of user with id: 3
+2022-10-24 18:20:43 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-24 18:20:43 INFO  UserDAO:65 - select user with login 1
+2022-10-24 18:20:43 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 3
+2022-10-24 18:20:43 INFO  ReceiptDAO:300 - select all payments
+2022-10-24 18:20:43 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-24 18:20:43 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-24 18:20:59 INFO  AccountDAO:195 - select card number of account with id: 32
+2022-10-24 18:20:59 INFO  CardDAO:83 - get amount of card with id 31
+2022-10-24 18:21:25 INFO  AccountDAO:195 - select card number of account with id: 32
+2022-10-24 18:21:25 INFO  CardDAO:83 - get amount of card with id 31
+2022-10-24 18:21:45 INFO  AccountDAO:195 - select card number of account with id: 32
+2022-10-24 18:21:45 INFO  CardDAO:83 - get amount of card with id 31
+2022-10-24 18:22:04 INFO  AccountDAO:195 - select card number of account with id: 32
+2022-10-24 18:22:04 INFO  CardDAO:83 - get amount of card with id 31
+2022-10-24 18:22:25 INFO  AccountDAO:195 - select card number of account with id: 32
+2022-10-24 18:22:25 INFO  CardDAO:83 - get amount of card with id 31
+2022-10-24 18:22:38 INFO  AccountDAO:212 - select accounts count of user with id: 3
+2022-10-24 18:22:38 INFO  AccountDAO:68 - select user accounts(with pagination) where user id = 3
+2022-10-24 18:22:38 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 3
+2022-10-24 18:23:23 INFO  AccountDAO:212 - select accounts count of user with id: 16
+2022-10-24 18:23:23 INFO  ReceiptDAO:279 - select payment count of user with id: 16
+2022-10-24 18:23:23 INFO  UserDAO:65 - select user with login user1
+2022-10-24 18:23:23 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 16
+2022-10-24 18:23:23 INFO  ReceiptDAO:300 - select all payments
+2022-10-24 18:23:23 INFO  ReceiptDAO:279 - select payment count of user with id: 16
+2022-10-24 18:23:23 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-24 18:23:25 INFO  AccountDAO:212 - select accounts count of user with id: 16
+2022-10-24 18:23:25 INFO  AccountDAO:68 - select user accounts(with pagination) where user id = 16
+2022-10-24 18:23:25 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 16
+2022-10-24 18:23:28 INFO  ReceiptDAO:300 - select all payments
+2022-10-24 18:23:28 INFO  ReceiptDAO:279 - select payment count of user with id: 16
+2022-10-24 18:23:28 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-24 18:23:42 INFO  AccountDAO:212 - select accounts count of user with id: 16
+2022-10-24 18:23:42 INFO  AccountDAO:68 - select user accounts(with pagination) where user id = 16
+2022-10-24 18:23:42 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 16
+2022-10-24 18:24:01 INFO  AccountDAO:266 - check account name for availability with name: Tourism
+2022-10-24 18:24:01 INFO  CardDAO:103 - check card number for availability with number: 1116541235795136
+2022-10-24 18:24:01 INFO  CardDAO:40 - creat new card with card number: 1116541235795136
+2022-10-24 18:24:01 INFO  AccountDAO:34 - add new entry in account table with account name: Tourism
+2022-10-24 18:24:01 INFO  AccountDAO:212 - select accounts count of user with id: 16
+2022-10-24 18:24:01 INFO  AccountDAO:68 - select user accounts(with pagination) where user id = 16
+2022-10-24 18:24:01 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 16
+2022-10-24 18:24:11 INFO  AccountDAO:212 - select accounts count of user with id: 16
+2022-10-24 18:24:11 INFO  AccountDAO:68 - select user accounts(with pagination) where user id = 16
+2022-10-24 18:24:11 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 16
+2022-10-24 18:24:12 INFO  AccountDAO:212 - select accounts count of user with id: 16
+2022-10-24 18:24:12 INFO  AccountDAO:117 - block account with id: 34
+2022-10-24 18:24:12 INFO  AccountDAO:68 - select user accounts(with pagination) where user id = 16
+2022-10-24 18:24:12 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 16
+2022-10-24 18:24:19 INFO  AccountDAO:212 - select accounts count of user with id: 3
+2022-10-24 18:24:19 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-24 18:24:19 INFO  UserDAO:65 - select user with login 1
+2022-10-24 18:24:19 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 3
+2022-10-24 18:24:19 INFO  ReceiptDAO:300 - select all payments
+2022-10-24 18:24:19 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-24 18:24:19 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-24 18:24:21 INFO  ReceiptDAO:300 - select all payments
+2022-10-24 18:24:21 INFO  ReceiptDAO:279 - select payment count of user with id: 3
+2022-10-24 18:24:21 INFO  ReceiptDAO:245 - select of user receipts
+2022-10-24 18:24:52 INFO  AccountDAO:212 - select accounts count of user with id: 3
+2022-10-24 18:24:52 INFO  AccountDAO:68 - select user accounts(with pagination) where user id = 3
+2022-10-24 18:24:52 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 3
+2022-10-24 18:25:15 INFO  UserDAO:226 - update data of user with id: 3
+2022-10-24 18:25:15 INFO  AccountDAO:212 - select accounts count of user with id: 3
+2022-10-24 18:25:15 INFO  AccountDAO:68 - select user accounts(with pagination) where user id = 3
+2022-10-24 18:25:15 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 3
+2022-10-24 18:25:20 INFO  AccountDAO:212 - select accounts count of user with id: 3
+2022-10-24 18:25:20 INFO  AccountDAO:68 - select user accounts(with pagination) where user id = 3
+2022-10-24 18:25:20 INFO  AccountDAO:99 - select user accounts(without pagination) where user id = 3

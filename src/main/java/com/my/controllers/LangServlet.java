@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet("/changeLang")
 public class LangServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String lang = req.getParameter("lang");
         String url = req.getHeader("Referer");
