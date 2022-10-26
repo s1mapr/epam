@@ -1,9 +1,8 @@
 package com.my.controllers.userController;
 
-import com.my.dao.AccountDAO;
-import com.my.dao.CardDAO;
+import com.my.service.AccountService;
+import com.my.service.CardService;
 import com.my.utils.Validation;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +18,6 @@ import static com.my.utils.HttpConstants.*;
 public class TopUpAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("TopUpAccountServlet#doGet");
         HttpSession session = req.getSession();
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
@@ -33,7 +31,6 @@ public class TopUpAccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("TopUpAccountServlet#doPost");
         HttpSession session = req.getSession();
         String id = session.getAttribute("accountId").toString();
         Validation validation = new Validation();
@@ -48,11 +45,11 @@ public class TopUpAccountServlet extends HttpServlet {
             resp.sendRedirect(MAIN_SERVLET_PATH + USER_TOP_UP_PATH);
             return;
         }
-        int cardId = AccountDAO.getCardId(Integer.parseInt(id));
+        int cardId = AccountService.getCardId(Integer.parseInt(id));
         double amount = Double.parseDouble(req.getParameter("amount"));
-        double currentAmount = CardDAO.getAmount(cardId);
+        double currentAmount = CardService.getAmount(cardId);
         double newAmount = currentAmount + amount;
-        CardDAO.updateAmount(newAmount, cardId);
+        CardService.updateAmount(newAmount, cardId);
         session.removeAttribute("accountId");
         resp.sendRedirect(MAIN_SERVLET_PATH + USER_PROFILE_PATH);
     }

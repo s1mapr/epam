@@ -13,7 +13,6 @@ import static com.my.utils.HttpConstants.*;
 public class MainPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("MainPageServlet#doGet");
         req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
 }

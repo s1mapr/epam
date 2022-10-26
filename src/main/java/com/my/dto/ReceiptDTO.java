@@ -3,27 +3,28 @@ package com.my.dto;
 import java.util.Date;
 
 public class ReceiptDTO {
-
-private String paymentName;
-private Date paymentDate;
-private String userCard;
-private String userFirstName;
-private String userLastName;
-private String phoneNumber;
-private double amount;
-private String paymentCardNumber;
-private String purpose;
-private String paymentStatus;
-private String paymentFirstName;
-private String paymentLastName;
-private String paymentPatronymic;
-private String fineNumber;
-private String meterW;
-private String meterE;
-private String meterG;
-private double amountW;
-private double amountE;
-private double amountG;
+    private int id;
+    private String accountName;
+    private String paymentName;
+    private Date paymentDate;
+    private String userCard;
+    private String userFirstName;
+    private String userLastName;
+    private String phoneNumber;
+    private double amount;
+    private String paymentCardNumber;
+    private String purpose;
+    private String paymentStatus;
+    private String paymentFirstName;
+    private String paymentLastName;
+    private String paymentPatronymic;
+    private String fineNumber;
+    private String meterW;
+    private String meterE;
+    private String meterG;
+    private double amountW;
+    private double amountE;
+    private double amountG;
 
     public static class Builder {
         private ReceiptDTO newReceipt;
@@ -39,6 +40,16 @@ private double amountG;
 
         public ReceiptDTO.Builder paymentDate(Date paymentDate) {
             newReceipt.paymentDate = paymentDate;
+            return this;
+        }
+
+        public ReceiptDTO.Builder accountName(String accountName) {
+            newReceipt.accountName = accountName;
+            return this;
+        }
+
+        public ReceiptDTO.Builder id(int id) {
+            newReceipt.id = id;
             return this;
         }
 
@@ -295,5 +306,21 @@ private double amountG;
 
     public void setAmountG(double amountG) {
         this.amountG = amountG;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 }

@@ -72,13 +72,13 @@
         <tbody>
         <c:forEach var="receipts" items="${requestScope.list}">
             <tr>
-                <td>${receipts.name}</td>
-                <td>${receipts.date}</td>
+                <td>${receipts.paymentName}</td>
+                <td>${receipts.paymentDate}</td>
                 <td>${receipts.purpose}</td>
                 <td>${receipts.accountName}</td>
                 <td>${receipts.amount}</td>
-                <td>${receipts.status}</td>
-                <td><a href="${pageContext.request.contextPath}/user/download?id=${receipts.id}&purpose=${receipts.purpose}&name=${receipts.name}&date=${receipts.date}" class="btn btn-primary"><fmt:message key="receipt"/></a></td>
+                <td>${receipts.paymentStatus}</td>
+                <td><a href="${pageContext.request.contextPath}/user/download?id=${receipts.id}&purpose=${receipts.purpose}&name=${receipts.paymentName}&date=${receipts.paymentDate}" class="btn btn-primary"><fmt:message key="receipt"/></a></td>
             </tr>
         </c:forEach>
         </tbody>

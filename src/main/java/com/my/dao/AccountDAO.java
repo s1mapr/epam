@@ -1,6 +1,6 @@
 package com.my.dao;
 
-import com.my.entities.Account;
+import com.my.dto.AccountDTO;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -42,8 +42,8 @@ public class AccountDAO {
         }
     }
 
-    public static List<Account> getUserAccounts(int id, int currentPage, String query) {
-        List<Account> list = new ArrayList<>();
+    public static List<AccountDTO> getUserAccounts(int id, int currentPage, String query) {
+        List<AccountDTO> list = new ArrayList<>();
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -55,7 +55,7 @@ public class AccountDAO {
                     String cardNumber = rs.getString("card.number");
                     Double amount = rs.getDouble("card.amount");
                     String status = rs.getString("status");
-                    Account account = new Account.Builder()
+                    AccountDTO account = new AccountDTO.Builder()
                             .id(accountId)
                             .name(name)
                             .cardNumber(cardNumber)
@@ -74,8 +74,8 @@ public class AccountDAO {
     }
 
 
-    public static List<Account> getUserAccountsWithoutPagination(int id) {
-        List<Account> list = new ArrayList<>();
+    public static List<AccountDTO> getUserAccountsWithoutPagination(int id) {
+        List<AccountDTO> list = new ArrayList<>();
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ?")) {
             statement.setInt(1, id);
@@ -86,7 +86,7 @@ public class AccountDAO {
                     String cardNumber = rs.getString("card.number");
                     Double amount = rs.getDouble("card.amount");
                     String status = rs.getString("status");
-                    Account account = new Account.Builder()
+                    AccountDTO account = new AccountDTO.Builder()
                             .id(accountId)
                             .name(name)
                             .cardNumber(cardNumber)
@@ -217,9 +217,9 @@ public class AccountDAO {
         return count;
     }
 
-    public static List<Account> accountPagination(int currentPage, String query) {
-        List<Account> accounts = new ArrayList<>();
-        Account account = null;
+    public static List<AccountDTO> accountPagination(int currentPage, String query) {
+        List<AccountDTO> accounts = new ArrayList<>();
+        AccountDTO account = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, (currentPage - 1) * 10);
@@ -232,7 +232,7 @@ public class AccountDAO {
                     String userFirstName = rs.getString("user.first_name");
                     String userLastName = rs.getString("user.last_name");
                     int count = ReceiptDAO.getPaymentCountInAccount(id);
-                    account = new Account.Builder()
+                    account = new AccountDTO.Builder()
                             .id(id)
                             .name(name)
                             .status(status)

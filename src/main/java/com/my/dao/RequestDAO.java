@@ -92,6 +92,7 @@ public class RequestDAO {
              Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(GET_COUNT_OF_REQUEST)) {
             rs.next();
+            count = rs.getInt("count");
             log.info("select count of all request");
         } catch (SQLException e) {
             log.error("problem with selecting count of all request");

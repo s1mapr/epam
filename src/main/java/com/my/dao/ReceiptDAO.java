@@ -1,14 +1,9 @@
 package com.my.dao;
 
 import com.my.dto.ReceiptDTO;
-import com.my.entities.Receipt;
-import com.my.entities.User;
-import com.sun.net.httpserver.HttpsServer;
+import com.my.dto.UserDTO;
 import org.apache.log4j.Logger;
-
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -214,9 +209,9 @@ public class ReceiptDAO {
     }
 
 
-    public static List<Receipt> getUsersReceiptsWithPagination(int userId, int currentPage, String query) {
-        List<Receipt> receiptList = new ArrayList<>();
-        Receipt receipt = null;
+    public static List<ReceiptDTO> getUsersReceiptsWithPagination(int userId, int currentPage, String query) {
+        List<ReceiptDTO> receiptList = new ArrayList<>();
+        ReceiptDTO receipt = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
@@ -229,14 +224,14 @@ public class ReceiptDAO {
                     String purpose = rs.getString("purpose.name");
                     String accountName = rs.getString("account.name");
                     String status = rs.getString("status");
-                    Double amount = rs.getDouble("amount");
-                    receipt = new Receipt.Builder()
-                            .name(name)
-                            .date(date)
+                    double amount = rs.getDouble("amount");
+                    receipt = new ReceiptDTO.Builder()
+                            .paymentName(name)
+                            .paymentDate(date)
                             .id(id)
                             .purpose(purpose)
                             .accountName(accountName)
-                            .status(status)
+                            .paymentStatus(status)
                             .amount(amount)
                             .build();
                     receiptList.add(receipt);
@@ -325,14 +320,13 @@ public class ReceiptDAO {
         }
     }
 
-    public static ReceiptDTO getReceiptInfoPhone(int receiptId, HttpSession session) {
+    public static ReceiptDTO getReceiptInfoPhone(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_PHONE)) {
             statement.setInt(1, receiptId);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
-                User user = (User) session.getAttribute("user");
                 String paymentName = rs.getString("receipt.name");
                 Date paymentDate = rs.getDate("receipt.date");
                 String userCard = rs.getString("card.number");
@@ -360,14 +354,13 @@ public class ReceiptDAO {
         return receipt;
     }
 
-    public static ReceiptDTO getReceiptInfoService(int receiptId, HttpSession session) {
+    public static ReceiptDTO getReceiptInfoService(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_SERVICES)) {
             statement.setInt(1, receiptId);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
-                User user = (User) session.getAttribute("user");
                 String paymentName = rs.getString("receipt.name");
                 Date paymentDate = rs.getDate("receipt.date");
                 String userCard = rs.getString("card.number");
@@ -397,14 +390,13 @@ public class ReceiptDAO {
         return receipt;
     }
 
-    public static ReceiptDTO getReceiptInfoCard(int receiptId, HttpSession session) {
+    public static ReceiptDTO getReceiptInfoCard(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_CARD)) {
             statement.setInt(1, receiptId);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
-                User user = (User) session.getAttribute("user");
                 String paymentName = rs.getString("receipt.name");
                 Date paymentDate = rs.getDate("receipt.date");
                 String userCard = rs.getString("card.number");
@@ -436,14 +428,13 @@ public class ReceiptDAO {
         return receipt;
     }
 
-    public static ReceiptDTO getReceiptInfoUtilities(int receiptId, HttpSession session) {
+    public static ReceiptDTO getReceiptInfoUtilities(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_UTILITIES)) {
             statement.setInt(1, receiptId);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
-                User user = (User) session.getAttribute("user");
                 String paymentName = rs.getString("receipt.name");
                 Date paymentDate = rs.getDate("receipt.date");
                 String userCard = rs.getString("card.number");
@@ -481,14 +472,13 @@ public class ReceiptDAO {
         return receipt;
     }
 
-    public static ReceiptDTO getReceiptInfoFines(int receiptId, HttpSession session) {
+    public static ReceiptDTO getReceiptInfoFines(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_DATA_FOR_PDF_FINES)) {
             statement.setInt(1, receiptId);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
-                User user = (User) session.getAttribute("user");
                 String paymentName = rs.getString("receipt.name");
                 Date paymentDate = rs.getDate("receipt.date");
                 String userCard = rs.getString("card.number");

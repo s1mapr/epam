@@ -1,11 +1,8 @@
 package com.my.dao;
 
-import com.my.entities.Account;
-import com.my.entities.User;
+import com.my.dto.UserDTO;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +19,8 @@ public class UserDAO {
     private static final String UPDATE_USER_DATA = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE id = ?";
     private static final String SET_USER_AVATAR = "UPDATE user SET avatar_url = ? WHERE id = ?";
 
-    public static User getUserByLoginAndPassword(String login, String password) {
-        User user = null;
+    public static UserDTO getUserByLoginAndPassword(String login, String password) {
+        UserDTO user = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, login);
@@ -47,7 +44,7 @@ public class UserDAO {
                 }
                 int accountsCount = AccountDAO.getCountOfUsersAccounts(userId);
                 int paymentsCount = ReceiptDAO.getPaymentsCountOfUser(userId);
-                user = new User.Builder()
+                user = new UserDTO.Builder()
                         .id(userId)
                         .login(userLogin)
                         .password(userPassword)
@@ -172,9 +169,9 @@ public class UserDAO {
     }
 
 
-    public static List<User> usersPagination(int currentPage, String query) {
-        List<User> list = new ArrayList<>();
-        User user = null;
+    public static List<UserDTO> usersPagination(int currentPage, String query) {
+        List<UserDTO> list = new ArrayList<>();
+        UserDTO user = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, (currentPage - 1) * 10);
@@ -188,7 +185,7 @@ public class UserDAO {
                     String email = rs.getString("email");
                     String phoneNumber = rs.getString("phone_number");
                     String status = rs.getString("status");
-                    user = new User.Builder()
+                    user = new UserDTO.Builder()
                             .id(id)
                             .login(login)
                             .firstName(firsName)

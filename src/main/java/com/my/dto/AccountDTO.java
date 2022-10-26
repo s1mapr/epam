@@ -1,69 +1,69 @@
-package com.my.entities;
+package com.my.dto;
 
-public class Account {
+public class AccountDTO {
     private String name;
     private int id;
-    private Double amount;
+    private Double amount;//
     private String status;
-    private String userLogin;
-    private String userFirstName;
-    private String userLastName;
-    private int paymentsCount;
-    private String cardNumber;
+    private String userLogin;//
+    private String userFirstName;//
+    private String userLastName;//
+    private int paymentsCount;//
+    private String cardNumber;//
 
     public static class Builder {
-        private Account newAccount;
+        private AccountDTO newAccount;
 
         public Builder() {
-            newAccount = new Account();
+            newAccount = new AccountDTO();
         }
 
-        public Account.Builder name(String name) {
+        public AccountDTO.Builder name(String name) {
             newAccount.name = name;
             return this;
         }
 
-        public Account.Builder id(int id) {
+        public AccountDTO.Builder id(int id) {
             newAccount.id = id;
             return this;
         }
 
-        public Account.Builder amount(Double amount) {
+        public AccountDTO.Builder amount(Double amount) {
             newAccount.amount = amount;
             return this;
         }
 
-        public Account.Builder status(String status) {
+        public AccountDTO.Builder status(String status) {
             newAccount.status = status;
             return this;
         }
 
-        public Account.Builder userLogin(String userLogin) {
+        public AccountDTO.Builder userLogin(String userLogin) {
             newAccount.userLogin = userLogin;
             return this;
         }
 
-        public Account.Builder userFirstName(String userFirstName) {
+        public AccountDTO.Builder userFirstName(String userFirstName) {
             newAccount.userFirstName = userFirstName;
             return this;
         }
 
-        public Account.Builder userLastName(String userLastName) {
+        public AccountDTO.Builder userLastName(String userLastName) {
             newAccount.userLastName = userLastName;
             return this;
         }
 
-        public Account.Builder paymentsCount(int paymentsCount) {
+        public AccountDTO.Builder paymentsCount(int paymentsCount) {
             newAccount.paymentsCount = paymentsCount;
             return this;
         }
 
-        public Account.Builder cardNumber(String cardNumber) {
+        public AccountDTO.Builder cardNumber(String cardNumber) {
             newAccount.cardNumber = cardNumber;
             return this;
         }
 
-        public Account build() {
+        public AccountDTO build() {
             return newAccount;
         }
     }

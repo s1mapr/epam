@@ -1,9 +1,9 @@
 package com.my.controllers.userController.servicesPayments;
 
-import com.my.dao.AccountDAO;
-import com.my.dao.CardDAO;
-import com.my.dao.ReceiptDAO;
-import com.my.entities.User;
+import com.my.dto.UserDTO;
+import com.my.service.AccountService;
+import com.my.service.CardService;
+import com.my.service.ReceiptService;
 import com.my.utils.Validation;
 
 import javax.servlet.ServletException;
@@ -21,7 +21,6 @@ import static com.my.utils.HttpConstants.*;
 public class UtilitiesPaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("UtilitiesPaymentServlet#doGet");
         HttpSession session = req.getSession();
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
@@ -30,14 +29,12 @@ public class UtilitiesPaymentServlet extends HttpServlet {
             session.removeAttribute("notEnoughMoney");
             req.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
         }
-        session.removeAttribute("purposeId");
         session.setAttribute("purposeId", 4);
         req.getRequestDispatcher("/views/jsp/options/utilitiesPayment.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("UtilitiesPaymentServlet#doPost");
         HttpSession session = req.getSession();
         Validation validation = new Validation();
         boolean isValid = validation.utilitiesPaymentValidation(req.getParameter("meter_w"),
@@ -48,30 +45,27 @@ public class UtilitiesPaymentServlet extends HttpServlet {
             resp.sendRedirect(MAIN_SERVLET_PATH + USER_UTILITIES_PAYMENT_PATH);
             return;
         }
-        int meter_w = Integer.parseInt(req.getParameter("meter_w"));
-        int meter_e = Integer.parseInt(req.getParameter("meter_e"));
-        int meter_g = Integer.parseInt(req.getParameter("meter_g"));
-        double amount_w = Double.parseDouble(req.getParameter("amount_w"));
-        double amount_e = Double.parseDouble(req.getParameter("amount_e"));
-        double amount_g = Double.parseDouble(req.getParameter("amount_g"));
-
-        User user = (User) session.getAttribute("user");
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        int meterW = Integer.parseInt(req.getParameter("meter_w"));
+        int meterE = Integer.parseInt(req.getParameter("meter_e"));
+        int meterG = Integer.parseInt(req.getParameter("meter_g"));
+        double amountW = Double.parseDouble(req.getParameter("amount_w"));
+        double amountE = Double.parseDouble(req.getParameter("amount_e"));
+        double amountG = Double.parseDouble(req.getParameter("amount_g"));
         int purposeId = Integer.parseInt(session.getAttribute("purposeId").toString());
-        double amount = amount_w + amount_e + amount_g;
+        double amount = amountW + amountE + amountG;
         int accountId = Integer.parseInt(req.getParameter("accountId"));
-        int cardId = AccountDAO.getCardId(accountId);
-        double oldAmount = CardDAO.getAmount(cardId);
+        int cardId = AccountService.getCardId(accountId);
+        double oldAmount = CardService.getAmount(cardId);
         double newAmount = oldAmount - amount;
         if (newAmount < 0) {
             session.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
             resp.sendRedirect(MAIN_SERVLET_PATH + USER_UTILITIES_PAYMENT_PATH);
             return;
         }
-
-        int serviceId = ReceiptDAO.createNewEntryInUtilitiesService(meter_w, meter_e, meter_g, amount_w, amount_e, amount_g);
-        ReceiptDAO.createEntryInReceipt(accountId, purposeId, amount, serviceId, user.getId());
-
-        CardDAO.updateAmount(newAmount, cardId);
+        int serviceId = ReceiptService.createNewEntryInUtilitiesService(meterW, meterE, meterG, amountW, amountE, amountG);
+        ReceiptService.createEntryInReceipt(accountId, purposeId, amount, serviceId, user.getId());
+        CardService.updateAmount(newAmount, cardId);
         user.setPaymentsCount(user.getPaymentsCount() + 1);
         resp.sendRedirect(MAIN_SERVLET_PATH + USER_RECEIPTS_PATH);
     }

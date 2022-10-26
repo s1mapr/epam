@@ -1,6 +1,6 @@
 package com.my.filters;
 
-import com.my.entities.User;
+import com.my.dto.UserDTO;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -19,7 +19,7 @@ public class UserFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        UserDTO user = (UserDTO) session.getAttribute("user");
         if (Objects.nonNull(user) && user.getRole().equals("user")) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {

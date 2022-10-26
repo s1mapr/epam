@@ -1,6 +1,6 @@
-package com.my.entities;
+package com.my.dto;
 
-public class User {
+public class UserDTO {
 
     private int id;
     private String login;
@@ -16,10 +16,10 @@ public class User {
     private String avatarURL;
 
     public static class Builder{
-        private User newUser;
+        private UserDTO newUser;
 
         public Builder() {
-            newUser = new User();
+            newUser = new UserDTO();
         }
         public Builder id(int id){
             newUser.id = id;
@@ -70,7 +70,7 @@ public class User {
             newUser.avatarURL = avatarURL;
             return this;
         }
-        public User build(){
+        public UserDTO build(){
             return newUser;
         }
     }
@@ -173,7 +173,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDTO{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 '}';

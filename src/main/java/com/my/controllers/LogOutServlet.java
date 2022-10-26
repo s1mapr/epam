@@ -14,7 +14,6 @@ import static com.my.utils.HttpConstants.*;
 public class LogOutServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("LogOutServlet#doGet");
         HttpSession session = req.getSession();
         session.invalidate();
         resp.sendRedirect(MAIN_SERVLET_PATH+MAIN_PAGE_PATH);

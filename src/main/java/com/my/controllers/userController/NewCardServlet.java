@@ -1,8 +1,8 @@
 package com.my.controllers.userController;
 
-import com.my.dao.AccountDAO;
-import com.my.dao.CardDAO;
-import com.my.entities.User;
+import com.my.dto.UserDTO;
+import com.my.service.AccountService;
+import com.my.service.CardService;
 import com.my.utils.Validation;
 
 import javax.servlet.ServletException;
@@ -20,7 +20,6 @@ import static com.my.utils.HttpConstants.*;
 public class NewCardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("NewCardServlet#doGet");
         HttpSession session = req.getSession();
         if(Objects.nonNull(session.getAttribute("accountExist"))){
             session.removeAttribute("accountExist");
@@ -33,38 +32,36 @@ public class NewCardServlet extends HttpServlet {
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
         req.setAttribute("valid", validation);
-
         req.getRequestDispatcher("/views/jsp/newAccount.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("NewCardServlet#doPost");
         HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
-        if(AccountDAO.checkAccountName(req.getParameter("name"), user.getId())){
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        String name = req.getParameter("name");
+        String cardNumber = req.getParameter("card");
+        String date = req.getParameter("date");
+        String cvv = req.getParameter("cvv");
+        if(AccountService.checkAccountNameIfExist(name, user.getId())){
             session.setAttribute("accountExist", "msg");
             resp.sendRedirect(MAIN_SERVLET_PATH + USER_NEW_CARD_PATH);
             return;
         }
-        String cardNumber = req.getParameter("card");
-        if (!CardDAO.checkCardNumber(cardNumber)) {
+        if (!CardService.checkCardNumberIfExist(cardNumber)) {
             session.setAttribute("cardExist", "msg");
             resp.sendRedirect(MAIN_SERVLET_PATH + USER_NEW_CARD_PATH);
             return;
         }
         Validation validation = new Validation();
-        boolean isValid = validation.newCardValidation(req.getParameter("name"),
-                req.getParameter("card"), req.getParameter("date"), req.getParameter("cvv"), req.getParameter("cardHolder"));
+        boolean isValid = validation.newCardValidation(name, cardNumber, date, cvv, req.getParameter("cardHolder"));
         if (!isValid) {
             session.setAttribute("valid", validation);
             resp.sendRedirect(MAIN_SERVLET_PATH + USER_NEW_CARD_PATH);
             return;
         }
-        int cardId = CardDAO.createNewCard(cardNumber,
-                req.getParameter("date"),
-                req.getParameter("cvv"));
-        AccountDAO.addNewAccount(req.getParameter("name"), cardId, user.getId());
+        int cardId = CardService.createCard(cardNumber, date, cvv);
+        AccountService.createNewAccount(name, cardId, user.getId());
         user.setAccountsCount(user.getAccountsCount() + 1);
         resp.sendRedirect(MAIN_SERVLET_PATH + USER_PROFILE_PATH);
     }
