@@ -17,13 +17,14 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Controller for uploading image
+ */
 @WebServlet(USER_UPLOAD_PATH)
 public class UploadImageServlet extends HttpServlet {
 
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
         ServletContext context = req.getServletContext();

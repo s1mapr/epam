@@ -1,15 +1,19 @@
 package com.my.dto;
 
+/**
+ * Describes Account's DTO
+ */
+
 public class AccountDTO {
     private String name;
     private int id;
-    private Double amount;//
+    private Double amount;
     private String status;
-    private String userLogin;//
-    private String userFirstName;//
-    private String userLastName;//
-    private int paymentsCount;//
-    private String cardNumber;//
+    private String userLogin;
+    private String userFirstName;
+    private String userLastName;
+    private int paymentsCount;
+    private String cardNumber;
 
     public static class Builder {
         private AccountDTO newAccount;

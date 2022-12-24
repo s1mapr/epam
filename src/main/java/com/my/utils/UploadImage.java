@@ -11,9 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * UploadImage utils
+ */
 public class UploadImage {
     private static final Logger log = Logger.getLogger(UploadImage.class);
+
+    /**
+     * Return file object
+     */
     public static File getFile(UserDTO user, String filePath, FileItem fileItem) {
         File file;
         file = new File(filePath + "\\" + user.getId() + "\\avatar" + Objects.requireNonNull(new File(filePath + "\\" + user.getId() + "\\").listFiles()).length + ".png");
@@ -27,6 +33,10 @@ public class UploadImage {
         return file;
     }
 
+    /**
+     * Return file name
+     */
+
     public static String getFileName(FileItem fileItem) {
         String fileName = null;
         if (!fileItem.isFormField()) {
@@ -34,6 +44,10 @@ public class UploadImage {
         }
         return fileName;
     }
+
+    /**
+     * Return list of file items
+     */
 
     public static List<FileItem> getFileItems(HttpServletRequest req, UserDTO user, String filePath) {
         ServletFileUpload upload = getUpload();
@@ -51,6 +65,10 @@ public class UploadImage {
         }
         return fileItems;
     }
+
+    /**
+     * Return ServletFileUpload object
+     */
 
     private static ServletFileUpload getUpload(){
         int maxFileSize = 5000 * 1024;

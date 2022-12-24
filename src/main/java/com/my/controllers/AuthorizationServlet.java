@@ -4,6 +4,7 @@ import com.my.dto.AccountDTO;
 import com.my.dto.UserDTO;
 import com.my.service.AccountService;
 import com.my.service.UserService;
+import com.my.utils.Security;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,10 +18,14 @@ import java.util.Objects;
 
 import static com.my.utils.HttpConstants.*;
 
+/**
+ * Controller for Authorization
+ */
+
 @WebServlet(AUTHORIZATION_PATH)
 public class AuthorizationServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         if (Objects.nonNull(session.getAttribute("youAreBlocked"))) {
             session.removeAttribute("youAreBlocked");
@@ -34,9 +39,10 @@ public class AuthorizationServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        UserDTO user = UserService.getUser(req.getParameter("login"), req.getParameter("password"));
+        UserDTO user = UserService.getUser(req.getParameter("login"),
+                                            Security.hashPassword( req.getParameter("password")));
         if (Objects.isNull(user)) {
             session.setAttribute("loginError", "msg");
             resp.sendRedirect(MAIN_SERVLET_PATH + AUTHORIZATION_PATH);

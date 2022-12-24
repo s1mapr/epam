@@ -16,11 +16,13 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Controller for utilities payment
+ */
 @WebServlet(USER_UTILITIES_PAYMENT_PATH)
 public class UtilitiesPaymentServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
@@ -34,7 +36,7 @@ public class UtilitiesPaymentServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Validation validation = new Validation();
         boolean isValid = validation.utilitiesPaymentValidation(req.getParameter("meter_w"),
@@ -59,7 +61,7 @@ public class UtilitiesPaymentServlet extends HttpServlet {
         double oldAmount = CardService.getAmount(cardId);
         double newAmount = oldAmount - amount;
         if (newAmount < 0) {
-            session.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
+            session.setAttribute("notEnoughMoney", "msg");
             resp.sendRedirect(MAIN_SERVLET_PATH + USER_UTILITIES_PAYMENT_PATH);
             return;
         }

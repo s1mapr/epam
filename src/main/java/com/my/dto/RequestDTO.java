@@ -1,5 +1,8 @@
 package com.my.dto;
 
+/**
+ * Describes Request's DTO
+ */
 public class RequestDTO {
     private int accountId;
     private String status;

@@ -7,6 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data access object for Account entity
+ */
+
 public class AccountDAO {
     private static final Logger log = Logger.getLogger(AccountDAO.class);
     private static final String CREATE_NEW_ACCOUNT = "INSERT INTO account(card_id, name, user_id, status) VALUES (?, ?, ?, ?)";
@@ -17,7 +21,13 @@ public class AccountDAO {
     private static final String GET_ACCOUNT_NAME = "SELECT * FROM account WHERE name = ? && user_id = ?";
     private static final String GET_COUNT_OF_USERS_ACCOUNTS = "SELECT COUNT(user_id) AS count FROM account WHERE user_id = ?";
     private static final String CHANGE_STATUS_TO_PENDING = "UPDATE account SET status = \"pending\" WHERE id = ?";
-
+    /**
+     * Creating new account
+     *
+     * @param name String
+     * @param cardId int
+     * @param userId int
+     */
     public static void addNewAccount(String name, int cardId, int userId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -41,6 +51,15 @@ public class AccountDAO {
             close(connection);
         }
     }
+
+    /**
+     * Return list of AccountDTOs
+     *
+     * @param id int
+     * @param currentPage int
+     * @param query String
+     * @return List of AccountDTO items. If any problems returns empty list.
+     */
 
     public static List<AccountDTO> getUserAccounts(int id, int currentPage, String query) {
         List<AccountDTO> list = new ArrayList<>();
@@ -73,6 +92,12 @@ public class AccountDAO {
         return list;
     }
 
+    /**
+     * Return list of AccountDTOs
+     *
+     * @param id int
+     * @return List of AccountDTO items. If any problems returns empty list.
+     */
 
     public static List<AccountDTO> getUserAccountsWithoutPagination(int id) {
         List<AccountDTO> list = new ArrayList<>();
@@ -104,6 +129,12 @@ public class AccountDAO {
         return list;
     }
 
+    /**
+     * Update account status by Account identifier
+     *
+     * @param accountId int
+     */
+
     public static void blockAccount(int accountId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -124,6 +155,12 @@ public class AccountDAO {
             close(connection);
         }
     }
+
+    /**
+     * Update account status by Account identifier
+     *
+     * @param accountId int
+     */
 
     public static void unblockAccount(int accountId) {
         Connection connection = null;
@@ -146,6 +183,12 @@ public class AccountDAO {
         }
     }
 
+    /**
+     * Update account status by Account identifier
+     *
+     * @param accountId int
+     */
+
     public static void setPendingStatus(int accountId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -167,6 +210,9 @@ public class AccountDAO {
         }
     }
 
+    /**
+     * Return count of all accounts
+     */
 
     public static int getAllAccountsCount() {
         int count = -1;
@@ -182,6 +228,13 @@ public class AccountDAO {
         }
         return count;
     }
+
+    /**
+     * Return id of card by accountId
+     *
+     * @param accountId int
+     */
+
 
     public static int getCardId(int accountId) {
         int cardId = -1;
@@ -200,6 +253,14 @@ public class AccountDAO {
         return cardId;
     }
 
+    /**
+     * Return count of users accounts by userId
+     *
+     * @param userId int
+     */
+
+
+
     public static int getCountOfUsersAccounts(int userId) {
         int count = -1;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -216,6 +277,15 @@ public class AccountDAO {
         }
         return count;
     }
+
+    /**
+     * Return list of AccountDTOs
+     *
+     * @param currentPage int
+     * @param query String
+     * @return List of AccountDTO items. If any problems returns empty list.
+     */
+
 
     public static List<AccountDTO> accountPagination(int currentPage, String query) {
         List<AccountDTO> accounts = new ArrayList<>();
@@ -252,6 +322,14 @@ public class AccountDAO {
         return accounts;
     }
 
+    /**
+     * Checks database for account with accountName for existence
+     *
+     * @param accountName String
+     * @param userId int
+     */
+
+
     public static boolean checkAccountName(String accountName, int userId){
         boolean checker = false;
         try(Connection connection = DBManager.getInstance().getConnection();
@@ -270,6 +348,7 @@ public class AccountDAO {
         }
         return checker;
     }
+
 
     private static void close(PreparedStatement statement) {
         try {

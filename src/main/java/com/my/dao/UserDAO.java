@@ -7,6 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+/**
+ * Data access object for User entity
+ */
 
 public class UserDAO {
     private static final Logger log = Logger.getLogger(UserDAO.class);
@@ -18,6 +21,17 @@ public class UserDAO {
     private static final String GET_ALL_USERS_COUNT = "SELECT COUNT(id) AS count FROM user WHERE role_id = '1'";
     private static final String UPDATE_USER_DATA = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE id = ?";
     private static final String SET_USER_AVATAR = "UPDATE user SET avatar_url = ? WHERE id = ?";
+
+
+    /**
+     * Return userDTO object by login and password
+     *
+     * @param login String
+     * @param password String
+     *
+     * @return userDTO object
+     */
+
 
     public static UserDTO getUserByLoginAndPassword(String login, String password) {
         UserDTO user = null;
@@ -67,6 +81,18 @@ public class UserDAO {
         return user;
     }
 
+
+    /**
+     * Method for adding new user to database
+     *
+     * @param login String
+     * @param password String
+     * @param firstName String
+     * @param lastName String
+     * @param email String
+     * @param phoneNumber String
+     */
+
     public static void registration(String login, String password, String firstName, String lastName, String email, String phoneNumber) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -93,6 +119,14 @@ public class UserDAO {
         }
     }
 
+
+    /**
+     * Check database entries for user with login
+     *
+     * @param login String
+     *
+     */
+
     public static boolean checkUserForRegistration(String login) {
         String userLogin = null;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -111,6 +145,11 @@ public class UserDAO {
         return userLogin == null;
     }
 
+
+    /**
+     * Return count of all users
+     */
+
     public static int getAllUsersCount() {
         int count = -1;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -125,6 +164,14 @@ public class UserDAO {
         }
         return count;
     }
+
+
+    /**
+     * Change user status to blocked by userId
+     *
+     * @param userId int
+     *
+     */
 
     public static void blockUser(int userId) {
         Connection connection = null;
@@ -146,6 +193,13 @@ public class UserDAO {
             close(connection);
         }
     }
+
+    /**
+     * Change user status to unblocked by userId
+     *
+     * @param userId int
+     *
+     */
 
     public static void unblockUser(int userId) {
         Connection connection = null;
@@ -206,6 +260,11 @@ public class UserDAO {
         return list;
     }
 
+    /**
+     * Updates user data
+     *
+     */
+
     public static void updateUserData(String firstName, String lastName, String email, String phoneNumber, int userId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -230,6 +289,11 @@ public class UserDAO {
             close(connection);
         }
     }
+
+    /**
+     * Setting new profile picture of user
+     *
+     */
 
     public static void setNewAvatar(String url, int userId) {
         Connection connection = null;

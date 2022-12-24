@@ -2,20 +2,20 @@ package com.my.utils;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.my.dao.ReceiptDAO;
-import com.my.dto.ReceiptDTO;
-import com.my.dto.UserDTO;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
+/**
+ * PdfCreator utils
+ */
 public class PdfCreator {
     private static final Logger log = Logger.getLogger(PdfCreator.class);
 
+    /**
+     * initialization of image
+     */
     public static Image imageInitialization(String imgPath) {
         Image image = null;
         try {
@@ -28,7 +28,9 @@ public class PdfCreator {
         }
         return image;
     }
-
+    /**
+     * creates pdf instance
+     */
     public static void pdfGetInstance(Document document) throws FileNotFoundException {
         try {
             PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
@@ -38,28 +40,25 @@ public class PdfCreator {
             log.error("Exception -  " + e);
         }
     }
+
+    /**
+     * Creating pdf document
+     */
     public static void createPDF(HttpServletResponse resp, ServletContext context) throws IOException {
         File downloadFile = new File("iTextHelloWorld.pdf");
         FileInputStream inStream = new FileInputStream(downloadFile);
-
-        // obtains ServletContext
-
-        // gets MIME type of the file
         String mimeType = context.getMimeType("iTextHelloWorld.pdf");
         if (mimeType == null) {
             mimeType = "application/octet-stream";
         }
 
-        // modifies response
         resp.setContentType(mimeType);
         resp.setContentLength((int) downloadFile.length());
 
-        // forces download
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
         resp.setHeader(headerKey, headerValue);
 
-        // obtains response's output stream
         OutputStream outStream = resp.getOutputStream();
         byte[] buffer = new byte[4096];
         int bytesRead = -1;

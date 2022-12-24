@@ -17,7 +17,9 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Controller for pdf creator
+ */
 @WebServlet(USER_CREATE_PDF)
 public class PdfCreatorServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(PdfCreatorServlet.class);

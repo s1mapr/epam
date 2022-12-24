@@ -14,12 +14,14 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Controller for receipts
+ */
 @WebServlet(USER_RECEIPTS_PATH)
 public class MyReceiptsServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
         ReceiptService.updateStatus();

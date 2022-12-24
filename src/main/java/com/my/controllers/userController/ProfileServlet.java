@@ -12,14 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Controller for profile
+ */
 @WebServlet(USER_PROFILE_PATH)
 public class ProfileServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
         int listLength = AccountService.getUserAccountsListLength(user.getId());

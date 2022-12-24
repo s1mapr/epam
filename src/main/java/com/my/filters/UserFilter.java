@@ -12,6 +12,9 @@ import java.util.Objects;
 
 import static com.my.utils.HttpConstants.*;
 
+/**
+ * Filter for User access
+ */
 @WebFilter("/user/*")
 public class UserFilter implements Filter {
     @Override

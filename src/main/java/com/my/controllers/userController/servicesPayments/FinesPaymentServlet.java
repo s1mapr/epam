@@ -16,11 +16,13 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Controller for fines payment
+ */
 @WebServlet(USER_FINES_PAYMENT_PATH)
 public class FinesPaymentServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
@@ -34,7 +36,7 @@ public class FinesPaymentServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Validation validation = new Validation();
         UserDTO user = (UserDTO) session.getAttribute("user");

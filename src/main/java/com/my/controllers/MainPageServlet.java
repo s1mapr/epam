@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Controller for main page
+ */
 @WebServlet(MAIN_PAGE_PATH)
 public class MainPageServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
 }

@@ -11,11 +11,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Controller for request
+ */
 @WebServlet(ADMIN_REQUESTS_PATH)
 public class RequestsServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         int listLength = RequestService.getListLength();
         int pagesCount = listLength % 10 == 0 ? listLength / 10 : listLength / 10 + 1;

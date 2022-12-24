@@ -1,5 +1,7 @@
 package com.my.dto;
-
+/**
+ * Describes User's DTO
+ */
 public class UserDTO {
 
     private int id;

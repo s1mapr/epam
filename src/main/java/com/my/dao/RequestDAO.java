@@ -6,6 +6,9 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Data access object for Request entity
+ */
 
 public class RequestDAO {
     private static final Logger log = Logger.getLogger(RequestDAO.class);
@@ -13,6 +16,15 @@ public class RequestDAO {
     private static String UPDATE_STATUS = "UPDATE request SET status = 'accepted' WHERE account_id = ?";
     private static String CREATE_NEW_REQUEST = "INSERT INTO request(account_id, status) VALUES (?, 'pending')";
     private static String GET_COUNT_OF_REQUEST = "SELECT COUNT(id) AS count FROM request WHERE status = 'pending'";
+
+
+    /**
+     * Return list of receiptDTO object by pageNumber, that has information of request
+     *
+     * @param pageNumber int
+     *
+     * @return receiptDTO object that has information of receipt
+     */
 
     public static List<RequestDTO> getRequests(int pageNumber) {
         List<RequestDTO> requestList = new ArrayList<>();
@@ -44,6 +56,11 @@ public class RequestDAO {
         return requestList;
     }
 
+
+    /**
+     * Accept unblocking request
+     */
+
     public static void acceptRequest(int accountId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -65,6 +82,11 @@ public class RequestDAO {
         }
     }
 
+
+    /**
+     * Create new unblocking request
+     */
+
     public static void createNewRequest(int accountId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -85,6 +107,11 @@ public class RequestDAO {
             close(connection);
         }
     }
+
+
+    /**
+     * Return count of requests
+     */
 
     public static int getCountOfRequest() {
         int count = -1;

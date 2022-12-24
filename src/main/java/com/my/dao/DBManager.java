@@ -6,6 +6,12 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Singleton which helps to get DB connections using Hikari Connection Pooling
+ * Use getInstance() method to get access
+ */
+
+
 public class DBManager {
     private static final String CONNECTION_URL = "jdbc:mysql://localhost/epam";
     public static final String USERNAME = "root";

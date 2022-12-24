@@ -2,6 +2,10 @@ package com.my.dto;
 
 import java.util.Date;
 
+/**
+ * Describes Receipt's DTO
+ */
+
 public class ReceiptDTO {
     private int id;
     private String accountName;

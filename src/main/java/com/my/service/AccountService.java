@@ -2,14 +2,12 @@ package com.my.service;
 
 import com.my.dao.AccountDAO;
 import com.my.dao.RequestDAO;
-import com.my.dao.UserDAO;
 import com.my.dto.AccountDTO;
-import com.my.dto.UserDTO;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * Account service
+ */
 public class AccountService {
     private static final String GET_ACCOUNTS = "SELECT * FROM account JOIN user ON user.id = account.user_id LIMIT 10 OFFSET ?";
     private static final String GET_ACCOUNTS_SORTED_BY_ACCOUNT_NAME = "SELECT * FROM account JOIN user ON user.id = account.user_id ORDER BY account.name ";
@@ -23,13 +21,24 @@ public class AccountService {
     private static final String GET_USER_ACCOUNTS_SORTED_BY_AMOUNT = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY card.amount ";
     private static final String GET_USER_ACCOUNTS_SORTED_BY_STATUS = "SELECT * FROM account JOIN card ON card.id = account.card_id WHERE user_id = ? ORDER BY status ";
 
+    /**
+     * Return count of all accounts
+     */
+
     public static int getListLength() {
         return AccountDAO.getAllAccountsCount();
     }
+    /**
+     * Return users account count
+     */
     public static int getUserAccountsListLength(int id){
         return AccountDAO.getCountOfUsersAccounts(id);
     }
 
+
+    /**
+     * Change account status. This function can use only admin
+     */
     public static void changeAccountStatusAdmin(String action, String id){
         if (Objects.nonNull(action) && action.equals("block")) {
             AccountDAO.blockAccount(Integer.parseInt(id));
@@ -37,6 +46,10 @@ public class AccountService {
             AccountDAO.unblockAccount(Integer.parseInt(id));
         }
     }
+
+    /**
+     * Changes status of account
+     */
 
     public static void changeAccountStatusUser(String action, String id){
         if (Objects.nonNull(action) && action.equals("block")) {
@@ -47,9 +60,17 @@ public class AccountService {
         }
     }
 
+    /**
+     * Return all accounts from database
+     */
+
     public static List<AccountDTO> getAllAccountsWithPagination(int pageNumber,String newQuery){
         return AccountDAO.accountPagination(pageNumber, newQuery);
     }
+
+    /**
+     * Return query that will be used for pagination
+     */
 
     public static String getQueryForAdminAccounts(String action, String type, String oldQuery) {
         if(Objects.nonNull(oldQuery) &&Objects.isNull(action)){
@@ -71,6 +92,10 @@ public class AccountService {
         return GET_ACCOUNTS;
     }
 
+    /**
+     * Return query that will be used for pagination
+     */
+
     public static String getQueryForUserAccounts(String action, String type, String oldQuery) {
         if (Objects.nonNull(oldQuery) && Objects.isNull(action)) {
             return oldQuery;
@@ -90,6 +115,9 @@ public class AccountService {
             return GET_USER_ACCOUNTS;
         }
 
+    /**
+     * Return page number
+     */
 
     public static int getPageNumber(String page, Integer pageNumberObj){
         int pageNumber;
@@ -103,21 +131,39 @@ public class AccountService {
         return pageNumber;
     }
 
+    /**
+     * Return all users accounts
+     */
+
     public static List<AccountDTO> getUserAccountsWithoutPagination(int userId){
         return AccountDAO.getUserAccountsWithoutPagination(userId);
     }
+
+    /**
+     * Return all users accounts
+     */
 
     public static List<AccountDTO> getUserAccountsWithPagination(int id,int pageNumber, String newQuery){
         return AccountDAO.getUserAccounts(id, pageNumber, newQuery);
     }
 
+    /**
+     * Return card id
+     */
     public static int getCardId(int accountId){
         return AccountDAO.getCardId(accountId);
     }
 
+    /**
+     * Creates new entry in database
+     */
+
     public static void createNewAccount(String name, int cardId, int userId){
         AccountDAO.addNewAccount(name, cardId, userId);
     }
+
+
+
 
     public static boolean checkAccountNameIfExist(String name, int userId){
         return AccountDAO.checkAccountName(name, userId);

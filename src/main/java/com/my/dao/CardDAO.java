@@ -5,6 +5,11 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.Random;
 
+/**
+ * Data access object for Card entity
+ */
+
+
 public class CardDAO {
     private static final Logger log = Logger.getLogger(CardDAO.class);
     private static final String GET_CARD_BY_NUMBER = "SELECT * FROM card WHERE number = ?";
@@ -12,6 +17,14 @@ public class CardDAO {
     private static final String CREATE_NEW_CARD = "INSERT INTO card(number, expiration_date, cvv, amount) VALUES (?, ?, ?, ?)";
     private static final String UPDATE_AMOUNT = "UPDATE card SET amount = ? WHERE id = ?";
 
+
+    /**
+     * Creating new Card
+     *
+     * @param number String
+     * @param date String
+     * @param cvv String
+     */
 
     public static int createNewCard(String number, String date, String cvv) {
         int cardId = -1;
@@ -49,6 +62,11 @@ public class CardDAO {
         return cardId;
     }
 
+    /**
+     * Update amount of card
+     *
+     */
+
     public static void updateAmount(double amount, int cardId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -70,7 +88,13 @@ public class CardDAO {
             close(connection);
         }
     }
-
+    /**
+     * Returning amount of card by id
+     *
+     * @param cardId int
+     *
+     * @return amount of card
+     */
     public static double getAmount(int cardId) {
         double amount = -1;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -88,6 +112,12 @@ public class CardDAO {
         return amount;
     }
 
+
+    /**
+     * Checking database for card number's existence
+     *
+     * @param number String
+     */
 
     public static boolean checkCardNumber(String number) {
         String cardNumber = null;

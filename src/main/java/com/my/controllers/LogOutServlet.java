@@ -10,6 +10,10 @@ import java.io.IOException;
 
 import static com.my.utils.HttpConstants.*;
 
+/**
+ * Controller for logout
+ */
+
 @WebServlet(LOGOUT_PATH)
 public class LogOutServlet extends HttpServlet {
     @Override

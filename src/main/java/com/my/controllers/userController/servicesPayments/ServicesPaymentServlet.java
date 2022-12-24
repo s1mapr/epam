@@ -16,25 +16,27 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Controller for services payment
+ */
 @WebServlet(USER_SERVICES_PAYMENT_PATH)
 public class ServicesPaymentServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Validation validation = (Validation) session.getAttribute("valid");
         session.removeAttribute("valid");
         req.setAttribute("valid", validation);
         if (Objects.nonNull(session.getAttribute("notEnoughMoney"))) {
             session.removeAttribute("notEnoughMoney");
-            req.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
+            req.setAttribute("notEnoughMoney", "msg");
         }
         session.setAttribute("purposeId", 2);
         req.getRequestDispatcher("/views/jsp/options/servicesPayment.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
         String cardNumber = req.getParameter("card");
@@ -54,7 +56,7 @@ public class ServicesPaymentServlet extends HttpServlet {
         double oldAmount = CardService.getAmount(cardId);
         double newAmount = oldAmount - amount;
         if (newAmount < 0) {
-            session.setAttribute("notEnoughMoney", "Недостатньо грошей для операції");
+            session.setAttribute("notEnoughMoney", "msg");
             resp.sendRedirect(MAIN_SERVLET_PATH + USER_SERVICES_PAYMENT_PATH);
             return;
         }

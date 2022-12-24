@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static com.my.utils.HttpConstants.*;
-
+/**
+ * Filter for Admin access
+ */
 @WebFilter("/adm/*")
 public class AdminFilter implements Filter {
     @Override

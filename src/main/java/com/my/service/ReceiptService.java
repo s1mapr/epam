@@ -2,18 +2,18 @@ package com.my.service;
 
 import com.itextpdf.text.*;
 import com.my.dao.ReceiptDAO;
-import com.my.dao.UserDAO;
 import com.my.dto.ReceiptDTO;
 import com.my.dto.UserDTO;
 import com.my.utils.PdfCreator;
 import org.apache.log4j.Logger;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * Card service
+ */
 public class ReceiptService {
     private static final Logger log = Logger.getLogger(ReceiptService.class);
     public static String GET_RECEIPTS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? LIMIT 10 OFFSET ?";
@@ -23,6 +23,10 @@ public class ReceiptService {
     public static String GET_RECEIPTS_SORTED_BY_STATUS = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY receipt.status ";
     public static String GET_RECEIPTS_SORTED_BY_PURPOSE = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY purpose.name ";
     public static String GET_RECEIPTS_SORTED_BY_ACCOUNT = "SELECT * FROM receipt JOIN purpose ON purpose.id = receipt.purpose_id JOIN account ON account.id = receipt.account_id WHERE receipt.user_id = ? ORDER BY account.name ";
+
+    /**
+     * Sets header data of generated pdf document
+     */
 
     private static void setHeaderData(Document document, ReceiptDTO receipt, String purpose, Font font) {
         DateTimeFormatter formatter
@@ -51,6 +55,10 @@ public class ReceiptService {
             log.error("Exception -  " + e);
         }
     }
+
+    /**
+     * Sets data for generated pdf document
+     */
 
     public static void setPdfData(String purpose, Document document, UserDTO user, int id, String imgPath, String fontPath){
         Image image = PdfCreator.imageInitialization(imgPath);
@@ -156,13 +164,25 @@ public class ReceiptService {
         }
     }
 
+    /**
+     * Updates receipt status
+     */
+
     public static void updateStatus(){
         ReceiptDAO.updateStatus();
     }
 
+    /**
+     * Return count of user payments
+     */
+
     public static int getReceiptListLength(int userId){
         return ReceiptDAO.getPaymentsCountOfUser(userId);
     }
+
+    /**
+     * Return query for pagination
+     */
 
     public static String getQuery(String action, String type, String oldQuery) {
         if(Objects.nonNull(oldQuery) &&Objects.isNull(action)){
@@ -186,6 +206,10 @@ public class ReceiptService {
         return GET_RECEIPTS;
     }
 
+    /**
+     * Return page number for pagination
+     */
+
     public static int getPageNumber(String page, Integer pageNumberObj){
         int pageNumber;
         if (Objects.nonNull(page)){
@@ -198,30 +222,48 @@ public class ReceiptService {
         return pageNumber;
     }
 
+    /**
+     * Return user receipts for pagination
+     */
+
     public static List<ReceiptDTO> getReceiptsWithPagination(int userId, int pageNumber, String newQuery){
         return ReceiptDAO.getUsersReceiptsWithPagination(userId, pageNumber, newQuery);
     }
 
+    /**
+     * Creates new entry in database witch has information about receipt
+     */
+
     public static void createEntryInReceipt(int accountId, int purposeId, double amount, int serviceId, int userId){
         ReceiptDAO.createEntryInReceipt(accountId, purposeId, amount, serviceId, userId);
     }
-
+    /**
+     * Creates new entry in database witch has information about receipt
+     */
     public static int createNewEntryInTransService(String cardNumber, String firstName, String lastName){
         return ReceiptDAO.createNewEntryInTransService(cardNumber, firstName, lastName);
     }
-
+    /**
+     * Creates new entry in database witch has information about receipt
+     */
     public static int createNewEntryInFinesService(String firstName, String lastName, String patronymic, String fineNumber){
         return ReceiptDAO.createNewEntryInFinesService(firstName, lastName, patronymic, fineNumber);
     }
-
+    /**
+     * Creates new entry in database witch has information about receipt
+     */
     public static int createNewEntryInPhoneService(String number){
         return ReceiptDAO.createNewEntryInPhoneService(number);
     }
-
+    /**
+     * Creates new entry in database witch has information about receipt
+     */
     public static int createNewEntryInServService(String cardNumber, String serviceName){
         return ReceiptDAO.createNewEntryInServService(cardNumber, serviceName);
     }
-
+    /**
+     * Creates new entry in database witch has information about receipt
+     */
     public static int createNewEntryInUtilitiesService(int meterW, int meterE, int meterG, double amountW, double amountE, double amountG){
         return ReceiptDAO.createNewEntryInUtilitiesService(meterW, meterE, meterG, amountW, amountE, amountG);
     }

@@ -7,10 +7,21 @@ import com.my.dto.RequestDTO;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Request service
+ */
+
 public class RequestService {
+    /**
+     * Return count of all requests
+     */
     public static int getListLength(){
         return RequestDAO.getCountOfRequest();
     }
+
+    /**
+     * Changes account status
+     */
 
     public static void unblockUserAccount(String action, String id){
         if (Objects.nonNull(action) && action.equals("unblock")) {
@@ -18,6 +29,10 @@ public class RequestService {
             RequestDAO.acceptRequest(Integer.parseInt(id));
         }
     }
+
+    /**
+     * Return page number for pagination
+     */
 
     public static int getPageNumber(String page, Object pageNumberObj){
         int pageNumber;
@@ -30,6 +45,10 @@ public class RequestService {
         }
         return pageNumber;
     }
+
+    /**
+     * Return request
+     */
 
     public static List<RequestDTO> getRequests(int page){
         return RequestDAO.getRequests(page);

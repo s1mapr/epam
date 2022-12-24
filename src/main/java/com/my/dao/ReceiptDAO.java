@@ -8,6 +8,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Data access object for Receipt entity
+ */
 
 public class ReceiptDAO {
     private static final Logger log = Logger.getLogger(ReceiptDAO.class);
@@ -27,6 +30,12 @@ public class ReceiptDAO {
     private static final String GET_DATA_FOR_PDF_CARD = "SELECT * FROM receipt JOIN account ON account.id = receipt.account_id JOIN card ON card.id = account.card_id JOIN trans_service ON trans_service.id = receipt.service_id WHERE receipt.id = ?";
     private static final String GET_DATA_FOR_PDF_UTILITIES = "SELECT * FROM receipt JOIN account ON account.id = receipt.account_id JOIN card ON card.id = account.card_id JOIN utilities_service ON utilities_service.id = receipt.service_id WHERE receipt.id = ?";
     private static final String GET_DATA_FOR_PDF_FINES = "SELECT * FROM receipt JOIN account ON account.id = receipt.account_id JOIN card ON card.id = account.card_id JOIN fine_service ON fine_service.id = receipt.service_id WHERE receipt.id = ?";
+
+    /**
+     * Creating new entry in phone service
+     *
+     * @param phoneNumber String
+     */
 
     public static int createNewEntryInPhoneService(String phoneNumber) {
         int phoneId = -1;
@@ -55,6 +64,13 @@ public class ReceiptDAO {
         }
         return phoneId;
     }
+
+    /**
+     * Creating new entry in serv service
+     *
+     * @param cardNumber String
+     * @param serviceName String
+     */
 
     public static int createNewEntryInServService(String cardNumber, String serviceName) {
         int servId = -1;
@@ -85,6 +101,14 @@ public class ReceiptDAO {
         return servId;
     }
 
+    /**
+     * Creating new entry in trans service
+     *
+     * @param cardNumber String
+     * @param firstName String
+     * @param lastName String
+     */
+
     public static int createNewEntryInTransService(String cardNumber, String firstName, String lastName) {
         int servId = -1;
         Connection connection = null;
@@ -114,6 +138,15 @@ public class ReceiptDAO {
         }
         return servId;
     }
+
+    /**
+     * Creating new entry in fines service
+     *
+     * @param firstName String
+     * @param lastName String
+     * @param patronymic String
+     * @param number String
+     */
 
     public static int createNewEntryInFinesService(String firstName, String lastName, String patronymic, String number) {
         int servId = -1;
@@ -146,6 +179,16 @@ public class ReceiptDAO {
         return servId;
     }
 
+    /**
+     * Creating new entry in utilities service
+     *
+     * @param meterWater int
+     * @param meterElectricity int
+     * @param meterGas int
+     * @param amountWater double
+     * @param amountElectricity double
+     * @param amountGas double
+     */
     public static int createNewEntryInUtilitiesService(int meterWater, int meterElectricity, int meterGas,
                                                        double amountWater, double amountElectricity, double amountGas) {
         int servId = -1;
@@ -181,6 +224,16 @@ public class ReceiptDAO {
         return servId;
     }
 
+    /**
+     * Creating new entry in receipt
+     *
+     * @param accountId int
+     * @param purposeId int
+     * @param amount double
+     * @param serviceId int
+     * @param userId int
+     */
+
     public static void createEntryInReceipt(int accountId, int purposeId, double amount, int serviceId, int userId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -209,6 +262,15 @@ public class ReceiptDAO {
     }
 
 
+    /**
+     * Return list of receiptDTOs by userId, page of pagination and query for database
+     *
+     * @param query String
+     * @param currentPage int
+     * @param userId int
+     *
+     * @return list of receipts
+     */
     public static List<ReceiptDTO> getUsersReceiptsWithPagination(int userId, int currentPage, String query) {
         List<ReceiptDTO> receiptList = new ArrayList<>();
         ReceiptDTO receipt = null;
@@ -245,6 +307,14 @@ public class ReceiptDAO {
         return receiptList;
     }
 
+    /**
+     * Return payments count of account with id accountId
+     *
+     * @param accountId int
+     *
+     * @return count of operations of account
+     */
+
     public static int getPaymentCountInAccount(int accountId) {
         int count = -1;
         try (Connection connection = DBManager.getInstance().getConnection();
@@ -261,6 +331,15 @@ public class ReceiptDAO {
         }
         return count;
     }
+
+    /**
+     * Return payments count of user with id userId
+     *
+     * @param userId int
+     *
+     * @return payments count of user
+     */
+
 
     public static int getPaymentsCountOfUser(int userId) {
         int count = -1;
@@ -280,6 +359,11 @@ public class ReceiptDAO {
     }
 
 
+    /**
+     * Update receipt status
+     *
+     */
+
     public static void updateStatus() {
         try (Connection connection = DBManager.getInstance().getConnection();
              Statement statement = connection.createStatement();
@@ -298,6 +382,7 @@ public class ReceiptDAO {
             log.error("Exception -  " + e);
         }
     }
+
 
     private static void utilUpdateStatus(int receiptId) {
         Connection connection = null;
@@ -319,6 +404,15 @@ public class ReceiptDAO {
             close(connection);
         }
     }
+
+    /**
+     * Return receiptDTO object by receiptId and userDto, that has information of receipt
+     *
+     * @param receiptId int
+     * @param user UserDTO
+     *
+     * @return receiptDTO object that has information of receipt
+     */
 
     public static ReceiptDTO getReceiptInfoPhone(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;
@@ -353,6 +447,15 @@ public class ReceiptDAO {
         }
         return receipt;
     }
+
+    /**
+     * Return receiptDTO object by receiptId and userDto, that has information of receipt
+     *
+     * @param receiptId int
+     * @param user UserDTO
+     *
+     * @return receiptDTO object that has information of receipt
+     */
 
     public static ReceiptDTO getReceiptInfoService(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;
@@ -389,6 +492,15 @@ public class ReceiptDAO {
         }
         return receipt;
     }
+
+    /**
+     * Return receiptDTO object by receiptId and userDto, that has information of receipt
+     *
+     * @param receiptId int
+     * @param user UserDTO
+     *
+     * @return receiptDTO object that has information of receipt
+     */
 
     public static ReceiptDTO getReceiptInfoCard(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;
@@ -427,6 +539,15 @@ public class ReceiptDAO {
         }
         return receipt;
     }
+
+    /**
+     * Return receiptDTO object by receiptId and userDto, that has information of receipt
+     *
+     * @param receiptId int
+     * @param user UserDTO
+     *
+     * @return receiptDTO object that has information of receipt
+     */
 
     public static ReceiptDTO getReceiptInfoUtilities(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;
@@ -471,6 +592,15 @@ public class ReceiptDAO {
         }
         return receipt;
     }
+
+    /**
+     * Return receiptDTO object by receiptId and userDto, that has information of receipt
+     *
+     * @param receiptId int
+     * @param user UserDTO
+     *
+     * @return receiptDTO object that has information of receipt
+     */
 
     public static ReceiptDTO getReceiptInfoFines(int receiptId, UserDTO user) {
         ReceiptDTO receipt = null;

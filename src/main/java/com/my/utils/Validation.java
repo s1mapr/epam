@@ -1,5 +1,9 @@
 package com.my.utils;
 
+/**
+ * Validation utils
+ */
+
 public class Validation {
     private boolean login;
     private boolean password;
@@ -23,6 +27,15 @@ public class Validation {
     private boolean amountG;
     private boolean cardHolder;
 
+    /**
+     * Validates data
+     * @param login String
+     * @param password String
+     * @param firstName String
+     * @param lastName String
+     * @param email String
+     * @param phoneNumber String
+     */
     public boolean registrationValidation(String login, String password, String firstName,
                                           String lastName, String email, String phoneNumber) {
         this.login = checkLogin(login);
@@ -34,12 +47,26 @@ public class Validation {
         return this.login && this.password && this.firstName && this.lastName && this.email && this.phoneNumber;
     }
 
+
+    /**
+     * Validates data
+     * @param phoneNumber String
+     * @param paymentAmount String
+     */
+
     public boolean phoneRechargeValidation(String phoneNumber, String paymentAmount) {
         this.phoneNumber = checkPhoneNumber(phoneNumber);
         this.paymentAmount = checkPaymentAmount(paymentAmount);
         return this.phoneNumber && this.paymentAmount;
     }
 
+    /**
+     * Validates data
+     * @param firstName String
+     * @param lastName String
+     * @param cardNumber String
+     * @param paymentAmount String
+     */
     public boolean cardTransferValidation(String cardNumber, String firstName, String lastName, String paymentAmount) {
         this.cardNumber = checkCardNumber(cardNumber);
         this.firstName = checkFirstName(firstName);
@@ -48,12 +75,28 @@ public class Validation {
         return this.cardNumber && this.firstName && this.lastName && this.paymentAmount;
     }
 
+    /**
+     * Validates data
+     * @param cardNumber String
+     * @param paymentAmount String
+     * @param paymentPurpose String
+     */
     public boolean servicesPaymentValidation(String cardNumber, String paymentPurpose, String paymentAmount) {
         this.cardNumber = checkCardNumber(cardNumber);
         this.paymentPurpose = checkPaymentPurpose(paymentPurpose);
         this.paymentAmount = checkPaymentAmount(paymentAmount);
         return this.cardNumber && this.paymentPurpose && this.paymentAmount;
     }
+
+
+    /**
+     * Validates data
+     * @param paymentAmount String
+     * @param patronymic String
+     * @param firstName String
+     * @param lastName String
+     * @param fineNumber String
+     */
 
     public boolean finesPaymentValidation(String firstName, String patronymic, String lastName, String fineNumber, String paymentAmount) {
         this.firstName = checkFirstName(firstName);
@@ -64,6 +107,16 @@ public class Validation {
         return this.firstName && this.patronymic && this.lastName && this.fineNumber && this.paymentAmount;
     }
 
+
+    /**
+     * Validates data
+     * @param accountName String
+     * @param cardHolder String
+     * @param cardNumber String
+     * @param expirationDate String
+     * @param cvv String
+     */
+
     public boolean newCardValidation(String accountName, String cardNumber, String expirationDate, String cvv, String cardHolder) {
         this.accountName = checkAccountName(accountName);
         this.cardNumber = checkCardNumber(cardNumber);
@@ -72,6 +125,17 @@ public class Validation {
         this.cardHolder=checkCardHolder(cardHolder);
         return this.accountName && this.cardNumber && this.expirationDate && this.cvv&&this.cardHolder;
     }
+
+
+    /**
+     * Validates data
+     * @param meterE String
+     * @param meterG String
+     * @param meterW String
+     * @param amountE String
+     * @param amountW String
+     * @param amountG String
+     */
 
     public boolean utilitiesPaymentValidation(String meterW, String meterE, String meterG,
                                               String amountW, String amountE, String amountG) {
@@ -84,6 +148,15 @@ public class Validation {
         return this.meterW && this.meterE && this.meterG && this.amountW && this.amountE && this.amountG;
     }
 
+
+    /**
+     * Validates data
+     * @param firstName String
+     * @param lastName String
+     * @param email String
+     * @param phoneNumber String
+     */
+
     public boolean updateProfileValidation(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = checkFirstName(firstName);
         this.lastName = checkLastName(lastName);
@@ -91,6 +164,16 @@ public class Validation {
         this.phoneNumber = checkPhoneNumber(phoneNumber);
         return this.firstName && this.lastName && this.email && this.phoneNumber;
     }
+
+
+    /**
+     * Validates data
+     * @param cardNumber String
+     * @param expiryDate String
+     * @param cvv String
+     * @param amount String
+     * @param cardHolder String
+     */
 
     public boolean topUpValidation(String cardNumber, String expiryDate, String cvv, String amount, String cardHolder) {
         this.cardNumber = checkCardNumber(cardNumber);
