@@ -33,7 +33,7 @@ public class PdfCreator {
      */
     public static void pdfGetInstance(Document document) throws FileNotFoundException {
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("Receipt.pdf"));
             log.info("create instance of PdfWriter");
         } catch (DocumentException e) {
             log.error("problem with creating instance of PdfWriter");
@@ -45,9 +45,9 @@ public class PdfCreator {
      * Creating pdf document
      */
     public static void createPDF(HttpServletResponse resp, ServletContext context) throws IOException {
-        File downloadFile = new File("iTextHelloWorld.pdf");
+        File downloadFile = new File("Receipt.pdf");
         FileInputStream inStream = new FileInputStream(downloadFile);
-        String mimeType = context.getMimeType("iTextHelloWorld.pdf");
+        String mimeType = context.getMimeType("Receipt.pdf");
         if (mimeType == null) {
             mimeType = "application/octet-stream";
         }

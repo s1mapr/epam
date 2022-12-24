@@ -10710,3 +10710,60 @@
 2022-12-24 14:08:55 INFO  AccountDAO:273 - select accounts count of user with id: 3
 2022-12-24 14:08:55 INFO  AccountDAO:87 - select user accounts(with pagination) where user id = 3
 2022-12-24 14:08:55 INFO  AccountDAO:124 - select user accounts(without pagination) where user id = 3
+2022-12-24 17:26:21 INFO  UserDAO:140 - check user for registration where login = S1mapr
+2022-12-24 17:26:21 INFO  Security:20 - codding password
+2022-12-24 17:26:21 INFO  UserDAO:111 - creat new user with login: S1mapr
+2022-12-24 17:26:31 INFO  Security:20 - codding password
+2022-12-24 17:26:31 ERROR UserDAO:78 - problem with selecting user with login S1mapr
+2022-12-24 17:26:31 ERROR UserDAO:79 - Exception -  java.sql.SQLException: Illegal operation on empty result set.
+2022-12-24 17:26:43 INFO  Security:20 - codding password
+2022-12-24 17:26:43 INFO  AccountDAO:273 - select accounts count of user with id: 20
+2022-12-24 17:26:43 INFO  ReceiptDAO:353 - select payment count of user with id: 20
+2022-12-24 17:26:43 INFO  UserDAO:76 - select user with login S1mapr
+2022-12-24 17:26:43 INFO  AccountDAO:124 - select user accounts(without pagination) where user id = 20
+2022-12-24 17:26:43 INFO  ReceiptDAO:379 - select all payments
+2022-12-24 17:26:43 INFO  ReceiptDAO:353 - select payment count of user with id: 20
+2022-12-24 17:26:43 INFO  ReceiptDAO:302 - select of user receipts
+2022-12-24 17:26:45 INFO  ReceiptDAO:379 - select all payments
+2022-12-24 17:26:45 INFO  ReceiptDAO:353 - select payment count of user with id: 20
+2022-12-24 17:26:45 INFO  ReceiptDAO:302 - select of user receipts
+2022-12-24 17:26:48 INFO  AccountDAO:273 - select accounts count of user with id: 20
+2022-12-24 17:26:48 INFO  AccountDAO:87 - select user accounts(with pagination) where user id = 20
+2022-12-24 17:26:48 INFO  AccountDAO:124 - select user accounts(without pagination) where user id = 20
+2022-12-24 17:27:06 INFO  UploadImage:61 - upload new avatar
+2022-12-24 17:27:06 INFO  UploadImage:28 - write file
+2022-12-24 17:27:06 INFO  UserDAO:309 - update avatar of user with id: 20
+2022-12-24 17:27:10 INFO  UserDAO:282 - update data of user with id: 20
+2022-12-24 17:27:10 INFO  AccountDAO:273 - select accounts count of user with id: 20
+2022-12-24 17:27:10 INFO  AccountDAO:87 - select user accounts(with pagination) where user id = 20
+2022-12-24 17:27:10 INFO  AccountDAO:124 - select user accounts(without pagination) where user id = 20
+2022-12-24 17:27:13 INFO  ReceiptDAO:379 - select all payments
+2022-12-24 17:27:13 INFO  ReceiptDAO:353 - select payment count of user with id: 20
+2022-12-24 17:27:13 INFO  ReceiptDAO:302 - select of user receipts
+2022-12-24 17:27:21 INFO  AccountDAO:273 - select accounts count of user with id: 20
+2022-12-24 17:27:21 INFO  AccountDAO:87 - select user accounts(with pagination) where user id = 20
+2022-12-24 17:27:21 INFO  AccountDAO:124 - select user accounts(without pagination) where user id = 20
+2022-12-24 17:27:40 INFO  AccountDAO:344 - check account name for availability with name: Tourism
+2022-12-24 17:27:40 INFO  CardDAO:133 - check card number for availability with number: 7896541235795136
+2022-12-24 17:28:00 INFO  AccountDAO:344 - check account name for availability with name: Tourism
+2022-12-24 17:28:00 INFO  CardDAO:133 - check card number for availability with number: 7896541235797415
+2022-12-24 17:28:26 INFO  AccountDAO:344 - check account name for availability with name: NameOfAccount
+2022-12-24 17:28:26 INFO  CardDAO:133 - check card number for availability with number: 7896541235791458
+2022-12-24 17:28:26 INFO  CardDAO:53 - creat new card with card number: 7896541235791458
+2022-12-24 17:28:26 INFO  AccountDAO:44 - add new entry in account table with account name: NameOfAccount
+2022-12-24 17:28:26 INFO  AccountDAO:273 - select accounts count of user with id: 20
+2022-12-24 17:28:26 INFO  AccountDAO:87 - select user accounts(with pagination) where user id = 20
+2022-12-24 17:28:26 INFO  AccountDAO:124 - select user accounts(without pagination) where user id = 20
+2022-12-24 17:28:38 INFO  AccountDAO:248 - select card number of account with id: 38
+2022-12-24 17:28:38 INFO  CardDAO:107 - get amount of card with id 37
+2022-12-24 17:28:38 INFO  ReceiptDAO:56 - add new entry in phone_service table with phone number: +380976284216
+2022-12-24 17:28:38 INFO  ReceiptDAO:253 - add new entry in receipt table with purpose id: 1; and service id: 35
+2022-12-24 17:28:38 INFO  CardDAO:81 - update amount of card with id: 37
+2022-12-24 17:28:38 INFO  ReceiptDAO:379 - select all payments
+2022-12-24 17:28:38 INFO  ReceiptDAO:353 - select payment count of user with id: 20
+2022-12-24 17:28:38 INFO  ReceiptDAO:302 - select of user receipts
+2022-12-24 17:28:44 INFO  PdfCreator:37 - create instance of PdfWriter
+2022-12-24 17:28:44 INFO  PdfCreator:24 - create instance of Image
+2022-12-24 17:28:44 INFO  ReceiptDAO:443 - select receipt(phone recharge) info with id: 83
+2022-12-24 17:28:44 INFO  ReceiptService:52 - generate pdf report header
+2022-12-24 17:28:44 INFO  ReceiptService:78 - generate pdf report for phone recharge
