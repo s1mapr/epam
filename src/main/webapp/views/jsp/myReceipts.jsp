@@ -77,7 +77,12 @@
                 <td>${receipts.purpose}</td>
                 <td>${receipts.accountName}</td>
                 <td>${receipts.amount}</td>
-                <td>${receipts.paymentStatus}</td>
+                <c:if test="${receipts.paymentStatus == 'prepared'}">
+                    <td><fmt:message key="prepared"/></td>
+                </c:if>
+                <c:if test="${receipts.paymentStatus == 'sent'}">
+                    <td><fmt:message key="sent"/></td>
+                </c:if>
                 <td><a href="${pageContext.request.contextPath}/user/download?id=${receipts.id}&purpose=${receipts.purpose}&name=${receipts.paymentName}&date=${receipts.paymentDate}" class="btn btn-primary"><fmt:message key="receipt"/></a></td>
             </tr>
         </c:forEach>

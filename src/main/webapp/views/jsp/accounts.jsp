@@ -84,7 +84,18 @@
         <td>${accounts.userFirstName}</td>
         <td>${accounts.userLastName}</td>
         <td>${accounts.paymentsCount}</td>
-        <td>${accounts.status}</td>
+        <c:choose>
+          <c:when test="${accounts.status == 'unblocked'}">
+            <td><fmt:message key="unblocked"/></td>
+          </c:when>
+          <c:when test="${accounts.status == 'blocked'}">
+            <td><fmt:message key="blocked"/></td>
+          </c:when>
+          <c:when test="${accounts.status == 'pending'}">
+            <td><fmt:message key="pending"/></td>
+          </c:when>
+        </c:choose>
+
         <td><a class="btn btn-primary mx-1 "
                href="${pageContext.request.contextPath}/adm/accounts?action=block&id=${accounts.id}"><fmt:message key="block"/></a></td>
         <td><a class="btn btn-primary mx-1 "

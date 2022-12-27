@@ -94,7 +94,15 @@
                 <td>${users.email}</td>
                 <td>${users.phoneNumber}</td>
                 <td>${users.paymentsCount}</td>
-                <td>${users.status}</td>
+                <c:choose>
+                    <c:when test="${users.status == 'unblocked'}">
+                        <td><fmt:message key="unblocked"/></td>
+                    </c:when>
+                    <c:when test="${users.status == 'blocked'}">
+                        <td><fmt:message key="blocked"/></td>
+                    </c:when>
+                </c:choose>
+
                 <td><a class="btn btn-primary mx-1 "
                        href="${pageContext.request.contextPath}/adm/users?action=block&id=${users.id}"><fmt:message key="block"/></a>
                 </td>

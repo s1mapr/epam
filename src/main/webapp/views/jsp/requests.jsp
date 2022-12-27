@@ -48,7 +48,7 @@
             <tr>
                 <td>${request.accountName}</td>
                 <td>${request.paymentCount}</td>
-                <td>${request.status}</td>
+                <td><fmt:message key="pending"/></td>
                 <td><a class="btn btn-primary mx-1 "
                        href="${pageContext.request.contextPath}/adm/requests?action=unblock&id=${request.accountId}"><fmt:message key="unblock"/></a>
                 </td>

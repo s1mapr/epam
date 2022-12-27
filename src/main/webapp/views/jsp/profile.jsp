@@ -102,7 +102,17 @@
                     <td>${names.name}</td>
                     <td>${names.cardNumber}</td>
                     <td>${names.amount}</td>
-                    <td>${names.status}</td>
+                    <c:choose>
+                        <c:when test="${names.status == 'unblocked'}">
+                            <td><fmt:message key="unblocked"/></td>
+                        </c:when>
+                        <c:when test="${names.status == 'blocked'}">
+                            <td><fmt:message key="blocked"/></td>
+                        </c:when>
+                        <c:when test="${names.status == 'pending'}">
+                            <td><fmt:message key="pending"/></td>
+                        </c:when>
+                    </c:choose>
                     <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/user/topUp?id=${names.id}"><fmt:message key="topUpAccount"/></a></td>
                     <c:choose>
                         <c:when test="${names.status == 'unblocked'}">
